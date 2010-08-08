@@ -1,0 +1,63 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+    <file>icons/24-zoom-in.png</file>
+    <file>icons/24-zoom-out.png</file>
+    <file>icons/24-zoom-actual.png</file>
+    <file>icons/24-zoom-fill.png</file>
+    <file>icons/document-save-as.png</file>
+    <file>icons/document-import.png</file>
+    <file>icons/textedit/editcopy.png</file>
+    <file>icons/textedit/editpaste.png</file>
+    <file>icons/textedit/editcut.png</file>
+    <file>icons/textedit/format_text_bold.png</file>
+    <file>icons/textedit/format_text_italic.png</file>
+    <file>icons/textedit/format_text_underline.png</file>
+    <file>icons/textedit/fontsizeup_koffice.png</file>
+    <file>icons/textedit/fontsizedown_koffice.png</file>
+    <file>icons/textedit/package_graphics.png</file>
+    <file>icons/textedit/format_justify_left.png</file>
+    <file>icons/textedit/format_justify_center.png</file>
+    <file>icons/textedit/format_justify_right.png</file>
+    <file>icons/textedit/format_indent_less.png</file>
+    <file>icons/textedit/format_indent_more.png</file>
+    <file>icons/textedit/edit_find.png</file>
+    <file>icons/folder.png</file>
+    <file>icons/af_requirement.png</file>
+    <file>icons/af_usecase.png</file>
+    <file>icons/af_image.png</file>
+    <file>icons/af_feature.png</file>
+    <file>icons/af_testcase.png</file>
+    <file>icons/af_testsuite.png</file>
+    <file>icons/af_simplesection.png</file>
+    <file>icons/af_component.png</file>
+    <file>icons/folder_open.png</file>
+    <file>icons/appicon.png</file>
+    <file>icons/filter.png</file>
+    <file>icons/filter.png</file>
+    <file>icons/database_open.png</file>
+    <file>icons/database_new.png</file>
+    <file>icons/folder_new.png</file>
+    <file>icons/af_simplesection_add.png</file>
+    <file>icons/af_requirement_add.png</file>
+    <file>icons/af_usecase_add.png</file>
+    <file>icons/af_image_add.png</file>
+    <file>icons/af_feature_add.png</file>
+    <file>icons/af_testcase_add.png</file>
+    <file>icons/af_testsuite_add.png</file>
+    <file>icons/af_component_add.png</file>
+    <file>icons/file_edit.png</file>
+    <file>icons/editcopy.png</file>
+    <file>icons/editpaste.png</file>
+    <file>icons/file_delete.png</file>
+    <file>icons/textedit/list_square.png</file>
+    <file>icons/textedit/list_alpha_lowcase.png</file>
+    <file>icons/textedit/list_alpha_upcase.png</file>
+    <file>icons/textedit/list_circle.png</file>
+    <file>icons/textedit/list_disc.png</file>
+    <file>icons/textedit/list_numbered.png</file>
+    <file>icons/textedit/list_roman_lowcase.png</file>
+    <file>icons/textedit/list_roman_upcase.png</file>
+</qresource>
+</RCC>
+
+

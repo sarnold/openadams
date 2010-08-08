@@ -1,0 +1,144 @@
+/*
+Copyright 2008 Achim Köhler
+
+This file is part of openADAMS.
+
+openADAMS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 2 of the License,
+or (at your option) any later version.
+
+openADAMS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with AFMS.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* $Id$ */
+
+
+body, th, td  {
+ font-family: Verdana, Helvetica, Arial, sans-serif;
+ font-size: 100.01%;
+}
+
+div.dynheader 
+{
+	font-weight:bold;
+	color: #4444FF;
+}
+
+ul.tocfolder {
+	padding-left:2em;
+	list-style:none;
+	margin-bottom:0.5em;
+}
+
+div.tocentry {
+	padding-left:2em;
+}
+
+div#toc { 
+	font-size: 0.8em;
+	position:fixed; top:0; left:0; width:22.5em;
+	margin-left:-1.5em;
+	padding: 0;
+	border: 1px dashed silver;
+	background: #EEEEEE;
+}
+
+p#toc {margin-left:2em;}
+p#logo {margin-left:2em; margin-top:0; border-bottom:1px dashed silver;}
+p#logo:before {content:url(logo.jpg)" "; }
+span#logo {position:relative; bottom:3px; font-weight:bold;}
+
+
+p span.navbutton {
+	margin-right : 1em; 
+}
+
+div#content {
+	margin-top: 0;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	margin-left: 16em;
+}
+
+* html div#content {
+    height: 1em;  /* Workaround for 3 pixel bug IE 6 and below */
+}
+
+div.requirement, div.testcase, div.feature, div.simplesection, div.image, div.component, div.testsuite, div.usecase
+{
+	padding-left:1em;
+	background: #EEEEEE;
+	border-top:dotted 1pt;
+	border-bottom:dotted 1pt;
+	margin-bottom:1ex;
+}
+
+div.folder {
+	padding-left:1em;
+}
+
+body > div.folder {
+	margin-left:-1em;
+}
+
+h1#id1 {
+	/* no top margin for first headline */
+	margin-top:0;
+}
+
+h1 {
+	font-size:x-large;
+	color: #4444FF;
+	background: #EEEEEE;
+}
+
+span.navbutton{
+	color:#FFFFFF; 
+	padding-bottom:0pt; padding-left:2pt; padding-right:2pt; 
+	background:#4444FF;
+	font-family:monospace;
+}
+
+span.navbutton a:link {color:white; text-decoration:none;}
+span.navbutton a:visited {color:white; text-decoration:none;}
+span.navbutton a:focus {color:white; text-decoration:none;}
+span.navbutton a:hover.navbutton {color:white; text-decoration:none;}
+span.navbutton a:active.navbutton {color:white; text-decoration:none;}
+
+
+h1.folder 
+{	
+	margin-top:2em;
+	margin-bottom:1em;
+	background: #FFFF7F;
+	border: dotted 1pt;
+}
+
+
+h2 {
+ color: #000000;
+ text-decoration: none;
+ font-size:large;
+ /*margin-top:1em;*/
+}
+
+table.attributes {
+    border-style:solid;
+    border-width:thin;
+    width:auto;
+}
+    
+table.attributes td 
+{
+	border-style:dotted;
+	border-width:thin;
+    padding-left: 1em;
+    padding-right: 1em;
+}

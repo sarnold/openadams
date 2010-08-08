@@ -1,0 +1,12 @@
+====================================
+openADAMS Release 0.2.0 (2010-08-08)
+====================================
+
+First release
+
+Known issues
+~~~~~~~~~~~~
+* oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash
+  of the application
+* Documentation is missing
+* oaxml2db.py: experimental
