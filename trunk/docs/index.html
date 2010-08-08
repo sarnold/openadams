@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>openADAMS</title>
+<meta name="author" content="Achim&nbsp;Köhler" />
+<meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
+<meta content="openADAMS Oberview" name="description" />
+<meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
+<link rel="stylesheet" href="oadoc.css" type="text/css" />
+</head>
+<body>
+
+<p>
+openADAMS is an Open Source "<u>A</u>rtifact <u>D</u>ocumentation <u>A</u>nd 
+<u>M</u>anagement <u>S</u>ystem" to document and 
+manage artifacts appearing in the software development process of a product, 
+for instance <em>requirements</em>, <em>use cases</em> or <em>test cases</em>. 
+</p>
+
+<h1>Mission</h1>
+<p>
+Goal of this project is to provide a set of tools to manage some of the artifacts 
+appearing in the software development process. Till now the term artifacts basically 
+stands for <em>features</em>, <em>requirements</em>, <em>use cases</em>, 
+<em>architecture and design documents</em>, 
+and <em>test cases</em>.
+</p>
+<p>
+Managing these artifacts of course means creating and editing them. 
+Furthermore relations between artifacts could be organized.
+</p>
+<p>
+The tools could be useful in small and medium sized development projects. 
+Whenever you are used to write down requirements, use cases or test cases in a 
+Word Processor or a Spreadsheet Software, you should consider using openADAMS instead.
+</p>
+<p>
+openADAMS is a standalone desktop application, no database servers, web servers or similar 
+are required.
+</p>
+
+<h1>Related resources</h1>
+
+openADAMS is the successor of <a href="http://sourceforge.net/projects/afms/">AFMS</a>.
+
+Here are the main new features of openADAMS:
+
+<ul>
+<li>
+    Artifacts could  be organized in user definable folders
+</li>
+<li>
+    Build in Rich Text Editor, no reStructured Text required any more
+</li>
+<li>
+    Images could be stored in the Database and these images could be 
+    inserted into Rich Text Fields of Artifacts
+</li>
+<li>
+    Support for Architecture and Design documentation with new artifact 
+    kind "components". Components have a Rich Text Field where you can 
+    include things like UML Diagrams. Components may be related to requirements 
+    to achieve traceability
+</li>
+<li>
+    PyQt instead of wxPython for the GUI
+</li>    
+<li>
+    Much more cleaner and smaller code. Thanks to Qt's model/view framework!
+</li>    
+</ul>
+
+<p>
+The test runner tool from <a href="http://sourceforge.net/projects/afms/">AFMS</a> is
+yet not available in openADAMS.
+</p>
+<p>
+The NAFMS tools are implemented in <a href="http://www.python.org/">Python</a> and 
+uses <a href="http://www.riverbankcomputing.com/software/pyqt/intro">PyQt</a> for 
+the graphical user interfaces.
+</p>
+<p>
+Artifacts and other data are stored in a <a href="http://www.sqlite.org/">SQLite</a>
+database. <a href="http://www.sqlite.org/">SQLite</a> (pysqlite) comes with current 
+<a href="http://www.python.org/">Python</a> releases.
+</p>
+</body>
+</html>
