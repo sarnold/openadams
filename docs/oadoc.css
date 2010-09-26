@@ -1,7 +1,8 @@
 /* Stylesheet for AFMS documentation */
 BODY {
  font-family: Verdana, Helvetica, Arial, sans-serif;
- background-image: url(graphics/grid.jpeg);
+ /* background-image: url(graphics/grid.jpeg); */
+ background-color:#D7F4EE;
 }
 
 DL { margin-left:30px; }
@@ -141,5 +142,44 @@ font-size: x-small;
 clear: both;
 }
 
+H2 {
+	/* border-top-width:thin;
+	border-bottom-width:thin;
+	border-color:#501616;
+	border-style:dashed; */
+	border-bottom:thin solid #162D50;
+	border-top:medium solid #162D50;
+	margin-top:1em;
+}
 
+.left { 
+float:left;
+width:920px;
+}
+.right {
+	width:300px;
+	margin-left:920px;
+	background-color:#FFEEAA;
+	padding:2pt;
+	border-width:thin;
+	border-color:#501616;
+	border-style:dashed;
+	font-style:oblique ;
+}
+.clear {
+clear:left;
+}
 
+p#explain_gui_hint {
+	margin-top:100pt;
+}
+
+p#explain_gui_text {
+	margin-top:0pt;
+	background-color:#FF5555;
+}
+
+img {
+	padding-top:0.5em;
+	padding-left:1em;
+}
