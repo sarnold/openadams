@@ -177,7 +177,62 @@ the corresponding multiline text field.
 <br/>
 <img src="images/text-editor.png" alt="text editor screenshot"/>
 </p>
- 
+<!-- *** *** *** *** -->
+
+<h2>Types of Artifacts</h2>
+openADAMS supports 7 basic artifact types:
+<dl>
+<dt>Text sections</dt>
+<dd>Used for plain text. A text section artifact has an ID, a title, some keywords and the actual content.</dd>
+
+<dt>Features</dt>
+<dd>Are used to describe product functions or properties, i.e. from the customers or marketing point of view.
+Features are useable to derive requirements.
+Features have an ID, title, keywords, priority, risk, status and a description.
+Features could be linked to requirments and use cases.
+</dd>
+
+<dt>Requirements</dt>
+<dd>
+Requirements as one of the most import type of artifacts have a lot of fields and attributes:
+ID, title, keywords, priority, status, risk, category, complexity, assigee, effort, baseline,
+description, testability, origin and rationale.
+Requirements could be linked to use cases, test cases and components.
+</dd>
+
+<dt>Use cases</dt>
+<dd>
+Are used to document a use case. Attributes and fields of a use case artifact are
+ID, title, keywords, priority, use frequency, actors, stakeholders, prerequisites, main scenario, 
+alternative scenario and notes.
+Use cases could be linked to requirements.
+</dd>
+
+<dt>Components</dt>
+<dd>Basic architectural documentation is supported through component artifacts.
+Attributes and fields of a component are ID, title, keywords, kind of component and description.
+Components could be linked to requirements.</dd>
+
+<dt>Test cases</dt>
+<dd>A test case describes a test for one or more requirement. 
+Fields and attributes of a test case are ID, title, keywords, priority, purpose, prerequisite, 
+test data, steps, notes and a script URL.
+Test cases are linked to requirements and test suites.
+</dd>
+
+<dt>Test suites</dt>
+<dd>
+A test suite is simpy a container to organize test cases. A test suite artifact has an 
+ID, a title, some keywords and a description.
+</dd>
+</dl>
+
+<p>
+Another kind of artifacts are images. 
+In any multiline text field of an artifact images may be inserted. But only those images 
+which are stored in the database file could be inserted. Use <em>Edit/Add image</em> from the menu strip
+to add an image to the database.
+</p>
 <!-- *** *** *** *** -->
 
 <h2>Linking Artifacts</h2>
