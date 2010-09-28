@@ -3,6 +3,7 @@ BODY {
  font-family: Verdana, Helvetica, Arial, sans-serif;
  /* background-image: url(graphics/grid.jpeg); */
  background-color:#D7F4EE;
+ background-image:url("images/background.png"); background-repeat:repeat-y;
 }
 
 /* tabs styles, based on http://www.alistapart.com/articles/slidingdoors */
