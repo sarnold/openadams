@@ -104,23 +104,78 @@ function explain(n) {
 <hr class="header"/>
 </div>
 
-<div class="document" id="artefact-management-system-afms">
+<div class="document">
+<h1><em>This page is under construction</em></h1>
+
 <p>
 Work in progress ...
 </p>
 
 <h1>Getting started</h1>
+<<<<<<< .mine
+<ol>
+<li><a href="#install">Installation</a></li>
+<li><a href="#uibasics">User interface basics</a></li>
+<li><a href="#folders">Creating folders</a></li>
+<li><a href="#artifacts">Creating and editing artifacts</a></li>
+<li><a href="#images">Dealing with images</a></li>
+<li><a href="#filtering">Filtering</a></li>
+<li><a href="#reporting">Reporting</a></li>
+<li><a href="#export">Export</a></li>
+</ol>
 
+<h2><a name="install">Installation</a></h2>
+<h3>Installing from source</h3>
+=======
+
+>>>>>>> .r26
 <p>
+<<<<<<< .mine
+The following software must be installed prior to installation and running openADAMS from source:
+<ul>
+<li>Python 2.5; Versions 2.6 and 2.7 should work too.</li>
+<li>PyQt4</li>
+</ul>
+=======
 The artifact editor saves all artifacts, folders  and relations between artifacts in a database file. 
 Images included in artifact fields are also saved in this database.
+>>>>>>> .r26
 </p>
+<<<<<<< .mine
+<p>
+To install openADAMS from source please download the latest archive <code>openadams-x.y.z.zip</code> 
+from <a href="http://sourceforge.net/projects/openadams/files/">Sourceforge</a>. 
+After unzipping the archive to an arbitrary folder you should be able to start openADAMS by running either the
+script <code>oaeditor.py</code> or <code>oaeditor.pyw</code>.
+</p>
+
+<h3>Win32 binary installation</h3>
+<p>
+Download the latest archive <code>openadams-win32-x.y.z.zip</code> from <a href="http://sourceforge.net/projects/openadams/files/">Sourceforge</a>.
+Unzip the archive to an arbitrary folder and run <code>oaeditor.exe</code> to start openADAMS.
+</p>
+
+<h2><a name="uibasics">User interface basics</a></h2>
+
+<h2><a name="folders">Creating folders</a></h2>
+
+<h2><a name="artifacts">Creating and editing artifacts</a></h2>
+
+<h2><a name="images">Dealing with images</a></h2>
+<h2><a name="filtering">Filtering</a></h2>
+
+<h2><a name="reporting">Reporting</a></h2>
+
+<h2><a name="export">Export</a></h2>
+
+=======
 
 <div class="left"> 
 <object id="explain_gui_image" data="images/explain_gui.svg" type="image/svg+xml" width="100%" height="100%">
     <param name="src" value="explain_gui.svg">
     Sorry, your browser is not able to display this object!
   </object>
+>>>>>>> .r26
 </div>
 
 <div>
