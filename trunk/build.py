@@ -57,7 +57,7 @@ def manifest():
 subwcref()
 from _naf_version import VERSION
 manifest()
-#build()
+build()
 buildbin()
     
     
