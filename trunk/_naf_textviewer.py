@@ -257,11 +257,17 @@ class cTextEditWidget(QtGui.QWidget):
         self.parent.setWindowTitle(s)
 
     def submit(self):
+        self.finishEditHtml()
+        self.mapper.saveEditItem()
+
+    def cancel(self):
+        self.finishEditHtml()
+
+    def finishEditHtml(self):
         # if editing raw html, finish this edit mode
         if self.editHtmlAction.isChecked():
             self.editHtml(False)
             self.editHtmlAction.setChecked(False)
-        self.mapper.saveEditItem()
 
     def setupActions(self):
         self.editGroup = QtGui.QActionGroup(self, enabled=True)

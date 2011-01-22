@@ -27,6 +27,7 @@ __id__ = '$Id$'
 
 import os, sys, getopt, sqlite3, datetime, codecs, base64, logging, traceback
 from xml.dom.minidom import getDOMImplementation, XMLNS_NAMESPACE, parseString, parse
+from xml.parsers.expat import ExpatError 
 import re, traceback
 
 import _naf_database as nafdb
@@ -289,7 +290,11 @@ class cExportPrettyXml(cExportPlainXml):
                     if mo is not None:
                         data = mo.group(1)
                         data = '<div class="__from_qt__">'+data+"</div>"
-                        dom = parseString(data.encode('UTF-8'))
+                        try:
+                            dom = parseString(data.encode('UTF-8'))
+                        except ExpatError:
+                            print "Trouble with %s, ID %s, field %s" %  (table.name, itemid, column.name)
+                            raise 
                         for imgElement in dom.documentElement.getElementsByTagName('img'):
                             imgId = imgElement.getAttribute('src')
                             mo = self.imgIdRegexp.search(imgId)
