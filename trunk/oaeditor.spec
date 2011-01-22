@@ -1,11 +1,14 @@
 # -*- mode: python -*-
 
+SRCDIR = r'C:\home\projects\openadams\trunk'
+sys.path.append(SRCDIR)
+
 from _naf_version import VERSION
 
 NAME = 'openadams-win32-%s' % VERSION
 
 a = Analysis([os.path.join(HOMEPATH,'support\\_mountzlib.py'), os.path.join(HOMEPATH,'support\\useUnicode.py'), 'oaeditor.py'],
-             pathex=[r'C:\home\projects\openadams'])
+             [SRCDIR])
 pyz = PYZ(a.pure)
 exe = EXE(pyz,
           a.scripts,

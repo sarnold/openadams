@@ -11,7 +11,7 @@
 <context>
     <name>cAbout</name>
     <message>
-        <location filename="naf_editor.py" line="413"/>
+        <location filename="naf_editor.py" line="418"/>
         <source>About</source>
         <translation type="unfinished">Über</translation>
     </message>
@@ -104,7 +104,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 &lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="415"/>
+        <location filename="naf_editor.py" line="420"/>
         <source>
         &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
         &lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Editor %s&lt;/b&gt;&lt;/p&gt;
@@ -398,42 +398,42 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cExportToXmlDialog</name>
     <message>
-        <location filename="naf_editor.py" line="357"/>
+        <location filename="naf_editor.py" line="362"/>
         <source>Export to Xml</source>
         <translation type="unfinished">Nach Xml exportieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="360"/>
+        <location filename="naf_editor.py" line="365"/>
         <source>Stylesheet</source>
         <translation type="unfinished">Stylesheet</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="366"/>
+        <location filename="naf_editor.py" line="371"/>
         <source>Output file</source>
         <translation type="unfinished">Ausgabedatei</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="372"/>
+        <location filename="naf_editor.py" line="377"/>
         <source>Plain format</source>
         <translation type="unfinished">Einfaches Format</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="387"/>
+        <location filename="naf_editor.py" line="392"/>
         <source>Use Xsl Stylesheet</source>
         <translation type="unfinished">Xsl Stylesheet</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="387"/>
+        <location filename="naf_editor.py" line="392"/>
         <source>Xsl Stylesheet Files (*.xsl);;All files (*.*)</source>
         <translation type="unfinished">Xsl Stylesheet Dateien (*.xsl);; Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="393"/>
+        <location filename="naf_editor.py" line="398"/>
         <source>Save to</source>
         <translation type="unfinished">Speichern unter</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="393"/>
+        <location filename="naf_editor.py" line="398"/>
         <source>Xml Files (*.xml);;All files (*.*)</source>
         <translation type="unfinished">Xml Dateien (*.xml);;Alle Dateien (*.*)</translation>
     </message>
@@ -747,57 +747,57 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Artefakt Browser</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="547"/>
+        <location filename="naf_editor.py" line="552"/>
         <source>Exit</source>
         <translation type="unfinished">Beenden</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="549"/>
+        <location filename="naf_editor.py" line="554"/>
         <source>Exit application</source>
         <translation type="unfinished">Anwendung beenden</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="704"/>
+        <location filename="naf_editor.py" line="709"/>
         <source>Open database</source>
         <translation type="unfinished">Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="554"/>
+        <location filename="naf_editor.py" line="559"/>
         <source>Open existing database</source>
         <translation type="unfinished">Vorhandene Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="736"/>
+        <location filename="naf_editor.py" line="741"/>
         <source>New database</source>
         <translation type="unfinished">Neue Datenbank</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="559"/>
+        <location filename="naf_editor.py" line="564"/>
         <source>Create new database</source>
         <translation type="unfinished">Neue Datenbank erstellen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="565"/>
+        <location filename="naf_editor.py" line="570"/>
         <source>About</source>
         <translation type="unfinished">Über</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="567"/>
+        <location filename="naf_editor.py" line="572"/>
         <source>About this program</source>
         <translation type="unfinished">Über dieses Programm</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="637"/>
+        <location filename="naf_editor.py" line="642"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Datei</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="665"/>
+        <location filename="naf_editor.py" line="670"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="669"/>
+        <location filename="naf_editor.py" line="674"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;Hilfe</translation>
     </message>
@@ -807,52 +807,52 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Keine Datenbank</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="736"/>
+        <location filename="naf_editor.py" line="741"/>
         <source>Database Files (*.db);;All files (*.*)</source>
         <translation type="unfinished">Datenbank-Dateien (*.db);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="578"/>
+        <location filename="naf_editor.py" line="583"/>
         <source>Add text section</source>
         <translation type="unfinished">Textabschnitt hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="594"/>
+        <location filename="naf_editor.py" line="599"/>
         <source>Add feature</source>
         <translation type="unfinished">Feature hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="582"/>
+        <location filename="naf_editor.py" line="587"/>
         <source>Add requirement</source>
         <translation type="unfinished">Anforderung hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="586"/>
+        <location filename="naf_editor.py" line="591"/>
         <source>Add usecase</source>
         <translation type="unfinished">Anwendungsfall hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="606"/>
+        <location filename="naf_editor.py" line="611"/>
         <source>Add component</source>
         <translation type="unfinished">Komponente hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="598"/>
+        <location filename="naf_editor.py" line="603"/>
         <source>Add testcase</source>
         <translation type="unfinished">Testfall hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="602"/>
+        <location filename="naf_editor.py" line="607"/>
         <source>Add testsuite</source>
         <translation type="unfinished">Testsuite hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="590"/>
+        <location filename="naf_editor.py" line="595"/>
         <source>Add image</source>
         <translation type="unfinished">Bild hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="672"/>
+        <location filename="naf_editor.py" line="677"/>
         <source>Toolbar</source>
         <translation type="unfinished">Werkzeugleiste</translation>
     </message>
@@ -862,12 +862,12 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="812"/>
+        <location filename="naf_editor.py" line="817"/>
         <source>Error</source>
         <translation type="unfinished">Fehler</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="575"/>
+        <location filename="naf_editor.py" line="580"/>
         <source>Add folder</source>
         <translation type="unfinished">Ordner hinzufügen</translation>
     </message>
@@ -882,7 +882,7 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Strg-C</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="618"/>
+        <location filename="naf_editor.py" line="623"/>
         <source>Paste</source>
         <translation type="unfinished">Einfügen</translation>
     </message>
@@ -897,42 +897,42 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Löschen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="640"/>
+        <location filename="naf_editor.py" line="645"/>
         <source>Recent databases</source>
         <translation type="unfinished">Zuletzt geöffnete Datenbanken</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="610"/>
+        <location filename="naf_editor.py" line="615"/>
         <source>Edit item</source>
         <translation type="unfinished">Eintrag bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="613"/>
+        <location filename="naf_editor.py" line="618"/>
         <source>Copy item</source>
         <translation type="unfinished">Eintrag kopieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="624"/>
+        <location filename="naf_editor.py" line="629"/>
         <source>Delete item</source>
         <translation type="unfinished">Eintrag löschen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="649"/>
+        <location filename="naf_editor.py" line="654"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="542"/>
+        <location filename="naf_editor.py" line="547"/>
         <source>Report</source>
         <translation type="unfinished">Bericht</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="562"/>
+        <location filename="naf_editor.py" line="567"/>
         <source>Export database</source>
         <translation type="unfinished">Datenbank exportieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="485"/>
+        <location filename="naf_editor.py" line="490"/>
         <source>Artifact editor</source>
         <translation type="unfinished">Artefakt Editor</translation>
     </message>
@@ -993,32 +993,32 @@ Eintrag wirklich löschen?</translation>
 <context>
     <name>cReportView</name>
     <message>
-        <location filename="naf_editor.py" line="444"/>
+        <location filename="naf_editor.py" line="449"/>
         <source>Report</source>
         <translation type="unfinished">Bericht</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="449"/>
+        <location filename="naf_editor.py" line="454"/>
         <source>&amp;Update</source>
         <translation type="unfinished">Akt&amp;ualisieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="451"/>
+        <location filename="naf_editor.py" line="456"/>
         <source>&amp;Save</source>
         <translation type="unfinished">&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="463"/>
+        <location filename="naf_editor.py" line="468"/>
         <source>Save Report</source>
         <translation type="unfinished">Bericht speichern</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="463"/>
+        <location filename="naf_editor.py" line="468"/>
         <source>Html Files (*.html *.htm)</source>
         <translation type="unfinished">Html Dateien (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="473"/>
+        <location filename="naf_editor.py" line="478"/>
         <source>Error</source>
         <translation type="unfinished">Html Dateien (*.html *.htm)</translation>
     </message>
@@ -1207,452 +1207,452 @@ Eintrag wirklich löschen?</translation>
 <context>
     <name>cTextEditWidget</name>
     <message>
-        <location filename="_naf_textviewer.py" line="268"/>
+        <location filename="_naf_textviewer.py" line="274"/>
         <source>&amp;Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="268"/>
+        <location filename="_naf_textviewer.py" line="274"/>
         <source>Copy the current selection&apos;s contents to the clipboard</source>
         <translation>Auswahl in Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="272"/>
+        <location filename="_naf_textviewer.py" line="278"/>
         <source>&amp;Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="272"/>
+        <location filename="_naf_textviewer.py" line="278"/>
         <source>Paste the clipboard&apos;s contents into the current selection</source>
         <translation>Aus Zwischenablage einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="276"/>
+        <location filename="_naf_textviewer.py" line="282"/>
         <source>Cu&amp;t</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="276"/>
+        <location filename="_naf_textviewer.py" line="282"/>
         <source>Cut the current selection&apos;s contents to the clipboard</source>
         <translation>Ausschneiden in Zwischenablage</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="280"/>
+        <location filename="_naf_textviewer.py" line="286"/>
         <source>&amp;Undo</source>
         <translation>Rückgängig</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="282"/>
+        <location filename="_naf_textviewer.py" line="288"/>
         <source>&amp;Redo</source>
         <translation>Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="284"/>
+        <location filename="_naf_textviewer.py" line="290"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="286"/>
+        <location filename="_naf_textviewer.py" line="292"/>
         <source>Select All</source>
         <translation>Alles auswählen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="288"/>
+        <location filename="_naf_textviewer.py" line="294"/>
         <source>Edit Html</source>
         <translation>Html bearbeiten</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="288"/>
+        <location filename="_naf_textviewer.py" line="294"/>
         <source>Edit raw HTML</source>
         <translation>Html Quelltext bearbeiten</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="296"/>
+        <location filename="_naf_textviewer.py" line="302"/>
         <source>Insert ...</source>
         <translation>Einfügen ...</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="292"/>
+        <location filename="_naf_textviewer.py" line="298"/>
         <source>Insert image</source>
         <translation>Bild einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="296"/>
+        <location filename="_naf_textviewer.py" line="302"/>
         <source>Insert table</source>
         <translation>Tabelle einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="298"/>
+        <location filename="_naf_textviewer.py" line="304"/>
         <source>Insert row</source>
         <translation>Tabellenzeile einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="298"/>
+        <location filename="_naf_textviewer.py" line="304"/>
         <source>Insert table row</source>
         <translation>Tabellenzeile einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="300"/>
+        <location filename="_naf_textviewer.py" line="306"/>
         <source>Insert column</source>
         <translation>Tabellenspalte einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="300"/>
+        <location filename="_naf_textviewer.py" line="306"/>
         <source>Insert table column</source>
         <translation>Tabellenspalte einfügen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="302"/>
+        <location filename="_naf_textviewer.py" line="308"/>
         <source>Remove row</source>
         <translation>Tabellenzeile löschen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="302"/>
+        <location filename="_naf_textviewer.py" line="308"/>
         <source>Remove table row</source>
         <translation>Tabellenzeile löschen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="304"/>
+        <location filename="_naf_textviewer.py" line="310"/>
         <source>Remove column</source>
         <translation>Tabellenspalte löschen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="304"/>
+        <location filename="_naf_textviewer.py" line="310"/>
         <source>Remove table column</source>
         <translation>Tabellenspalte löschen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="308"/>
+        <location filename="_naf_textviewer.py" line="314"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="311"/>
+        <location filename="_naf_textviewer.py" line="317"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="314"/>
+        <location filename="_naf_textviewer.py" line="320"/>
         <source>Underline</source>
         <translation>Unterstreichen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="317"/>
+        <location filename="_naf_textviewer.py" line="323"/>
         <source>Monospace</source>
         <translation>Feste Breite</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="317"/>
+        <location filename="_naf_textviewer.py" line="323"/>
         <source>Strg-M</source>
         <translation>Strg-M</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="320"/>
+        <location filename="_naf_textviewer.py" line="326"/>
         <source>Bigger</source>
         <translation>Größer</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="320"/>
+        <location filename="_naf_textviewer.py" line="326"/>
         <source>Strg-+</source>
         <translation>Strg-+</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="320"/>
+        <location filename="_naf_textviewer.py" line="326"/>
         <source>Increase font size</source>
         <translation>Schrift größer</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="325"/>
+        <location filename="_naf_textviewer.py" line="331"/>
         <source>Smaller</source>
         <translation>Kleiner</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="325"/>
+        <location filename="_naf_textviewer.py" line="331"/>
         <source>Strg--</source>
         <translation>Strg--</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="325"/>
+        <location filename="_naf_textviewer.py" line="331"/>
         <source>Decrease font size</source>
         <translation>Schrift kleiner</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="330"/>
+        <location filename="_naf_textviewer.py" line="336"/>
         <source>Color</source>
         <translation>Textfarbe</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="330"/>
+        <location filename="_naf_textviewer.py" line="336"/>
         <source>Text color</source>
         <translation>Textfarbe</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>No list</source>
         <translation>Keine Liste</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Disc list</source>
         <translation>Listenzeichen Scheibe</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Circle list</source>
         <translation>Listenzeichen Kreis</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Square list</source>
         <translation>Listenzeichen Rechteck</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Decimal list</source>
         <translation>Nummerierung dezimal</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Lower alpha list</source>
         <translation>Alphanumerische Liste klein</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Upper alpha list</source>
         <translation>Alphanumerische Liste groß</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Lower roman list</source>
         <translation>Nummerierung römisch klein</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="337"/>
+        <location filename="_naf_textviewer.py" line="343"/>
         <source>Upper roman list</source>
         <translation>Nummerierung römisch groß</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="354"/>
+        <location filename="_naf_textviewer.py" line="360"/>
         <source>Align left</source>
         <translation>Linksbündig</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="356"/>
+        <location filename="_naf_textviewer.py" line="362"/>
         <source>Align center</source>
         <translation>Zentriert</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="358"/>
+        <location filename="_naf_textviewer.py" line="364"/>
         <source>Align right</source>
         <translation>Rechtsbündig</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="360"/>
+        <location filename="_naf_textviewer.py" line="366"/>
         <source>Indent less</source>
         <translation>Einrückung erhöhen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="362"/>
+        <location filename="_naf_textviewer.py" line="368"/>
         <source>Indent more</source>
         <translation>Einrückung erniedrigen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="365"/>
+        <location filename="_naf_textviewer.py" line="371"/>
         <source>Find ...</source>
         <translation>Suchen ...</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="365"/>
+        <location filename="_naf_textviewer.py" line="371"/>
         <source>Find</source>
         <translation>Suchen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="368"/>
+        <location filename="_naf_textviewer.py" line="374"/>
         <source>Find Next</source>
         <translation>Weitersuchen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="368"/>
+        <location filename="_naf_textviewer.py" line="374"/>
         <source>Find next occurence</source>
         <translation>Weitersuchen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="371"/>
+        <location filename="_naf_textviewer.py" line="377"/>
         <source>Find Previous</source>
         <translation>Vorherige Suchen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="371"/>
+        <location filename="_naf_textviewer.py" line="377"/>
         <source>Find previous occurence</source>
         <translation>Vorherige Suchen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="374"/>
+        <location filename="_naf_textviewer.py" line="380"/>
         <source>Replace ...</source>
         <translation>Ersetzen ...</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="374"/>
+        <location filename="_naf_textviewer.py" line="380"/>
         <source>Replace</source>
         <translation>Ersetzen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="379"/>
+        <location filename="_naf_textviewer.py" line="385"/>
         <source>View Whitespace</source>
         <translation>Leerzeichen sichtbar</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="381"/>
+        <location filename="_naf_textviewer.py" line="387"/>
         <source>View End of Line</source>
         <translation>Zeilenumbruch sichtbar</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Black</source>
         <translation>Schwarz</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Red</source>
         <translation>Rot</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark red</source>
         <translation>Dunkelrot</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Green</source>
         <translation>Grün</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark green</source>
         <translation>Dunkelgrün</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Blue</source>
         <translation>Blau</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark blue</source>
         <translation>Dunkelblau</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Cyan</source>
         <translation>Zyan</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark cyan</source>
         <translation>Dunkelzyan</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark magenta</source>
         <translation>Dunkelmagenta</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Yellow</source>
         <translation>Gelb</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark yellow</source>
         <translation>Dunkelgelb</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Gray</source>
         <translation>Grau</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Dark gray</source>
         <translation>Dunkelgrau</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>Light gray</source>
         <translation>Hellgrau</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="391"/>
+        <location filename="_naf_textviewer.py" line="397"/>
         <source>White</source>
         <translation>Weiss</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="410"/>
+        <location filename="_naf_textviewer.py" line="416"/>
         <source>Toolbar</source>
         <translation>Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="420"/>
+        <location filename="_naf_textviewer.py" line="426"/>
         <source>&amp;Edit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="426"/>
+        <location filename="_naf_textviewer.py" line="432"/>
         <source>&amp;Search</source>
         <translation>Suchen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="431"/>
+        <location filename="_naf_textviewer.py" line="437"/>
         <source>&amp;Table</source>
         <translation>Tabelle</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="436"/>
+        <location filename="_naf_textviewer.py" line="442"/>
         <source>&amp;Image</source>
         <translation>Bild</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="439"/>
+        <location filename="_naf_textviewer.py" line="445"/>
         <source>&amp;List</source>
         <translation>Liste</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="442"/>
+        <location filename="_naf_textviewer.py" line="448"/>
         <source>&amp;Format</source>
         <translation>Format</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="453"/>
+        <location filename="_naf_textviewer.py" line="459"/>
         <source>&amp;Paragraph</source>
         <translation>Absatz</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="458"/>
+        <location filename="_naf_textviewer.py" line="464"/>
         <source>&amp;Options</source>
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="540"/>
+        <location filename="_naf_textviewer.py" line="546"/>
         <source>No match</source>
         <translation>Keine Übereinstimmung</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="540"/>
+        <location filename="_naf_textviewer.py" line="546"/>
         <source>Match</source>
         <translation>Übereinstimmung</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="627"/>
+        <location filename="_naf_textviewer.py" line="633"/>
         <source>Replacements: %1</source>
         <translation>Ersetzungen: %1</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="601"/>
+        <location filename="_naf_textviewer.py" line="607"/>
         <source>No Selection</source>
         <translation>Keine Auswahl</translation>
     </message>
@@ -1683,87 +1683,87 @@ Eintrag wirklich löschen?</translation>
 <context>
     <name>lookupTable</name>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="106"/>
+        <location filename="_nafhelp_translationsstrings.py" line="114"/>
         <source>Always</source>
         <translation>Immer</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="107"/>
+        <location filename="_nafhelp_translationsstrings.py" line="115"/>
         <source>Often</source>
         <translation>Oft</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="108"/>
+        <location filename="_nafhelp_translationsstrings.py" line="116"/>
         <source>Sometimes</source>
         <translation>Manchmal</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="109"/>
+        <location filename="_nafhelp_translationsstrings.py" line="117"/>
         <source>Rarely</source>
         <translation>Selten</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="110"/>
+        <location filename="_nafhelp_translationsstrings.py" line="118"/>
         <source>Once</source>
         <translation>Einmal</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="111"/>
+        <location filename="_nafhelp_translationsstrings.py" line="140"/>
         <source>Months</source>
         <translation>Monate</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="112"/>
+        <location filename="_nafhelp_translationsstrings.py" line="141"/>
         <source>Weeks</source>
         <translation>Wochen</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="113"/>
+        <location filename="_nafhelp_translationsstrings.py" line="142"/>
         <source>Days</source>
         <translation>Tage</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="114"/>
+        <location filename="_nafhelp_translationsstrings.py" line="143"/>
         <source>Hours</source>
         <translation>Stunden</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="115"/>
+        <location filename="_nafhelp_translationsstrings.py" line="144"/>
         <source>created</source>
         <translation>erstellt</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="116"/>
+        <location filename="_nafhelp_translationsstrings.py" line="145"/>
         <source>edited</source>
         <translation>bearbeitet</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="117"/>
+        <location filename="_nafhelp_translationsstrings.py" line="146"/>
         <source>deleted</source>
         <translation>gelöscht</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="118"/>
+        <location filename="_nafhelp_translationsstrings.py" line="147"/>
         <source>restored</source>
         <translation>wiederhergestellt</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="119"/>
+        <location filename="_nafhelp_translationsstrings.py" line="106"/>
         <source>Submitted</source>
         <translation>eingereicht</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="120"/>
+        <location filename="_nafhelp_translationsstrings.py" line="107"/>
         <source>Approved</source>
         <translation>freigegeben</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="121"/>
+        <location filename="_nafhelp_translationsstrings.py" line="108"/>
         <source>Completed</source>
         <translation>erledigt</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="124"/>
+        <location filename="_nafhelp_translationsstrings.py" line="111"/>
         <source>Low</source>
         <translation>Niedrig</translation>
     </message>
@@ -1773,112 +1773,112 @@ Eintrag wirklich löschen?</translation>
         <translation type="unfinished">mittel</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="126"/>
+        <location filename="_nafhelp_translationsstrings.py" line="113"/>
         <source>High</source>
         <translation>Hoch</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="127"/>
+        <location filename="_nafhelp_translationsstrings.py" line="119"/>
         <source>Essential</source>
         <translation>essentiell</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="128"/>
+        <location filename="_nafhelp_translationsstrings.py" line="120"/>
         <source>Expected</source>
         <translation>erwartet</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="129"/>
+        <location filename="_nafhelp_translationsstrings.py" line="121"/>
         <source>Desired</source>
         <translation>gewünscht</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="130"/>
+        <location filename="_nafhelp_translationsstrings.py" line="122"/>
         <source>Optional</source>
         <translation>optional</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="131"/>
+        <location filename="_nafhelp_translationsstrings.py" line="123"/>
         <source>Functional</source>
         <translation>Funktionale Anforderung</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="132"/>
+        <location filename="_nafhelp_translationsstrings.py" line="124"/>
         <source>Reliability</source>
         <translation>Zuverlässigkeit</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="133"/>
+        <location filename="_nafhelp_translationsstrings.py" line="125"/>
         <source>Up-time</source>
         <translation>Verfügbarkeit</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="134"/>
+        <location filename="_nafhelp_translationsstrings.py" line="126"/>
         <source>Safety</source>
         <translation>Safety</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="135"/>
+        <location filename="_nafhelp_translationsstrings.py" line="127"/>
         <source>Security</source>
         <translation>Security</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="136"/>
+        <location filename="_nafhelp_translationsstrings.py" line="128"/>
         <source>Performance</source>
         <translation>Performanz</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="137"/>
+        <location filename="_nafhelp_translationsstrings.py" line="129"/>
         <source>Scalability</source>
         <translation>Skalierbarkeit</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="138"/>
+        <location filename="_nafhelp_translationsstrings.py" line="130"/>
         <source>Maintainability</source>
         <translation>Wartbarkeit</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="139"/>
+        <location filename="_nafhelp_translationsstrings.py" line="131"/>
         <source>Upgradability</source>
         <translation>Upgradebar</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="140"/>
+        <location filename="_nafhelp_translationsstrings.py" line="132"/>
         <source>Supportability</source>
         <translation>Supportbar</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="141"/>
+        <location filename="_nafhelp_translationsstrings.py" line="133"/>
         <source>Operability</source>
         <translation>Betreibbarkeit</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="142"/>
+        <location filename="_nafhelp_translationsstrings.py" line="134"/>
         <source>Business life-cycle</source>
         <translation>Geschäfts-Lebenszyklus</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="143"/>
+        <location filename="_nafhelp_translationsstrings.py" line="135"/>
         <source>System hardware</source>
         <translation>Systemhardware</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="144"/>
+        <location filename="_nafhelp_translationsstrings.py" line="136"/>
         <source>System software</source>
         <translation>Systemsoftware</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="145"/>
+        <location filename="_nafhelp_translationsstrings.py" line="137"/>
         <source>API</source>
         <translation>API</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="146"/>
+        <location filename="_nafhelp_translationsstrings.py" line="138"/>
         <source>Data import/export</source>
         <translation>Datenim-/export</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="147"/>
+        <location filename="_nafhelp_translationsstrings.py" line="139"/>
         <source>Other</source>
         <translation>Andere</translation>
     </message>
@@ -1908,12 +1908,12 @@ Eintrag wirklich löschen?</translation>
         <translation>sicher</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="122"/>
+        <location filename="_nafhelp_translationsstrings.py" line="109"/>
         <source>In discussion</source>
         <translation type="unfinished">in Diskussion</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="123"/>
+        <location filename="_nafhelp_translationsstrings.py" line="110"/>
         <source>Rejected</source>
         <translation type="unfinished">abgelehnt</translation>
     </message>
