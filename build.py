@@ -3,8 +3,8 @@ import subprocess, os, os.path, shutil, zipfile
 import _nafhelp_createtranslationsstrings
 
 
-PYTHON_SITE_PCKG = r"C:\Programme\Python25\Lib\site-packages"
-PYQTPATH = r"C:\Programme\Python25\Lib\site-packages\PyQt4"
+PYTHON_SITE_PCKG = r"C:\Python27\Lib\site-packages"
+PYQTPATH = r"C:\Python27\Lib\site-packages\PyQt4"
 
 UIC = PYQTPATH + r"\bin\pyuic4.bat"
 PYLUPDATE = PYQTPATH + r"\bin\pylupdate4.exe"
@@ -39,10 +39,10 @@ def build():
 def buildbin():
     subwcref()
     if 0:
-        subprocess.call('python %s\pyinstaller-1.4\Makespec.py --icon=icons/appicon.ico -w oaeditor.py' % PYTHON_SITE_PCKG)
-    subprocess.call('python %s\pyinstaller-1.4\Build.py oaeditor.spec' % PYTHON_SITE_PCKG)
+        subprocess.call('python %s\pyinstaller-1.5-rc1\Makespec.py --icon=icons/appicon.ico -w oaeditor.py' % PYTHON_SITE_PCKG)
+    subprocess.call('python %s\pyinstaller-1.5-rc1\Build.py oaeditor.spec' % PYTHON_SITE_PCKG)
     basename = 'openadams-win32-%s' % VERSION
-    subprocess.call('cd dist && zip -r %s.zip %s' % (basename, basename), shell=True)
+    subprocess.call(r'cd dist && C:\Programme\tools\gnuwin\bin\zip -r %s.zip %s' % (basename, basename), shell=True)
 
 def manifest():
     modules = SOURCES.split() + ['_naf_resources.py', '_naf_version.py']
@@ -57,7 +57,7 @@ def manifest():
 subwcref()
 from _naf_version import VERSION
 manifest()
-build()
+#build()
 buildbin()
     
     
