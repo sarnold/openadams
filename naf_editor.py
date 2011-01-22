@@ -339,6 +339,11 @@ class cEditWin(QtGui.QDialog):
         self.hide()
 
     def reject(self):
+        try:
+            self.editView.currentWidget().cancel()
+        except AttributeError:
+            # cancel is not implemented for all widgets, ignorable exception
+            pass
         self.lastGeometry = self.geometry()
         self.hide()
 
