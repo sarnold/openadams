@@ -1,4 +1,28 @@
 ====================================
+openADAMS Release 0.2.1 (2011-01-22)
+====================================
+
+New features
+~~~~~~~~~~~~
+None
+
+Changes
+~~~~~~~
+naf_exportxml.py, added some debug output if xml parser fails
+
+Bug fixes
+~~~~~~~~~
+#3163190, edit HTML behavior when canceling editor
+
+Known issues
+~~~~~~~~~~~~
+* oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash
+  of the application
+* Documentation is missing
+* oaxml2db.py: experimental
+
+
+====================================
 openADAMS Release 0.2.0 (2010-08-08)
 ====================================
 
