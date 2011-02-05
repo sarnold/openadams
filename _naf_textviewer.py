@@ -20,7 +20,7 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-import operator
+import operator,  logging,  webbrowser
 from PyQt4 import QtCore, QtGui
 import _naf_database as nafdb
 import _naf_tableview
@@ -40,6 +40,23 @@ class cTextEditor(QtGui.QTextEdit):
         self.defaultTypewriteFontName = "Courier"
         defaultFont = QtGui.QFont(self.defaultFontName, self.defaultFontSize)
         self.setFont(defaultFont)
+        flags = self.textInteractionFlags()
+        self.setTextInteractionFlags(flags | QtCore.Qt.TextBrowserInteraction)
+        self.openLinkAction = QtGui.QAction(self.tr("Open link in browser"), self, enabled=True, checkable=False,
+            statusTip=self.tr("Open link in default browser"), triggered=self.openLink)
+        
+    def contextMenuEvent(self,  event):
+        textCursor = self.textCursor()
+        charFormat = textCursor.charFormat()
+        self.openLinkAction.setEnabled(charFormat.isAnchor())
+        menu = self.createStandardContextMenu()
+        menu.addAction(self.openLinkAction )
+        menu.exec_(event.globalPos())
+        
+    def openLink(self,  e):
+        textCursor = self.textCursor()
+        charFormat = textCursor.charFormat()
+        webbrowser.open(charFormat.anchorHref(),  new=2)
 
     def keyReleaseEvent(self, e):
         if e.key() != int(QtCore.Qt.Key_Insert):
@@ -223,6 +240,7 @@ class cTextEditWidget(QtGui.QWidget):
         self.textEdit = cTextEditor()
         self.textEdit.copyAvailable.connect(self.cutAction.setEnabled)
         self.textEdit.copyAvailable.connect(self.copyAction.setEnabled)
+        self.textEdit.copyAvailable.connect(self.editLinkAction.setEnabled)
         self.textEdit.redoAvailable.connect(self.redoAction.setEnabled)
         self.textEdit.undoAvailable.connect(self.undoAction.setEnabled)
         self.textEdit.overwriteSignal.connect(self.overwriteMode)
@@ -293,6 +311,10 @@ class cTextEditWidget(QtGui.QWidget):
             triggered=self.selectAll)
         self.editHtmlAction = QtGui.QAction(self.tr("Edit Html"), self, enabled=True, checkable=True,
             statusTip=self.tr("Edit raw HTML"), triggered=self.editHtml)
+        self.editLinkAction = QtGui.QAction(self.tr("Edit Link"), self, enabled=False, checkable=False,
+            statusTip=self.tr("Edit or insert a link"), triggered=self.editLink)
+        self.deleteLinkAction = QtGui.QAction(self.tr("Delete Link"), self, enabled=False, checkable=False,
+            statusTip=self.tr("Delete a link"), triggered=self.deleteLink)
 
         self.imageGroup = QtGui.QActionGroup(self, enabled=True)
         self.insertImageAction = QtGui.QAction(self.tr("Insert ..."), self.imageGroup, checkable=False,
@@ -426,7 +448,7 @@ class cTextEditWidget(QtGui.QWidget):
         editMenu = self.menuBar.addMenu(self.tr('&Edit'))
         actions = (self.undoAction, self.redoAction, '|', self.cutAction,
             self.copyAction, self.pasteAction, self.deleteAction, '|',
-            self.selectAllAction, '|', self.editHtmlAction)
+            self.selectAllAction, '|', self.editLinkAction, self.deleteLinkAction, '|',  self.editHtmlAction)
         self.populateMenu(editMenu, actions)
 
         searchMenu = self.menuBar.addMenu(self.tr('&Search'))
@@ -656,7 +678,12 @@ class cTextEditWidget(QtGui.QWidget):
         self.textEdit.setCursorWidth(width)
 
     def copyAvailable(self, isCopyAvailable):
-        textCursor = self.textEdit.textCursor()
+        if isCopyAvailable:
+            textCursor = self.textEdit.textCursor()
+            cf = textCursor.charFormat()
+            isAnchor = cf.isAnchor()
+            self.deleteLinkAction.setEnabled(isAnchor)
+            logging.debug("isAnchor() return %d" % cf.isAnchor() )
         self.deleteAction.setEnabled(isCopyAvailable)
 
     def currentCharFormatChanged(self, textCharFormat):
@@ -850,3 +877,27 @@ class cTextEditWidget(QtGui.QWidget):
             flags = flags & ~QtGui.QTextOption.ShowLineAndParagraphSeparators
         textOption.setFlags(flags)
         self.textEdit.document().setDefaultTextOption(textOption)
+        
+    def editLink(self):
+        textCursor = self.textEdit.textCursor()
+        charFormat = textCursor.charFormat()
+        (url, ok) = QtGui.QInputDialog.getText(self, self.tr("Enter URL"), self.tr("URL"), text=charFormat.anchorHref())
+        if not ok: 
+            return
+        charFormat.setAnchorHref(url)
+        charFormat.setAnchor(True)
+        # despite of setAnchor(True) formatting of the link text seemingly has to be done manually
+        charFormat.setFontUnderline(True)
+        textCursor.setCharFormat(charFormat)
+        self.textEdit.setTextCursor(textCursor)
+        self.textEdit.setTextColor(QtCore.Qt.GlobalColor(QtCore.Qt.blue))
+        
+    def deleteLink(self):
+        textCursor = self.textEdit.textCursor()
+        charFormat = textCursor.charFormat()
+        charFormat.setAnchor(False)
+        # despite of setAnchor(False) unformatting of the link text seemingly has to be done manually
+        charFormat.setFontUnderline(False)
+        textCursor.setCharFormat(charFormat)
+        self.textEdit.setTextCursor(textCursor)
+        self.textEdit.setTextColor(QtCore.Qt.GlobalColor(QtCore.Qt.black))
