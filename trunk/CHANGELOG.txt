@@ -1,4 +1,29 @@
 ====================================
+openADAMS Release 0.x.x (2011-02-xx)
+====================================
+
+New features
+~~~~~~~~~~~~
+* Text editor now supports links (Menu Edit/Edit link, Edit/Delete Link)
+* Support for opening database files by drag'n drop
+
+Changes
+~~~~~~~
+None
+
+Bug fixes
+~~~~~~~~~
+* oareport.xsl: removed whitespaces from links
+
+Known issues
+~~~~~~~~~~~~
+* oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash
+  of the application
+* Documentation is missing
+* oaxml2db.py: experimental
+
+
+====================================
 openADAMS Release 0.2.1 (2011-01-22)
 ====================================
 

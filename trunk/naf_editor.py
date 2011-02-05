@@ -494,7 +494,7 @@ class cMainWin(QtGui.QMainWindow):
         self.filterIndicator.setPixmap(QtGui.QPixmap(":/icons/filter.png"))
         self.filterIndicator.setEnabled(False)
         self.statusBar().addWidget(self.filterIndicator)
-
+        
         settings = QtCore.QSettings()
         self.restoreGeometry(settings.value("mainwindow/geometry").toByteArray());
         self.restoreState(settings.value("mainwindow/windowState").toByteArray());
@@ -528,6 +528,8 @@ class cMainWin(QtGui.QMainWindow):
 
         self.editDialog = cEditWin(self, QtCore.Qt.WindowMaximizeButtonHint)
         self.editDialog.lastGeometry = None
+        
+        self.setAcceptDrops(True)
 
         self.mainController = cMainController(self)
         for view in self.views:
@@ -817,7 +819,20 @@ class cMainWin(QtGui.QMainWindow):
         msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
         msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
         msgBox.exec_()
+        
+    def dragEnterEvent(self, event):
+        if (event.mimeData().hasFormat("text/uri-list")):
+            event.acceptProposedAction()
 
+    def dropEvent(self, event):
+        urls = event.mimeData().urls()
+        if (len(urls) <= 0):
+            return
+        fileName = str(urls[0].toLocalFile())
+        if (len(fileName) <= 0):
+            return
+        self.openDatabase(fileName)
+         
 
 def start():
     dbName = None
@@ -833,8 +848,8 @@ def start():
 if __name__ == '__main__':
     logFormat = '%(module)s:%(lineno)s (%(funcName)s): %(message)s'
     level=logging.NOTSET
-    ##level=logging.DEBUG
-    ##level=logging.INFO,
+    level=logging.DEBUG
+    ##level=logging.INFO
     ##level=logging.ERROR,
     logging.basicConfig(format=logFormat, level=level,
                         ##, filemode='w', filename='myapp.log'

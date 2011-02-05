@@ -155,9 +155,7 @@ function expandDynSections()
     <xsl:param name="prefix" />
     <xsl:param name="id" />
     <li><a>
-        <xsl:attribute name="href">
-        #<xsl:value-of select="$prefix" />-<xsl:value-of select="normalize-space($id)"/>
-        </xsl:attribute>        
+        <xsl:attribute name="href">#<xsl:value-of select="$prefix" />-<xsl:value-of select="normalize-space($id)"/></xsl:attribute>        
         <xsl:value-of select="$prefix" />-<xsl:value-of select="normalize-space($id)"/>:
         <xsl:value-of select="$title"/>
     </a></li>
