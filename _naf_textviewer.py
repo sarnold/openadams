@@ -42,30 +42,51 @@ class cTextEditor(QtGui.QTextEdit):
         self.setFont(defaultFont)
         flags = self.textInteractionFlags()
         self.setTextInteractionFlags(flags | QtCore.Qt.TextBrowserInteraction)
+        self.setMouseTracking(True)
         self.openLinkAction = QtGui.QAction(self.tr("Open link in browser"), self, enabled=True, checkable=False,
             statusTip=self.tr("Open link in default browser"), triggered=self.openLink)
+        
         
     def contextMenuEvent(self,  event):
         textCursor = self.textCursor()
         charFormat = textCursor.charFormat()
         self.openLinkAction.setEnabled(charFormat.isAnchor())
         menu = self.createStandardContextMenu()
-        menu.addAction(self.openLinkAction )
+        try:
+            # insert openLinkAction after the copy link menu entry
+            menu.insertAction(menu.actions()[6],  self.openLinkAction )
+        except IndexError:
+            menu.addAction(self.openLinkAction)
+        if hasattr(self,  'pastePlainTextAction'):
+            try:
+                menu.insertAction(menu.actions()[8],  self.pastePlainTextAction)
+            except IndexError:
+                menu.addAction(self.pastePlainTextAction)
         menu.exec_(event.globalPos())
         
-    def openLink(self,  e):
-        textCursor = self.textCursor()
-        charFormat = textCursor.charFormat()
-        webbrowser.open(charFormat.anchorHref(),  new=2)
 
     def keyReleaseEvent(self, e):
         if e.key() != int(QtCore.Qt.Key_Insert):
             super(cTextEditor, self).keyReleaseEvent(e)
         else:
             self.overwriteSignal.emit()
+            
+            
+    def mouseMoveEvent(self,  e):
+        anchor = self.anchorAt(e.pos())
+        QtGui.QToolTip.showText(e.globalPos(),  anchor,  self)
+        super(cTextEditor, self).mouseMoveEvent(e)
+
+
+    def openLink(self,  e):
+        textCursor = self.textCursor()
+        charFormat = textCursor.charFormat()
+        webbrowser.open(charFormat.anchorHref(),  new=2)
+
 
     def setImageProvider(self, imageProvider):
         self.imageProvider = imageProvider
+
 
     def loadResource(self, type_, url):
         if type_ != QtGui.QTextDocument.ImageResource:
@@ -248,6 +269,7 @@ class cTextEditWidget(QtGui.QWidget):
         self.textEdit.currentCharFormatChanged.connect(self.currentCharFormatChanged)
         self.textEdit.cursorPositionChanged.connect(self.cursorPositionChanged)
         self.textEdit.setImageProvider(nafdb.getImageForId)
+        self.textEdit.pastePlainTextAction = self.pastePlainTextAction
         self.mapper = cDataMapper(self.textEdit, self._setWindowTitle)
 
         self.setupGui()
@@ -311,10 +333,13 @@ class cTextEditWidget(QtGui.QWidget):
             triggered=self.selectAll)
         self.editHtmlAction = QtGui.QAction(self.tr("Edit Html"), self, enabled=True, checkable=True,
             statusTip=self.tr("Edit raw HTML"), triggered=self.editHtml)
-        self.editLinkAction = QtGui.QAction(self.tr("Edit Link"), self, enabled=False, checkable=False,
+        self.editLinkAction = QtGui.QAction(self.tr("Create/Edit Link"), self, enabled=False, checkable=False,
             statusTip=self.tr("Edit or insert a link"), triggered=self.editLink)
         self.deleteLinkAction = QtGui.QAction(self.tr("Delete Link"), self, enabled=False, checkable=False,
             statusTip=self.tr("Delete a link"), triggered=self.deleteLink)
+        
+        self.pastePlainTextAction = QtGui.QAction(self.tr("Paste plain text"), self, enabled=True, checkable=False,
+            statusTip=self.tr("Open link in default browser"), triggered=self.pastePlainText)
 
         self.imageGroup = QtGui.QActionGroup(self, enabled=True)
         self.insertImageAction = QtGui.QAction(self.tr("Insert ..."), self.imageGroup, checkable=False,
@@ -447,7 +472,7 @@ class cTextEditWidget(QtGui.QWidget):
     def setupMenu(self):
         editMenu = self.menuBar.addMenu(self.tr('&Edit'))
         actions = (self.undoAction, self.redoAction, '|', self.cutAction,
-            self.copyAction, self.pasteAction, self.deleteAction, '|',
+            self.copyAction, self.pasteAction, self.pastePlainTextAction,   self.deleteAction, '|',
             self.selectAllAction, '|', self.editLinkAction, self.deleteLinkAction, '|',  self.editHtmlAction)
         self.populateMenu(editMenu, actions)
 
@@ -683,7 +708,6 @@ class cTextEditWidget(QtGui.QWidget):
             cf = textCursor.charFormat()
             isAnchor = cf.isAnchor()
             self.deleteLinkAction.setEnabled(isAnchor)
-            logging.debug("isAnchor() return %d" % cf.isAnchor() )
         self.deleteAction.setEnabled(isCopyAvailable)
 
     def currentCharFormatChanged(self, textCharFormat):
@@ -885,19 +909,31 @@ class cTextEditWidget(QtGui.QWidget):
         if not ok: 
             return
         charFormat.setAnchorHref(url)
-        charFormat.setAnchor(True)
+        charFormat.setAnchor(True)    
         # despite of setAnchor(True) formatting of the link text seemingly has to be done manually
+        # see http://bugreports.qt.nokia.com/browse/QTBUG-1814?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel#issue-tabs
+        # reading and writing HTML content with  self.textEdit.setHtml(self.textEdit.toHtml()) also works, but for this the cursor will
+        # be set to start of text which may be inconvinient.
         charFormat.setFontUnderline(True)
         textCursor.setCharFormat(charFormat)
         self.textEdit.setTextCursor(textCursor)
         self.textEdit.setTextColor(QtCore.Qt.GlobalColor(QtCore.Qt.blue))
-        
+    
     def deleteLink(self):
         textCursor = self.textEdit.textCursor()
         charFormat = textCursor.charFormat()
         charFormat.setAnchor(False)
         # despite of setAnchor(False) unformatting of the link text seemingly has to be done manually
+        # see http://bugreports.qt.nokia.com/browse/QTBUG-1814?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel#issue-tabs
+        # reading and writing HTML content with  self.textEdit.setHtml(self.textEdit.toHtml()) also works, but for this the cursor will
+        # be set to start of text which may be inconvinient.
         charFormat.setFontUnderline(False)
         textCursor.setCharFormat(charFormat)
         self.textEdit.setTextCursor(textCursor)
         self.textEdit.setTextColor(QtCore.Qt.GlobalColor(QtCore.Qt.black))
+        
+        
+    def pastePlainText(self,  e):
+        clipboard = QtGui.QApplication.clipboard()
+        self.textEdit.insertPlainText(clipboard.text())
+
