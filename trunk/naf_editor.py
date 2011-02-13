@@ -834,29 +834,32 @@ class cMainWin(QtGui.QMainWindow):
         self.openDatabase(fileName)
          
 
-def start():
+def start(level=logging.CRITICAL):
     dbName = None
     for i in range(1, len(sys.argv)):
         if not sys.argv[i].startswith('-'):
             dbName = sys.argv[i].decode(sys.getfilesystemencoding())
             break;
-    mainwin = cMainWin(dbName)
-    mainwin.show()
-    sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
+        else:
+            try:
+                i = ['-DEBUG',  '-INFO',  '-ERROR'].index(sys.argv[i])
+                level=[logging.DEBUG,  logging.INFO,  logging.ERROR][i]
+            except ValueError:
+                #ignore unknown args
+                pass
     logFormat = '%(module)s:%(lineno)s (%(funcName)s): %(message)s'
-    level=logging.NOTSET
-    level=logging.DEBUG
-    ##level=logging.INFO
-    ##level=logging.ERROR,
     logging.basicConfig(format=logFormat, level=level,
                         ##, filemode='w', filename='myapp.log'
                         )
     logging.debug("logging.debug is on")
     logging.info("logging.info is on")
     logging.error("logging.error is on")
+    mainwin = cMainWin(dbName)
+    mainwin.show()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
     start()
 
 # TODO: show active filters in status line

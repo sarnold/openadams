@@ -34,7 +34,8 @@ along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
       <head>
         <meta content="text/xhtml; charset=UTF-8" http-equiv="content-type"/>
         <title>openADAMS Report</title>
-        <link rel="stylesheet" type="text/css" href="oareport.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="oareport.css"/>
+        <link rel="stylesheet" type="text/css" media="print" href="oaprintreport.css"/>
       </head>
       <body>
         <script type="text/javascript">
