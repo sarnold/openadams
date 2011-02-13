@@ -4,8 +4,12 @@ openADAMS Release 0.x.x (2011-02-xx)
 
 New features
 ~~~~~~~~~~~~
-* Text editor now supports links (Menu Edit/Edit link, Edit/Delete Link)
+* Text editor now supports links (Menu Edit/Edit link, Edit/Delete Link, ...)
+* Text editor has new menu item to insert plain text
 * Support for opening database files by drag'n drop
+* Command line switches '-DEBUG',  '-INFO',  '-ERROR' for different log levels
+* oareport.xsl now includes oareport.css for screen output and
+  oaprintreport.css for print output
 
 Changes
 ~~~~~~~
