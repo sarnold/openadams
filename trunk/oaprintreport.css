@@ -1,5 +1,5 @@
 /*
-Copyright 2008 Achim Köhler
+Copyright 2010 Achim Köhler
 
 This file is part of openADAMS.
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with AFMS.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* $Id: oareport.css 8 2010-08-08 12:56:52Z achimk $ */
+/* $Id$ */
 
 
 body, th, td  {
  font-family: Verdana, Helvetica, Arial, sans-serif;
- font-size: 100.01%;
+ font-size: 10pt;
 }
 
 div.dynheader 
