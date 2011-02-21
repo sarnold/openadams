@@ -1,11 +1,11 @@
-import re,  os.path
+import re,  os.path, subprocess, codecs
 import _naf_database as nafdb
 
     
 class cHierarchicExporter(object):
     def __init__(self,  databaseName,  args):
         self.databaseName = databaseName
-        self.getItemForId = nafdb.getRawItemForId
+        self.getItemForId = nafdb.getItemForId
         self.args = args
         
     def _setUp(self):
@@ -83,7 +83,6 @@ class cHierarchicExporter(object):
             imgType = self.getItemForId('images', imgId, 'format')
             prefix = PREFIX[nafdb.TYPE_IMAGE]
             return 'img src="%s_%d.%s"' % (prefix,  imgId,  imgType)
-            
         mo = self.htmlBodyPattern.search(s)
         if not mo:
             return s
@@ -113,19 +112,20 @@ PREFIX = {
     }
 
 
-class cQtHelpExporterArgs(object):
-    def __init__(self,  projectname=None,  projectfolder=None,  title=None,  language=None,  cssfile=None):
+class cChmExporterArgs(object):
+    def __init__(self,  projectname=None,  projectfolder=None,  title=None,  language=None,  cssfile=None, hhclocation=None):
         self.language = language or '0x809 Englisch'
         self.cssfile = cssfile or 'oareport.css'
         self.projectname = projectname or 'oareport'
         self.projectfolder = projectfolder or '.'
         self.title = title or 'openADAMS Report'
+        self.hhclocation = hhclocation or "hhc.exe"
         
     def __getitem__(self, key):
        return getattr(self,  key) 
  
     
-class cQtHelpExporter(cHierarchicExporter):
+class cChmExporter(cHierarchicExporter):
     
     def setUp(self):
         self.indent = -1
@@ -153,42 +153,44 @@ class cQtHelpExporter(cHierarchicExporter):
                 [FILES]
                 """ % self.args
         fname = os.path.join("%(projectfolder)s" % args,  "%(projectname)s.hhp" % args)
-        self.fpHhp = open(fname,  "w")
+        self.fpHhp = codecs.open(fname, "w", 'ascii')
         self.fpHhp.write(self.trimString(t))
         
         t = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
                     "http://www.w3.org/TR/html4/strict.dtd">
                 <html>
                 <head>
-                <meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+                <meta name="GENERATOR" content="naf_exportchm">
                 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
                 <!-- Sitemap 1.0 -->
                 </head><body>'''
         fname = os.path.join("%(projectfolder)s" % args,  "%(projectname)s.hhc" % args)
-        self.fpToc = open(fname,  "w")
+        self.fpToc = codecs.open(fname,  "w", 'latin-1')
         self.fpToc.write(self.trimString(t))
 
     def tearDown(self):
-        #self.fp.write('\n'.join(self._fileList(self.tocnode.nodes[0])))
         self.fpHhp.write('\n[INFOTYPES]\n\n')
         self.fpHhp.close()
         self.fpToc.write('\ul></ul></body></html>\n')
         self.fpToc.close()
+        #TODO: make me run
+        ##subprocess.check_output(['cmd', '/C', self.args.hhclocation, self.fpHhp.name])
+
         
     def renderItem(self, table, itemid, nodeName='item',  relatedItems=[]):
         prefix = PREFIX[table.typeid]
         label = '%s_%05d' % (prefix ,  itemid)
         fname = os.path.join("%(projectfolder)s" % args,  "%s.html" % label)
-        fp = open(fname,  'w')
+        fp = codecs.open(fname,  'w', 'utf-8')
         t = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
                     "http://www.w3.org/TR/html4/strict.dtd">
                     <html>
                     <head>
                     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
                     <title>%s</title>
-                    <link rel="stylesheet" type="text/css" media="screen" href="oareport.css">
+                    <link rel="stylesheet" type="text/css" media="screen" href="%s">
                     </head>
-                    <body>""" % label
+                    <body>""" % (label, self.args.cssfile)
         fp.write(self.trimString(t))
         fp.write(self.renderers[table.typeid](table, itemid, relatedItems))
         fp.write('</body>\n</html>')
@@ -222,6 +224,13 @@ class cQtHelpExporter(cHierarchicExporter):
         """ % (title, label,  imageId))            
         return
     
+    def renderKeyValuePairs(self, keys, values):
+        s = ['<table class="keyvalue">']
+        for key, value in zip(keys, values):
+            value = value or '&mdash;'
+            s.append('<tr>\n<td>\n%s\n</td>\n<td>%s</td>\n</tr>' % (key, value))
+        return '\n'.join(s)
+    
     def getHeadline(self, table, itemid, tag='h1', withanchor=False):
         id = unicode(self.getItemForId(table.name, itemid, 'id'))
         title = unicode(self.getItemForId(table.name, itemid, 'title'))
@@ -229,7 +238,7 @@ class cQtHelpExporter(cHierarchicExporter):
         dict = {'tag':tag, 'prefix':prefix, 'id': int(id), 'title':title}
         format = ((
                    "<%(tag)s class='%(prefix)s'>%(prefix)s-%(id)s: %(title)s</%(tag)s>",   # withanchor=False, isFolder = False
-                   "<%(tag)s class='%(prefix)s'>%(title)s</%(tag)s>"),                                # withanchor=False, isFolder = True
+                   "<%(tag)s class='%(prefix)s'>%(title)s</%(tag)s>"),                     # withanchor=False, isFolder = True
                    (
                    "<%(tag)s class='%(prefix)s'><a href='%(prefix)s_%(id)05d.html'>%(prefix)s-%(id)s: %(title)s</a></%(tag)s>",     # withanchor=True, isFolder = False
                    "<%(tag)s class='%(prefix)s'><a href='%(prefix)s_%(id)05d.html'>%(title)s</a></%(tag)s>",                                   # withanchor=True, isFolder = True
@@ -249,40 +258,77 @@ class cQtHelpExporter(cHierarchicExporter):
         return '\n'.join(s)
     
     def renderRequirement(self, table, itemid, relatedItems): 
-        s = self.getHeadline(table, itemid)
-        return s
+        s = [self.getHeadline(table, itemid)]
+        for label, field  in zip(['Description', 'Rationale'], ['description', 'rationale']):
+            s.append('<h2>%s</h2>' % label)
+            s.append('<div class="user">')
+            s.append(self.extractHtmlBody(unicode(self.getItemForId(table.name, itemid, field))))
+            s.append('</div>')
+        fields = ['origin', 'priority', 'status', 'complexity', 'assigned', 'effort', 'category', 
+            'keywords', 'risk', 'testability', 'baseline']
+        keywords = ['Origin','Priority', 'Status', 'Complexity', 'Assigned', 'Effort', 'Category', 
+            'Keywords', 'Risk', 'Testability', 'Baseline']
+        values = [self.getItemForId(table.name, itemid, field) for field in fields]
+        s.append(self.renderKeyValuePairs(keywords, values))
+        return '\n'.join(s)
         
-    def renderUsecase(self, table, itemid, relatedItems): return ''
-    
+    def renderUsecase(self, table, itemid, relatedItems): 
+        s = [self.getHeadline(table, itemid)]
+        return '\n'.join(s)
+
     def renderImage(self, table, itemid, relatedItems): 
         format = self.getItemForId(table.name, itemid, 'format')
+        source = self.getItemForId(table.name, itemid, 'source')
+        keywords = self.getItemForId(table.name, itemid, 'keywords')
+        data = self.getItemForId(table.name, itemid, 'image')        
         prefix = PREFIX[nafdb.TYPE_IMAGE]
         fname = '%s_%d.%s' % (prefix,  itemid,  format)
         s = [self.getHeadline(table, itemid)]
-        data = self.getItemForId(table.name, itemid, 'image')
+        s.append('<div class="user">')
         s.append(self.extractHtmlBody(unicode(self.getItemForId(table.name, itemid, 'description'))))
+        s.append('</div>')
         s.append('<p><img src="%s"/></p>' % fname)
-        source = self.getItemForId(table.name, itemid, 'source')
-        keywords = self.getItemForId(table.name, itemid, 'keywords')
+        s.append(self.renderKeyValuePairs(['Source', 'Keywords'], [source, keywords]))
         fname = os.path.join("%(projectfolder)s" % args,  fname)
         fp = open(fname,  'wb')
         fp.write(data)
         fp.close()
         return '\n'.join(s)
     
-    def renderFeature(self, table, itemid, relatedItems): return ''
-    def renderTestcase(self, table, itemid, relatedItems): return ''
-    def renderTestsuite(self, table, itemid, relatedItems): return ''
-    
+    def renderFeature(self, table, itemid, relatedItems):
+        s = [self.getHeadline(table, itemid)]
+        return '\n'.join(s)
+
+    def renderTestcase(self, table, itemid, relatedItems): 
+        s = [self.getHeadline(table, itemid)]
+        return '\n'.join(s)
+
+    def renderTestsuite(self, table, itemid, relatedItems): 
+        s = [self.getHeadline(table, itemid)]
+        return '\n'.join(s)
+
     def renderSimplesection(self, table, itemid, relatedItems): 
         s = [self.getHeadline(table, itemid)]
+        s.append('<div class="user">')
         s.append(self.extractHtmlBody(unicode(self.getItemForId(table.name, itemid, 'content'))))
+        s.append('</div>')
+        keywords = self.getItemForId(table.name, itemid, 'keywords')
+        s.append(self.renderKeyValuePairs(['Keywords',], [keywords,]))
         return '\n'.join(s)
     
-    def renderComponent(self, table, itemid, relatedItems): return ''
-    def renderChange(self, table, itemid, relatedItems): return ''
-    
-args = cQtHelpExporterArgs(projectname='sample',  projectfolder='htmlhelp')
+    def renderComponent(self, table, itemid, relatedItems): 
+        s = [self.getHeadline(table, itemid)]
+        return '\n'.join(s)
+        
+    def renderChange(self, table, itemid, relatedItems): 
+        s = [self.getHeadline(table, itemid)]
+        return '\n'.join(s)
+        
+args = cChmExporterArgs(projectname='sample',  
+    projectfolder='htmlhelp', 
+    hhclocation=r'c:\Programme\HTMLHE~1\hhc.exe',
+    cssfile="oachmreport.css")
 databaseName = "test.db"
-exporter = cQtHelpExporter(databaseName,  args)
+databaseName = "ESR_660191_SY_0001_Systemanforderungsspezifikation.db"
+exporter = cChmExporter(databaseName,  args)
 exporter.run()
