@@ -40,6 +40,11 @@ TYPE_CHANGE = 10
 DEFAULT_VIEW_POS = sys.maxint
 DATABASE_VERSION = (2,)
 
+VIEW_NONE = 0
+VIEW_SINGLE_LINE = 1
+VIEW_MULTI_LINE = 2
+VIEW_SPECIAL = 3
+
 connection = None
 currentFileName = None
 
@@ -59,7 +64,7 @@ class cTable(object):
 
 
 class cColumn(object):
-    def __init__(self, name, _type, displayname, lookupTable=None, isFilterable=True, historyTable=None, default=None):
+    def __init__(self, name, _type, displayname, lookupTable=None, isFilterable=True, historyTable=None, default=None, view=VIEW_NONE):
         self.name = name
         self._type = _type
         self.displayname = QtCore.QCoreApplication.translate('cColumn', displayname)
@@ -67,131 +72,132 @@ class cColumn(object):
         self.isFilterable = isFilterable
         self.default = default
         self.historyTable = historyTable
+        self.view = view
 
-
+        
 tables = [
     cTable(name='folders', isFilterable=False, displayname="Folders", typeid=TYPE_FOLDER, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS),
         ]),
     cTable(name='requirements', isFilterable=True, displayname="Requirements", typeid=TYPE_REQUIREMENT, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0),
-            cColumn(name='status', _type= 'integer', displayname='Status', lookupTable='statusLUT', default=0),
-            cColumn(name='complexity', _type= 'integer', displayname='Complexity', lookupTable='complexityLUT', default=0),
-            cColumn(name='assigned', _type= 'text', displayname='Assigned'),
-            cColumn(name='effort', _type= 'integer', displayname='Effort', lookupTable='effortLUT', default=0),
-            cColumn(name='category', _type= 'integer', displayname='Category', lookupTable='categoryLUT', default=0),
-            cColumn(name='origin', _type= 'text', displayname='Origin', default="''"),
-            cColumn(name='rationale', _type= 'text', displayname='Rationale', default="''"),
-            cColumn(name='description', _type= 'text', displayname='Description', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
-            cColumn(name='risk', _type='integer', displayname='Risk', lookupTable='riskLUT', default=0),
-            cColumn(name='testability', _type= 'text', displayname='Testability', historyTable='testability_view', default="''"),
-            cColumn(name='baseline', _type= 'text', displayname='Baseline', historyTable='baseline_view', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='status', _type= 'integer', displayname='Status', lookupTable='statusLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='complexity', _type= 'integer', displayname='Complexity', lookupTable='complexityLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='assigned', _type= 'text', displayname='Assigned', view=VIEW_SINGLE_LINE),
+            cColumn(name='effort', _type= 'integer', displayname='Effort', lookupTable='effortLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='category', _type= 'integer', displayname='Category', lookupTable='categoryLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='origin', _type= 'text', displayname='Origin', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='rationale', _type= 'text', displayname='Rationale', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='description', _type= 'text', displayname='Description', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='risk', _type='integer', displayname='Risk', lookupTable='riskLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='testability', _type= 'text', displayname='Testability', historyTable='testability_view', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='baseline', _type= 'text', displayname='Baseline', historyTable='baseline_view', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='usecases', isFilterable=True, displayname="Usecases", typeid=TYPE_USECASE, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0),
-            cColumn(name='usefrequency', _type='integer', displayname='Use frequency', lookupTable='usefrequencyLUT', default=0),
-            cColumn(name='actors', _type='text', displayname='Actors', default="''"),
-            cColumn(name='stakeholders', _type='text', displayname='Stakeholders', default="''"),
-            cColumn(name='prerequisites', _type='text', displayname='Prerequisites', default="''"),
-            cColumn(name='mainscenario', _type='text', displayname='Main scenario', default="''"),
-            cColumn(name='altscenario', _type='text', displayname='Alt scenario', default="''"),
-            cColumn(name='notes', _type='text', displayname='Notes', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='usefrequency', _type='integer', displayname='Use frequency', lookupTable='usefrequencyLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='actors', _type='text', displayname='Actors', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='stakeholders', _type='text', displayname='Stakeholders', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='prerequisites', _type='text', displayname='Prerequisites', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='mainscenario', _type='text', displayname='Main scenario', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='altscenario', _type='text', displayname='Alt scenario', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='notes', _type='text', displayname='Notes', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='testsuites', isFilterable=True,displayname="Testsuites", typeid=TYPE_TESTSUITE, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='description', _type='text', displayname='Description', default="''"),
-            cColumn(name='execorder', _type='text', displayname='Execution order', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='description', _type='text', displayname='Description', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='execorder', _type='text', displayname='Execution order', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='testcases', isFilterable=True, displayname="Testcases", typeid=TYPE_TESTCASE, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='purpose', _type='text', displayname='Purpose', default="''"),
-            cColumn(name='prerequisite', _type='text', displayname='Prerequisite', default="''"),
-            cColumn(name='testdata', _type='text', displayname='Test data', default="''"),
-            cColumn(name='steps', _type='text', displayname='Steps', default="''"),
-            cColumn(name='notes', _type='text', displayname='Notes', default="''"),
-            cColumn(name='scripturl', _type='text', displayname='Script URL', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
-            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='purpose', _type='text', displayname='Purpose', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='prerequisite', _type='text', displayname='Prerequisite', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='testdata', _type='text', displayname='Test data', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='steps', _type='text', displayname='Steps', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='notes', _type='text', displayname='Notes', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='scripturl', _type='text', displayname='Script URL', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0, view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='simplesections', isFilterable=True, displayname="Text sections", typeid=TYPE_SIMPLESECTION, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='content', _type='text', displayname='Content', default="''"),
-            cColumn(name='level', _type='integer', displayname='Level', default=0, isFilterable=False),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='content', _type='text', displayname='Content', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='level', _type='integer', displayname='Level', default=0, isFilterable=False, view=VIEW_NONE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='features', isFilterable=True,displayname="Features", typeid=TYPE_FEATURE, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0),
-            cColumn(name='status', _type='integer', displayname='Status', lookupTable='statusLUT', default=0),
-            cColumn(name='risk', _type='integer', displayname='Risk', lookupTable='riskLUT', default=0),
-            cColumn(name='description', _type='text', displayname='Description', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='priority', _type='integer', displayname='Priority', lookupTable='priorityLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='status', _type='integer', displayname='Status', lookupTable='statusLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='risk', _type='integer', displayname='Risk', lookupTable='riskLUT', default=0, view=VIEW_SINGLE_LINE),
+            cColumn(name='description', _type='text', displayname='Description', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
     ]),
     cTable(name='images', isFilterable=True, displayname="Images", typeid=TYPE_IMAGE, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='description', _type='text', displayname='Description', default="''"),
-            cColumn(name='image', _type='blob', displayname='Image'),
-            cColumn(name='source', _type='text', displayname='Image source', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
-            cColumn(name='format', _type= 'text', displayname='Format', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='description', _type='text', displayname='Description', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='image', _type='blob', displayname='Image', view=VIEW_SPECIAL),
+            cColumn(name='source', _type='text', displayname='Image source', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='format', _type= 'text', displayname='Format', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='components', isFilterable=True, displayname="Components", typeid=TYPE_COMPONENT, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID', isFilterable=False),
             cColumn(name='typeid', _type='integer', displayname='Type ID'),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='description', _type='text', displayname='Description', default="''"),
-            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''"),
-            cColumn(name='kind', _type= 'text', displayname='Kind', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='description', _type='text', displayname='Description', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='keywords', _type= 'text', displayname='Keywords', historyTable='keywords_view', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='kind', _type= 'text', displayname='Kind', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
     cTable(name='changes', isFilterable=False, displayname="Changes", typeid=TYPE_CHANGE, columns=
         [
             cColumn(name='id', _type='integer primary key', displayname='ID'),
             cColumn(name='typeid', _type='integer', displayname='Type ID', isFilterable=False),
-            cColumn(name='title', _type='text', displayname='Title', default="''"),
-            cColumn(name='description', _type='text', displayname='Description', default="''"),
-            cColumn(name='afid', _type='integer', displayname='Artefact ID'),
-            cColumn(name='changetype', _type='integer', displayname='Change type'),
-            cColumn(name='date', _type='text', displayname='Date', default="''"),
-            cColumn(name='user', _type='text', displayname='User', default="''"),
+            cColumn(name='title', _type='text', displayname='Title', default="''", view=VIEW_SPECIAL),
+            cColumn(name='description', _type='text', displayname='Description', default="''", view=VIEW_MULTI_LINE),
+            cColumn(name='afid', _type='integer', displayname='Artefact ID', view=VIEW_SINGLE_LINE),
+            cColumn(name='changetype', _type='integer', displayname='Change type', view=VIEW_SINGLE_LINE),
+            cColumn(name='date', _type='text', displayname='Date', default="''", view=VIEW_SINGLE_LINE),
+            cColumn(name='user', _type='text', displayname='User', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
         ]),
 ]
