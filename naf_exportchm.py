@@ -1,4 +1,5 @@
 import re,  os.path, subprocess, codecs
+import xml.sax.saxutils as saxutils
 import _naf_database as nafdb
 
     
@@ -131,15 +132,15 @@ class cChmExporter(cHierarchicExporter):
         self.indent = -1
         self.renderers = {
             nafdb.TYPE_FOLDER : self.renderFolder, 
-            nafdb.TYPE_REQUIREMENT : self.renderRequirement,
-            nafdb.TYPE_USECASE : self.renderUsecase,
+            nafdb.TYPE_REQUIREMENT : self.renderArtifact,
+            nafdb.TYPE_USECASE : self.renderArtifact,
             nafdb.TYPE_IMAGE : self.renderImage,
-            nafdb.TYPE_FEATURE : self.renderFeature,
-            nafdb.TYPE_TESTCASE : self.renderTestcase,
-            nafdb.TYPE_TESTSUITE : self.renderTestsuite,
-            nafdb.TYPE_SIMPLESECTION : self.renderSimplesection,
-            nafdb.TYPE_COMPONENT : self.renderComponent,
-            nafdb.TYPE_CHANGE : self.renderChange,
+            nafdb.TYPE_FEATURE : self.renderArtifact,
+            nafdb.TYPE_TESTCASE : self.renderArtifact,
+            nafdb.TYPE_TESTSUITE : self.renderArtifact,
+            nafdb.TYPE_SIMPLESECTION : self.renderArtifact,
+            nafdb.TYPE_COMPONENT : self.renderArtifact,
+            nafdb.TYPE_CHANGE : self.renderArtifact,
         }
         t = """[OPTIONS]
                 Compatibility=1.1 or later
@@ -171,11 +172,11 @@ class cChmExporter(cHierarchicExporter):
     def tearDown(self):
         self.fpHhp.write('\n[INFOTYPES]\n\n')
         self.fpHhp.close()
-        self.fpToc.write('\ul></ul></body></html>\n')
+        self.fpToc.write('</ul></body></html>\n')
         self.fpToc.close()
-        #TODO: make me run
-        ##subprocess.check_output(['cmd', '/C', self.args.hhclocation, self.fpHhp.name])
-
+        retcode = subprocess.call('%s %s' % (self.args.hhclocation, self.fpHhp.name), stdout=subprocess.PIPE)
+        if retcode != 1:
+            raise OSError("Return value %d" % retcode)
         
     def renderItem(self, table, itemid, nodeName='item',  relatedItems=[]):
         prefix = PREFIX[table.typeid]
@@ -202,14 +203,16 @@ class cChmExporter(cHierarchicExporter):
         # append file name to list of files in hhp file
         self.fpHhp.write('%s.html\n' % label)
         if indent > self.indent:
+            # increase of indent could only be done in steps of 1
             self.fpToc.write('<ul>')
         elif indent < self.indent:
-            self.fpToc.write('</ul>\n')
+            # decrease of indent could  be done in steps of 1, 2, ...
+            self.fpToc.write('</ul>\n' * (self.indent-indent))
         else:
             pass
         self.indent = indent
         id = unicode(self.getItemForId(table.name, itemid, 'id'))
-        title = unicode(self.getItemForId(table.name, itemid, 'title'))
+        title = saxutils.escape(unicode(self.getItemForId(table.name, itemid, 'title')))
         if table.typeid == nafdb.TYPE_FOLDER:
             imageId = 5
         else:
@@ -222,18 +225,18 @@ class cChmExporter(cHierarchicExporter):
             <param name="ImageNumber" value="%d">
             </object>
         """ % (title, label,  imageId))            
-        return
     
     def renderKeyValuePairs(self, keys, values):
         s = ['<table class="keyvalue">']
         for key, value in zip(keys, values):
-            value = value or '&mdash;'
+            value = saxutils.escape(value) or '&mdash;'
+            key = saxutils.escape(key)
             s.append('<tr>\n<td>\n%s\n</td>\n<td>%s</td>\n</tr>' % (key, value))
         return '\n'.join(s)
     
     def getHeadline(self, table, itemid, tag='h1', withanchor=False):
         id = unicode(self.getItemForId(table.name, itemid, 'id'))
-        title = unicode(self.getItemForId(table.name, itemid, 'title'))
+        title = saxutils.escape(unicode(self.getItemForId(table.name, itemid, 'title')))
         prefix = PREFIX[table.typeid]
         dict = {'tag':tag, 'prefix':prefix, 'id': int(id), 'title':title}
         format = ((
@@ -256,26 +259,31 @@ class cChmExporter(cHierarchicExporter):
                 s.append(self.getHeadline(relatedItem['table'], relatedItem['id'], 'li',  withanchor=True))
             s.append('</ul>')
         return '\n'.join(s)
-    
-    def renderRequirement(self, table, itemid, relatedItems): 
+        
+    def renderArtifact(self, table, itemid, relatedItems):
         s = [self.getHeadline(table, itemid)]
-        for label, field  in zip(['Description', 'Rationale'], ['description', 'rationale']):
-            s.append('<h2>%s</h2>' % label)
+        multilineFields = []
+        multilineHeadings = []
+        singlelineFields = []
+        singlelineHeadings = []
+        for column in table.columns:
+            if column.view == nafdb.VIEW_SINGLE_LINE:
+                singlelineFields.append(column.name)
+                singlelineHeadings.append(column.displayname)
+            elif column.view == nafdb.VIEW_MULTI_LINE:
+                multilineFields.append(column.name)
+                multilineHeadings.append(column.displayname)
+            else:
+                pass
+        for heading, field  in zip(multilineHeadings, multilineFields):
+            s.append('<h2>%s</h2>' % heading)
             s.append('<div class="user">')
             s.append(self.extractHtmlBody(unicode(self.getItemForId(table.name, itemid, field))))
             s.append('</div>')
-        fields = ['origin', 'priority', 'status', 'complexity', 'assigned', 'effort', 'category', 
-            'keywords', 'risk', 'testability', 'baseline']
-        keywords = ['Origin','Priority', 'Status', 'Complexity', 'Assigned', 'Effort', 'Category', 
-            'Keywords', 'Risk', 'Testability', 'Baseline']
-        values = [self.getItemForId(table.name, itemid, field) for field in fields]
-        s.append(self.renderKeyValuePairs(keywords, values))
+        values = [self.getItemForId(table.name, itemid, field) for field in singlelineFields]
+        s.append(self.renderKeyValuePairs(singlelineHeadings, values))
         return '\n'.join(s)
-        
-    def renderUsecase(self, table, itemid, relatedItems): 
-        s = [self.getHeadline(table, itemid)]
-        return '\n'.join(s)
-
+            
     def renderImage(self, table, itemid, relatedItems): 
         format = self.getItemForId(table.name, itemid, 'format')
         source = self.getItemForId(table.name, itemid, 'source')
@@ -294,39 +302,11 @@ class cChmExporter(cHierarchicExporter):
         fp.write(data)
         fp.close()
         return '\n'.join(s)
+
     
-    def renderFeature(self, table, itemid, relatedItems):
-        s = [self.getHeadline(table, itemid)]
-        return '\n'.join(s)
-
-    def renderTestcase(self, table, itemid, relatedItems): 
-        s = [self.getHeadline(table, itemid)]
-        return '\n'.join(s)
-
-    def renderTestsuite(self, table, itemid, relatedItems): 
-        s = [self.getHeadline(table, itemid)]
-        return '\n'.join(s)
-
-    def renderSimplesection(self, table, itemid, relatedItems): 
-        s = [self.getHeadline(table, itemid)]
-        s.append('<div class="user">')
-        s.append(self.extractHtmlBody(unicode(self.getItemForId(table.name, itemid, 'content'))))
-        s.append('</div>')
-        keywords = self.getItemForId(table.name, itemid, 'keywords')
-        s.append(self.renderKeyValuePairs(['Keywords',], [keywords,]))
-        return '\n'.join(s)
-    
-    def renderComponent(self, table, itemid, relatedItems): 
-        s = [self.getHeadline(table, itemid)]
-        return '\n'.join(s)
-        
-    def renderChange(self, table, itemid, relatedItems): 
-        s = [self.getHeadline(table, itemid)]
-        return '\n'.join(s)
-        
 args = cChmExporterArgs(projectname='sample',  
     projectfolder='htmlhelp', 
-    hhclocation=r'c:\Programme\HTMLHE~1\hhc.exe',
+    hhclocation=r'"\Programme\HTML Help Workshop\hhc.exe"',
     cssfile="oachmreport.css")
 databaseName = "test.db"
 databaseName = "ESR_660191_SY_0001_Systemanforderungsspezifikation.db"
