@@ -1,8 +1,13 @@
 import re,  os.path, subprocess, codecs
 import xml.sax.saxutils as saxutils
-import _naf_database as nafdb
+import base64,  sys
+import argparse
 
-    
+import _naf_database as nafdb
+from naf_exportxml import BROKEN_IMAGE_DATA
+
+BROKEN_IMAGE_FILENAME = "missing.png"
+
 class cHierarchicExporter(object):
     def __init__(self,  databaseName,  args):
         self.databaseName = databaseName
@@ -82,6 +87,11 @@ class cHierarchicExporter(object):
         def fixImageTag(mo):
             imgId = int(mo.group(1))
             imgType = self.getItemForId('images', imgId, 'format')
+            if imgType is None:
+                # hmmm..., let's check if an image with given id is actually in the database
+                if self.getItemForId('images', imgId, 'id') is None:
+                    # no image with given id is in the database
+                    return 'img src="%s" alt="Missing image" title="Missing image"' % BROKEN_IMAGE_FILENAME
             prefix = PREFIX[nafdb.TYPE_IMAGE]
             return 'img src="%s_%d.%s"' % (prefix,  imgId,  imgType)
         mo = self.htmlBodyPattern.search(s)
@@ -114,13 +124,13 @@ PREFIX = {
 
 
 class cChmExporterArgs(object):
-    def __init__(self,  projectname=None,  projectfolder=None,  title=None,  language=None,  cssfile=None, hhclocation=None):
+    def __init__(self,  projectname=None,  projectfolder=None,  title=None,  language=None,  cssfile=None, hhcpath=None):
         self.language = language or '0x809 Englisch'
         self.cssfile = cssfile or 'oareport.css'
-        self.projectname = projectname or 'oareport'
+        self.projectname = projectname 
         self.projectfolder = projectfolder or '.'
         self.title = title or 'openADAMS Report'
-        self.hhclocation = hhclocation or "hhc.exe"
+        self.hhcpath = hhcpath or "hhc.exe"
         
     def __getitem__(self, key):
        return getattr(self,  key) 
@@ -153,7 +163,7 @@ class cChmExporter(cHierarchicExporter):
 
                 [FILES]
                 """ % self.args
-        fname = os.path.join("%(projectfolder)s" % args,  "%(projectname)s.hhp" % args)
+        fname = os.path.join("%(projectfolder)s" % self.args,  "%(projectname)s.hhp" % self.args)
         self.fpHhp = codecs.open(fname, "w", 'ascii')
         self.fpHhp.write(self.trimString(t))
         
@@ -165,23 +175,28 @@ class cChmExporter(cHierarchicExporter):
                 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
                 <!-- Sitemap 1.0 -->
                 </head><body>'''
-        fname = os.path.join("%(projectfolder)s" % args,  "%(projectname)s.hhc" % args)
+        fname = os.path.join("%(projectfolder)s" % self.args,  "%(projectname)s.hhc" % self.args)
         self.fpToc = codecs.open(fname,  "w", 'latin-1')
         self.fpToc.write(self.trimString(t))
+        
+        fname = os.path.join("%(projectfolder)s" % self.args, BROKEN_IMAGE_FILENAME)
+        fp = open(fname, "wb")
+        fp.write(base64.b64decode(BROKEN_IMAGE_DATA))
+        fp.close()
 
     def tearDown(self):
         self.fpHhp.write('\n[INFOTYPES]\n\n')
         self.fpHhp.close()
         self.fpToc.write('</ul></body></html>\n')
         self.fpToc.close()
-        retcode = subprocess.call('%s %s' % (self.args.hhclocation, self.fpHhp.name), stdout=subprocess.PIPE)
+        retcode = subprocess.call('%s %s' % (self.args.hhcpath, self.fpHhp.name), stdout=subprocess.PIPE)
         if retcode != 1:
             raise OSError("Return value %d" % retcode)
         
     def renderItem(self, table, itemid, nodeName='item',  relatedItems=[]):
         prefix = PREFIX[table.typeid]
         label = '%s_%05d' % (prefix ,  itemid)
-        fname = os.path.join("%(projectfolder)s" % args,  "%s.html" % label)
+        fname = os.path.join("%(projectfolder)s" % self.args,  "%s.html" % label)
         fp = codecs.open(fname,  'w', 'utf-8')
         t = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
                     "http://www.w3.org/TR/html4/strict.dtd">
@@ -297,18 +312,35 @@ class cChmExporter(cHierarchicExporter):
         s.append('</div>')
         s.append('<p><img src="%s"/></p>' % fname)
         s.append(self.renderKeyValuePairs(['Source', 'Keywords'], [source, keywords]))
-        fname = os.path.join("%(projectfolder)s" % args,  fname)
+        fname = os.path.join("%(projectfolder)s" % self.args,  fname)
         fp = open(fname,  'wb')
         fp.write(data)
         fp.close()
         return '\n'.join(s)
 
+
+def run(databaseName,  args):
+    database_path,  database_basename = os.path.split(databaseName)
+    args.projectname= args.projectname or os.path.splitext(database_basename)[0]
+    exporter = cChmExporter(databaseName,  args)
+    exporter.run()
     
-args = cChmExporterArgs(projectname='sample',  
-    projectfolder='htmlhelp', 
-    hhclocation=r'"\Programme\HTML Help Workshop\hhc.exe"',
-    cssfile="oachmreport.css")
-databaseName = "test.db"
-databaseName = "ESR_660191_SY_0001_Systemanforderungsspezifikation.db"
-exporter = cChmExporter(databaseName,  args)
-exporter.run()
+    
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Export database to compressed help file.')
+    parser.add_argument('-o',  '--out',  metavar='file', required=False,  type=str, help='output file base name')
+    parser.add_argument('-d',  '--dir',  metavar='folder', required=False,  type=str, help='output folder name (default htmlhelp)',  default="htmlhelp")
+    parser.add_argument('-c',  '--css',  metavar='cssfile', required=False,  type=str, help='Cascading Style Sheet file (default oachmreport.css)',  default='oachmreport.css')
+    parser.add_argument('--hhc',  metavar='hhc', required=False,  type=str, help='Path to HTML Help Compiler (default hhc.exe)', default="hhc.exe")
+    parser.add_argument('--title',  '-t',  metavar='title', required=False,  type=str, help='Report title')
+    parser.add_argument('database',  metavar='database',  type=str, help='Database file')
+    args = parser.parse_args()
+    
+    exporterArgs= cChmExporterArgs(projectname = args.out, 
+        projectfolder=args.dir, 
+        cssfile=args.css, 
+        hhcpath=args.hhc, 
+        title=args.title)
+    run(args.database,  exporterArgs)
+    
+
