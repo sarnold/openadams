@@ -1,3 +1,29 @@
+#!/usr/bin/python
+# -*- coding: utf-8  -*-
+# $Id$
+
+# -------------------------------------------------------------------
+# Copyright 2011 Achim Köhler
+#
+# This file is part of openADAMS.
+#
+# openADAMS is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 2 of the License,
+# or (at your option) any later version.
+#
+# openADAMS is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
+# -------------------------------------------------------------------
+
+__revision__ = '$Rev$'
+__id__ = '$Id$'
+
 import re,  os.path, subprocess, codecs
 import xml.sax.saxutils as saxutils
 import base64,  sys,  shutil
