@@ -1,12 +1,14 @@
 import re,  os.path, subprocess, codecs
 import xml.sax.saxutils as saxutils
-import base64,  sys
+import base64,  sys,  shutil
 import argparse
 
 import _naf_database as nafdb
 from naf_exportxml import BROKEN_IMAGE_DATA
 
 BROKEN_IMAGE_FILENAME = "missing.png"
+DEFAULT_OUTPUT_FOLDER = 'htmlhelp'
+DEFAULT_HHC_LOCATION = 'hhc.exe'
 
 class cHierarchicExporter(object):
     def __init__(self,  databaseName,  args):
@@ -126,9 +128,9 @@ PREFIX = {
 class cChmExporterArgs(object):
     def __init__(self,  projectname=None,  projectfolder=None,  title=None,  language=None,  cssfile=None, hhcpath=None):
         self.language = language or '0x809 Englisch'
-        self.cssfile = cssfile or 'oareport.css'
+        self.cssfile = cssfile 
         self.projectname = projectname 
-        self.projectfolder = projectfolder or '.'
+        self.projectfolder = projectfolder
         self.title = title or 'openADAMS Report'
         self.hhcpath = hhcpath or "hhc.exe"
         
@@ -163,10 +165,16 @@ class cChmExporter(cHierarchicExporter):
 
                 [FILES]
                 """ % self.args
+        # create projectfolder if it not exists
+        if not os.path.exists(self.args.projectfolder):
+            os.mkdir(self.args.projectfolder)
+        
+        # create help project file 
         fname = os.path.join("%(projectfolder)s" % self.args,  "%(projectname)s.hhp" % self.args)
         self.fpHhp = codecs.open(fname, "w", 'ascii')
         self.fpHhp.write(self.trimString(t))
         
+        # create table of contents file
         t = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
                     "http://www.w3.org/TR/html4/strict.dtd">
                 <html>
@@ -179,21 +187,42 @@ class cChmExporter(cHierarchicExporter):
         self.fpToc = codecs.open(fname,  "w", 'latin-1')
         self.fpToc.write(self.trimString(t))
         
+        # create file with missing image icon
         fname = os.path.join("%(projectfolder)s" % self.args, BROKEN_IMAGE_FILENAME)
         fp = open(fname, "wb")
         fp.write(base64.b64decode(BROKEN_IMAGE_DATA))
         fp.close()
+        
+        # copy cascading style sheet file
+        if self.args.cssfile is not None:
+            css_path,  css_basename = os.path.split(self.args.cssfile)
+            dest = os.path.join(self.args.projectfolder,  css_basename)
+            if not os.path.exists(dest):
+                shutil.copy(self.args.cssfile,  self.args.projectfolder)
+            self.args.cssfile = css_basename
 
     def tearDown(self):
         self.fpHhp.write('\n[INFOTYPES]\n\n')
         self.fpHhp.close()
         self.fpToc.write('</ul></body></html>\n')
         self.fpToc.close()
-        retcode = subprocess.call('%s %s' % (self.args.hhcpath, self.fpHhp.name), stdout=subprocess.PIPE)
-        if retcode != 1:
-            raise OSError("Return value %d" % retcode)
+        cmdline = '%s %s' % (os.path.normpath(self.args.hhcpath), os.path.normpath(self.fpHhp.name))
+        fname = os.path.join("%(projectfolder)s" % self.args,  "build.bat")
+        fp = open(fname, "w")
+        fp.write(cmdline)
+        fp.close()
+        try:
+            retcode = subprocess.call(cmdline, stdout=subprocess.PIPE)
+            if retcode != 1:
+                raise OSError("%s returns %d" % (cmdline,  retcode))
+        except WindowsError,  e:
+            raise WindowsError(cmdline)
         
     def renderItem(self, table, itemid, nodeName='item',  relatedItems=[]):
+        if self.args.cssfile is not None:
+            linkstr = '<link rel="stylesheet" type="text/css" media="screen" href="%s">' %  self.args.cssfile
+        else:
+            linkstr = ''
         prefix = PREFIX[table.typeid]
         label = '%s_%05d' % (prefix ,  itemid)
         fname = os.path.join("%(projectfolder)s" % self.args,  "%s.html" % label)
@@ -204,9 +233,9 @@ class cChmExporter(cHierarchicExporter):
                     <head>
                     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
                     <title>%s</title>
-                    <link rel="stylesheet" type="text/css" media="screen" href="%s">
+                    %s
                     </head>
-                    <body>""" % (label, self.args.cssfile)
+                    <body>""" % (label, linkstr)
         fp.write(self.trimString(t))
         fp.write(self.renderers[table.typeid](table, itemid, relatedItems))
         fp.write('</body>\n</html>')
@@ -329,9 +358,9 @@ def run(databaseName,  args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Export database to compressed help file.')
     parser.add_argument('-o',  '--out',  metavar='file', required=False,  type=str, help='output file base name')
-    parser.add_argument('-d',  '--dir',  metavar='folder', required=False,  type=str, help='output folder name (default htmlhelp)',  default="htmlhelp")
-    parser.add_argument('-c',  '--css',  metavar='cssfile', required=False,  type=str, help='Cascading Style Sheet file (default oachmreport.css)',  default='oachmreport.css')
-    parser.add_argument('--hhc',  metavar='hhc', required=False,  type=str, help='Path to HTML Help Compiler (default hhc.exe)', default="hhc.exe")
+    parser.add_argument('-d',  '--dir',  metavar='folder', required=False,  type=str, help='output folder name (default %s)' % DEFAULT_OUTPUT_FOLDER,  default=DEFAULT_OUTPUT_FOLDER)
+    parser.add_argument('-c',  '--css',  metavar='cssfile', required=False,  type=str, help='Cascading Style Sheet file')
+    parser.add_argument('--hhc',  metavar='hhc', required=False,  type=str, help='Path to HTML Help Compiler (default %s)' % DEFAULT_HHC_LOCATION, default=DEFAULT_HHC_LOCATION)
     parser.add_argument('--title',  '-t',  metavar='title', required=False,  type=str, help='Report title')
     parser.add_argument('database',  metavar='database',  type=str, help='Database file')
     args = parser.parse_args()

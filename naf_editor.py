@@ -21,7 +21,7 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-import sys,  os, types, logging, pprint, datetime, traceback, time, types
+import sys,  os, types, logging, pprint, datetime, traceback, time, types,  re
 
 from _naf_version import VERSION, VERSION_STR
 
@@ -67,6 +67,7 @@ import _naf_filter
 import _naf_textviewer
 import _naf_resources
 import naf_exportxml
+import naf_exportchm
 
 MAX_RECENT_FILES = 5
 
@@ -411,6 +412,91 @@ class cExportToXmlDialog(QtGui.QDialog):
         self.btnOk.setEnabled(b)
 
 
+class  cExportToChmDialog(QtGui.QDialog):
+    def __init__(self, parent):
+        super(cExportToChmDialog, self).__init__(parent)
+        self.setMinimumWidth(640)
+        self.setSizeGripEnabled(False)
+        self.setWindowTitle(self.tr("Export to Compressed Help"))
+        
+        self.validTitleRe = re.compile("^\S+$")
+        
+        line = 0
+        gridLayout = QtGui.QGridLayout()
+        gridLayout.addWidget(QtGui.QLabel(self.tr('Help Project Name')), line, 0)
+        self.projectName = QtGui.QLineEdit(self)
+        self.projectName.textChanged.connect(self.validateProjectName)
+        gridLayout.addWidget(self.projectName, line, 1)
+        
+        line = line + 1
+        gridLayout.addWidget(QtGui.QLabel(self.tr('Project title')), line, 0)
+        self.projectTitle = QtGui.QLineEdit(self)
+        gridLayout.addWidget(self.projectTitle, line, 1)
+        
+        line = line + 1  
+        gridLayout.addWidget(QtGui.QLabel(self.tr('Output folder')), line, 0)
+        self.outFolderName = QtGui.QLineEdit(self)
+        outFolderButton = QtGui.QPushButton('...')
+        outFolderButton.clicked.connect(self.getOutputFolder) 
+        gridLayout.addWidget(self.outFolderName, line, 1)
+        gridLayout.addWidget(outFolderButton, line, 2)
+        
+        line = line + 1
+        gridLayout.addWidget(QtGui.QLabel(self.tr('Stylesheet')), line , 0)
+        self.styleSheetName = QtGui.QLineEdit(self)
+        self.styleSheetName.textChanged.connect(self.validateStyleSheetName)
+        styleSheetButton = QtGui.QPushButton('...')
+        styleSheetButton.clicked.connect(self.getStyleSheetName)
+        gridLayout.addWidget(self.styleSheetName, line, 1)
+        gridLayout.addWidget(styleSheetButton, line, 2)
+        
+        line = line + 1
+        gridLayout.addWidget(QtGui.QLabel(self.tr('Path to Help Compiler')), line , 0)
+        self.helpCompilerLocation = QtGui.QLineEdit(self)
+        helpCompilerLocationButton = QtGui.QPushButton('...')
+        helpCompilerLocationButton.clicked.connect(self.getHhcLocation)
+        gridLayout.addWidget(self.helpCompilerLocation, line, 1)
+        gridLayout.addWidget(helpCompilerLocationButton, line, 2)
+        
+        buttonBox = QtGui.QDialogButtonBox(self)
+        self.btnOk =  buttonBox.addButton(QtGui.QDialogButtonBox.Ok)
+        self.btnCancel =  buttonBox.addButton(QtGui.QDialogButtonBox.Cancel)
+        layout = QtGui.QVBoxLayout()
+        layout.addLayout(gridLayout)
+        layout.addWidget(buttonBox)
+        self.setLayout(layout)
+        buttonBox.accepted.connect(self.accept)
+        buttonBox.rejected.connect(self.reject)
+        
+    def getOutputFolder(self):
+        dir = QtGui.QFileDialog.getExistingDirectory(self,  self.tr("Open Directory"),
+                    self.outFolderName.text(), QtGui.QFileDialog.ShowDirsOnly | QtGui.QFileDialog.DontResolveSymlinks)
+        if len(dir) > 0:
+            self.outFolderName.setText(dir)
+        
+    def getStyleSheetName(self):
+        fileName = str(QtGui.QFileDialog.getOpenFileName(self, self.tr("Use CSS Stylesheet"), ".", self.tr("CSS Stylesheet Files (*.css);;All files (*.*)")))
+        if fileName == '':
+            return
+        self.styleSheetName.setText(fileName)
+        
+    def getHhcLocation(self):
+        fileName = str(QtGui.QFileDialog.getOpenFileName(self, self.tr("Help Compiler"), ".", self.tr("Executable files (*.exe);;All files (*.*)")))
+        if fileName == '':
+            return
+        self.helpCompilerLocation.setText(fileName)
+        
+    def validateProjectName(self, projectName):
+        b = self.validTitleRe.match(projectName) is not None
+        self.projectName.setStyleSheet(["background: #FFB0B0", ""][b])
+        self.btnOk.setEnabled(b)
+        
+    def validateStyleSheetName(self,  styleSheetName):
+        b = os.path.exists(styleSheetName) or (styleSheetName == '')
+        self.styleSheetName.setStyleSheet(["background: #FFB0B0", ""][b])
+        self.btnOk.setEnabled(b)
+        
+
 class cAbout(QtGui.QDialog):
     def __init__(self, parent):
         super(cAbout, self).__init__(parent)
@@ -566,9 +652,12 @@ class cMainWin(QtGui.QMainWindow):
         newAction.setStatusTip(self.tr('Create new database'))
         self.connect(newAction, QtCore.SIGNAL('triggered()'), self.newDatabase)
 
-        self.exportAction = QtGui.QAction(self.tr('Export database'), self, statusTip="Export database to Xml",
+        self.exportAction = QtGui.QAction(self.tr('Export database to XML'), self, statusTip="Export database to Xml",
             enabled=False, triggered=self.exportToXml)
-
+            
+        self.exportChmAction = QtGui.QAction(self.tr('Export database to CHM'), self, statusTip="Export database to Compressed Help",
+            enabled=False, triggered=self.exportToChm)
+            
         aboutAction = QtGui.QAction(self.tr('About'), self)
         aboutAction.setShortcut('F1')
         aboutAction.setStatusTip(self.tr('About this program'))
@@ -650,6 +739,7 @@ class cMainWin(QtGui.QMainWindow):
         fileMenu.addSeparator()
         self.updateRecentFileActions()
         fileMenu.addAction(self.exportAction)
+        fileMenu.addAction(self.exportChmAction)
         fileMenu.addSeparator()
         fileMenu.addAction(exitAction)
 
@@ -718,6 +808,41 @@ class cMainWin(QtGui.QMainWindow):
             (type_, value, tb) = sys.exc_info()
             self.showExceptionMessageBox(type_, value, tb)
 
+    def exportToChm(self):
+        args = naf_exportchm.cChmExporterArgs()
+        (databaseDir, databaseName) = os.path.split(nafdb.currentFileName)
+        args.projectname =  os.path.splitext(databaseName)[0]
+        settings = QtCore.QSettings()
+        args.cssfile = settings.value('exportchm/cssfile',  '').toString()
+        args.projectfolder = settings.value('exportchm/projectfolder',  naf_exportchm.DEFAULT_OUTPUT_FOLDER).toString()
+        args.hhcpath = settings.value('exportchm/hhclocation',  naf_exportchm.DEFAULT_HHC_LOCATION).toString()
+        args.title = settings.value('exportchm/title', args.title).toString()
+        args.projectname = settings.value('exportchm/projectname',  args.projectname).toString()
+        
+        exportDialog = cExportToChmDialog(self)
+        exportDialog.projectName.setText(args.projectname)
+        exportDialog.projectTitle.setText(args.title)
+        exportDialog.outFolderName.setText(args.projectfolder)
+        exportDialog.styleSheetName.setText(args.cssfile)
+        exportDialog.helpCompilerLocation.setText(args.hhcpath)
+        
+        if  QtGui.QDialog.Accepted == exportDialog.exec_():
+            args.projectname = unicode(exportDialog.projectName.text())
+            args.cssfile = unicode(exportDialog.styleSheetName.text())
+            args.projectfolder = unicode(exportDialog.outFolderName.text())
+            args.hhcpath = unicode(exportDialog.helpCompilerLocation.text())
+            args.title = unicode(exportDialog.projectTitle.text())
+            settings.setValue('exportchm/cssfile',  args.cssfile)
+            settings.setValue('exportchm/projectfolder',  args.projectfolder)
+            settings.setValue('exportchm/hhclocation',  args.hhcpath)
+            settings.setValue('exportchm/title',  args.title)
+            settings.setValue('exportchm/projectname',  args.projectname)
+            try:
+                naf_exportchm.run(nafdb.currentFileName,  args)
+            except:
+                (type_, value, tb) = sys.exc_info()
+                self.showExceptionMessageBox(type_, value, tb)
+            
     def exportToXml(self):
         args = naf_exportxml.cArgs()
         args.databaseName = nafdb.currentFileName
@@ -791,6 +916,7 @@ class cMainWin(QtGui.QMainWindow):
         self.reportViewAction.setEnabled(True)
         self.addActionGroup.setEnabled(True)
         self.exportAction.setEnabled(True)
+        self.exportChmAction.setEnabled(True)
 
     @QtCore.pyqtSlot()
     def editStartedAction(self):
