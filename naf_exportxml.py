@@ -21,7 +21,7 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-__revision__ = '$Rev: 98 $'
+__revision__ = '$Rev$'
 __id__ = '$Id$'
 
 
