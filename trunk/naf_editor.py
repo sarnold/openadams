@@ -425,7 +425,7 @@ class  cExportToChmDialog(QtGui.QDialog):
         gridLayout = QtGui.QGridLayout()
         gridLayout.addWidget(QtGui.QLabel(self.tr('Help Project Name')), line, 0)
         self.projectName = QtGui.QLineEdit(self)
-        self.projectName.textChanged.connect(self.validateProjectName)
+        self.projectName.textChanged.connect(self.validate)
         gridLayout.addWidget(self.projectName, line, 1)
         
         line = line + 1
@@ -444,7 +444,7 @@ class  cExportToChmDialog(QtGui.QDialog):
         line = line + 1
         gridLayout.addWidget(QtGui.QLabel(self.tr('Stylesheet')), line , 0)
         self.styleSheetName = QtGui.QLineEdit(self)
-        self.styleSheetName.textChanged.connect(self.validateStyleSheetName)
+        self.styleSheetName.textChanged.connect(self.validate)
         styleSheetButton = QtGui.QPushButton('...')
         styleSheetButton.clicked.connect(self.getStyleSheetName)
         gridLayout.addWidget(self.styleSheetName, line, 1)
@@ -486,15 +486,21 @@ class  cExportToChmDialog(QtGui.QDialog):
             return
         self.helpCompilerLocation.setText(fileName)
         
-    def validateProjectName(self, projectName):
-        b = self.validTitleRe.match(projectName) is not None
-        self.projectName.setStyleSheet(["background: #FFB0B0", ""][b])
-        self.btnOk.setEnabled(b)
+    def validate(self, s):
+        projectName = self.projectName.text()
+        b1 = self.validTitleRe.match(projectName) is not None
+        self.projectName.setStyleSheet(["background: #FFB0B0", ""][b1])
+        
+        styleSheetName = self.styleSheetName.text()
+        b2 = os.path.exists(styleSheetName) or (styleSheetName == '')
+        self.styleSheetName.setStyleSheet(["background: #FFB0B0", ""][b2])
+        
+        self.btnOk.setEnabled(b1 and b2)
         
     def validateStyleSheetName(self,  styleSheetName):
         b = os.path.exists(styleSheetName) or (styleSheetName == '')
         self.styleSheetName.setStyleSheet(["background: #FFB0B0", ""][b])
-        self.btnOk.setEnabled(b)
+        self.btnOk.setEnabled(b and self.validateProjectName(self.projectName.text()))
         
 
 class cAbout(QtGui.QDialog):
@@ -839,6 +845,9 @@ class cMainWin(QtGui.QMainWindow):
             settings.setValue('exportchm/projectname',  args.projectname)
             try:
                 naf_exportchm.run(nafdb.currentFileName,  args)
+                msg = self.tr("Successfully created\n") + args.outputfile
+                msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Information, self.tr("Info"), QtCore.QString(msg))
+                msgBox.exec_()
             except:
                 (type_, value, tb) = sys.exc_info()
                 self.showExceptionMessageBox(type_, value, tb)

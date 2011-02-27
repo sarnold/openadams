@@ -133,6 +133,7 @@ class cChmExporterArgs(object):
         self.projectfolder = projectfolder
         self.title = title or 'openADAMS Report'
         self.hhcpath = hhcpath or "hhc.exe"
+        self.outputfile = None
         
     def __getitem__(self, key):
        return getattr(self,  key) 
@@ -141,6 +142,7 @@ class cChmExporterArgs(object):
 class cChmExporter(cHierarchicExporter):
     
     def setUp(self):
+        self.args.outputfile = None
         self.indent = -1
         self.renderers = {
             nafdb.TYPE_FOLDER : self.renderFolder, 
@@ -212,7 +214,8 @@ class cChmExporter(cHierarchicExporter):
         fp.write(cmdline)
         fp.close()
         try:
-            retcode = subprocess.call(cmdline, stdout=subprocess.PIPE)
+            retcode = subprocess.call(cmdline, stdout=subprocess.PIPE)            
+            self.args.outputfile = os.path.normpath(os.path.join("%(projectfolder)s" % self.args,  "%(projectname)s.chm" % self.args))           
             if retcode != 1:
                 raise OSError("%s returns %d" % (cmdline,  retcode))
         except WindowsError,  e:
