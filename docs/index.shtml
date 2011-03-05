@@ -18,6 +18,11 @@
   <li id="current">
   <a href="index.shtml"><span>Main page</span></a>
   </li>
+  <ul class="submenu">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#resources">Related Resources</a></li>
+    <li><a href="#license">License</a></li>
+  </ul>
   <li>
   <a href="getstarted.shtml"><span>Getting started</span></a>
   </li>
@@ -30,12 +35,12 @@
   </ul>
 </div>
 <!-- end_mainmenu -->
-
 <hr class="header"/>
 </div>
+
 <div class="document" id="artefact-management-system-afms">
 <h1 class="title">openADAMS</h1>
-<p>Open Source Artifact Documentation And Management System</p>
+<h2 class="title">Open Source Artifact Documentation And Management System</h2>
 
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
@@ -43,7 +48,7 @@
 <tbody valign="top">
 <tr><th class="docinfo-name">Author:</th>
 <td>Achim&nbsp;Köhler</td></tr>
-<tr class="field"><th class="docinfo-name">Release:</th><td class="field-body">0.2.0</td>
+<tr class="field"><th class="docinfo-name">Release:</th><td class="field-body">0.2.1</td>
 </tr>
 <tr><th class="docinfo-name">Copyright:</th>
 <td>Achim&nbsp;Köhler, 2010</td></tr>
@@ -54,12 +59,11 @@
 </tbody>
 </table>
 
-<div id="leftpanel">
+
+<h2><a name="mission">Mission</a></h2>
+<div class="imgpanel">
 <img src="images/screenshot1.png" width="300px"/>
 </div>
-<hr class="docutils" />
-
-<h2>Mission</h2>
 <p>
 Goal of this project is to provide a set of tools to manage some of the artifacts 
 appearing in the software development process. Till now the term artifacts basically 
@@ -83,7 +87,7 @@ are required.
 Read the <a href="getstarted.shtml">getting started</a> section to learn more about openADAMS.
 </p>
 
-<h2>Related resources</h2>
+<h2><a name="resources">Related resources</a></h2>
 
 openADAMS is the successor of <a href="http://sourceforge.net/projects/afms/">AFMS</a>.
 
@@ -135,7 +139,7 @@ openADAMS is strongly inspired by the <a class="reference external" href="http:/
 <a class="reference external" href="http://readyset.tigris.org/">Ready-to-use Software Engineering Templates</a>
 </p>
 
-<h2>License</h2>
+<h2><a name="license">License</a></h2>
 <p>
 openADAMS is free software: you can redistribute it and/or modify
 it under the terms of the <a class="reference external" href="http://www.gnu.org/licenses/">GNU General Public License</a> as published
@@ -147,7 +151,7 @@ or (at your option) any later version.
 <div class="footer">
 <hr class="footer" />
 <em>This document last modified</em><!--#flastmod file="index.shtml" -->
-<a class="reference external" href="http://sourceforge.net"><img align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+<a class="external" href="http://sourceforge.net"><img class="external" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
 </div>
 </body>
 </html>

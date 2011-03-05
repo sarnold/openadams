@@ -35,15 +35,43 @@
 
 <div class="document" id="artefact-management-system-afms">
 <h1>Acknowledgement</h1>
-<p>
-Contents coming soon ...
+
+<p>openADAMS  is implemented in <a href="http://www.python.org/">Python</a> and uses 
+<a href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt</a> as GUI Toolkit.
 </p>
+
+<p>The database engine is <a href="http://www.sqlite.org">sqlite</a>.</p>
+<p>The different icons are taken or derived from several icon collections:</p>
+<dl>
+<dt>Sweetie BasePack</dt>
+<dd><ul class="first last simple">
+<li>URL: <a class="reference external" href="http://sweetie.sublink.ca/preview/icons/Sweetie-BasePack-v3">http://sweetie.sublink.ca/preview/icons/Sweetie-BasePack-v3</a></li>
+<li>Licence: Creative Commons Attribution-ShareAlike 3.0 License Agreement,
+<a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/">http://creativecommons.org/licenses/by-sa/3.0/</a></li>
+</ul>
+
+</dd>
+<dt>Nuvola</dt>
+<dd><ul class="first last simple">
+<li>URL:      <a class="reference external" href="http://www.icon-king.com">http://www.icon-king.com</a></li>
+<li>Licence: GNU Lesser General Public License, <a class="reference external" href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a></li>
+</ul>
+</dd>
+<dt>Tango</dt>
+<dd><ul class="first last simple">
+<li>URL: <a class="reference external" href="http://tango.freedesktop.org/releases/tango-icon-theme-0.8.1.tar.gz">http://tango.freedesktop.org/releases/tango-icon-theme-0.8.1.tar.gz</a></li>
+
+<li>Licence: Creative Commons Attribution-ShareAlike 2.5 License Agreement,
+<a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.5/">http://creativecommons.org/licenses/by-sa/2.5/</a></li>
+</ul>
+</dd>
+</dl>
 </div>
 
 <div class="footer">
 <hr class="footer" />
 <em>This document last modified</em><!--#flastmod file="acknowledgement.shtml" -->
-<a class="reference external" href="http://sourceforge.net"><img align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+<a class="external" href="http://sourceforge.net"><img class="external" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
 </div>
 </body>
 </html>

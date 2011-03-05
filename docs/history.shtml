@@ -27,6 +27,11 @@
   <li id="current">
   <a href="history.shtml"><span>History</span></a>
   </li>
+   <ul class="submenu">
+        <li><a href="#devel">openADAMS Devel</a></li>
+        <li><a href="#r_0_2_1">openADAMS Release 0.2.1</a></li>
+        <li><a href="#r_0_2_0">openADAMS Release 0.2.0</a></li>
+    </ul>
   </ul>
 </div>
 <!-- end_mainmenu -->
@@ -35,15 +40,116 @@
 
 <div class="document" id="artefact-management-system-afms">
 <h1>History</h1>
+
+<h2><a name="devel">openADAMS Devel</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+Text editor now supports links (Menu Edit/Edit link, Edit/Delete Link, ...)
+</li>
+<li>
+Text editor has new menu item to insert plain text
+</li>
+<li>Support for opening database files by drag'n drop
+</li>
+<li>Command line switches '-DEBUG',  '-INFO',  '-ERROR' for different log levels
+</li>
+<li>oareport.xsl now includes oareport.css for screen output and
+  oaprintreport.css for print output
+</li>
+<li>
+Export to Compressed Help Format (using Microsoft Help Compiler), either from main window or using script
+<kbd>naf_exportchm.py</kbd>
+</li>
+</ul>
+
+
+<h3>Changes</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+oareport.xsl: removed whitespaces from links
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash
+  of the application
+</li>
+<li>
+Documentation is missing
+</li>
+<li>
+oaxml2db.py: experimental
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_2_1">openADAMS Release 0.2.1 (2011-01-22)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+naf_exportxml.py, added some debug output if xml parser fails
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+#3163190, edit HTML behavior when canceling editor
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash of the application
+</li>
+<li>
+Documentation is missing
+</li>
+<li>oaxml2db.py: experimental
+</li>
+</ul>
+
+<h2><a name="r_0_2_0">openADAMS Release 0.2.0 (2010-08-08)</a></h2>
 <p>
-Contents coming soon ...
+First release
 </p>
+
+<h3>Known issues</h3>
+<ul>
+<li>oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash of the application
+  </li>
+<li>
+Documentation is missing
+</li>
+<li>
+oaxml2db.py: experimental
+</li>
+</ul>
+
 </div>
 
 <div class="footer">
 <hr class="footer" />
 <em>This document last modified</em><!--#flastmod file="history.shtml" -->
-<a class="reference external" href="http://sourceforge.net"><img align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+<a class="external" href="http://sourceforge.net"><img class="external" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
 </div>
 </body>
 </html>
