@@ -8,7 +8,11 @@
 <meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
 <meta content="openADAMS Short Manual" name="description" />
 <meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
-<link rel="stylesheet" href="oadoc.css" type="text/css" />
+<link rel="stylesheet" href="css/oadoc.css" type="text/css" />
+<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="scripts/prototype.js"></script>
+<script type="text/javascript" src="scripts/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="scripts/lightbox.js"></script>
 </head>
 <body>
 <div class="header">
@@ -62,7 +66,10 @@
 
 <h2><a name="mission">Mission</a></h2>
 <div class="imgpanel">
-<img src="images/screenshot1.png" width="300px"/>
+&nbsp;
+<a href="images/screenshot1.png" rel="lightbox" title="openADAMS main window">
+<img class="norm" src="images/screenshot1.png" width="300px" alt="openADAMS main window"></img>
+</a>
 </div>
 <p>
 Goal of this project is to provide a set of tools to manage some of the artifacts 
@@ -151,7 +158,7 @@ or (at your option) any later version.
 <div class="footer">
 <hr class="footer" />
 <em>This document last modified</em><!--#flastmod file="index.shtml" -->
-<a class="external" href="http://sourceforge.net"><img class="external" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+<a class="external" href="http://sourceforge.net"><img class="norm" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
 </div>
 </body>
 </html>
