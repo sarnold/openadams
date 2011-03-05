@@ -8,7 +8,7 @@
 <meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
 <meta content="openADAMS Short Manual" name="description" />
 <meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
-<link rel="stylesheet" href="oadoc.css" type="text/css" />
+<link rel="stylesheet" href="css/oadoc.css" type="text/css" />
 </head>
 <body>
 <div class="header">
@@ -66,12 +66,16 @@
 </ul>
 </dd>
 </dl>
+
+<p>The documentation pages are using Lightbox for some effects, see <a class="reference external" href="http://www.huddletogether.com/projects/lightbox2/">http://www.huddletogether.com/projects/lightbox2/</a></p>
+
 </div>
+
 
 <div class="footer">
 <hr class="footer" />
 <em>This document last modified</em><!--#flastmod file="acknowledgement.shtml" -->
-<a class="external" href="http://sourceforge.net"><img class="external" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+<a class="external" href="http://sourceforge.net"><img class="norm" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
 </div>
 </body>
 </html>

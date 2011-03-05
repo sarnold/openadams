@@ -2,6 +2,7 @@
 body {
  font-family: Verdana, Helvetica, Arial, sans-serif;
  background-color:#FFFFFF;
+ margin: 0; padding: 0; 
 }
 
 /* tabs styles, based on http://www.alistapart.com/articles/slidingdoors */
@@ -76,34 +77,11 @@ hr.header {
     display:none;
 }
 
-/*
-p.admonition-title {
-	font-weight   : bold;
-	margin-bottom : 0;
-}
-
-DIV.hint p.last {
-	font-style    : oblique ;
-	padding-left  : 60px;
-	margin-top    : 0;
-    background-image:url(graphics/note.png); 
-    background-repeat:no-repeat;
-}
-*/
-
 div.imgpanel {
   float: right; width: 320px; height:700px;
   margin: 0; padding: 0;
   margin-top:0px;
 }
-/*
-DIV#artefact-management-system-afms hr {
-margin-left: -320px;
-}
-DIV#artefact-management-system-afms ul {
-margin-left:340px;
-}
-*/
 
 div.footer {
 font-size: x-small;
@@ -112,10 +90,6 @@ clear: both;
 
 
 h2 {
-	/* border-top-width:thin;
-	border-bottom-width:thin;
-	border-color:#501616;
-	border-style:dashed; */
 	border-bottom:thin solid #162D50;
 	border-top:medium solid #162D50;
 	margin-top:1em;
@@ -133,23 +107,6 @@ dl {
 }
 dt { font-style:oblique; }
 
-
-/*
-.left { 
-float:left;
-width:920px;
-}
-.right {
-	width:300px;
-	margin-left:920px;
-	background-color:#FFEEAA;
-	padding:2pt;
-	border-width:thin;
-	border-color:#501616;
-	border-style:dashed;
-	font-style:oblique ;
-}
-*/
 .clear {
 clear:left;
 }
@@ -165,12 +122,7 @@ p#explain_gui_text {
     border:1px solid #000000;
 }
 
-img {
-	padding-top:0.5em;
-	padding-left:1em;
-}
-
-img.external {
+img.norm {
 	padding-top:0;
 	padding-left:0;
 }
