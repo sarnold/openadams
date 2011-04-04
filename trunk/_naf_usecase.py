@@ -154,6 +154,11 @@ class cUsecaseView(QtGui.QTabWidget):
             relationType=_naf_tableview.REVERSE_RELATION), self)
         self.addTab(self.requirementTableView, self.tr('Related Requirements'))
         self.mapper.addObserver(self.requirementTableView)
+        
+        self.featureTableView = _naf_tableview.cItemTableView(_naf_tableview.cItemTableModel('features', ('id', 'priority', 'status', 'risk', 'keywords', 'title'),
+            relationType=_naf_tableview.REVERSE_RELATION), self)
+        self.addTab(self.featureTableView, self.tr('Related Features'))
+        self.mapper.addObserver(self.featureTableView)
 
     def model(self):
         return self.detailsView.mapper.model()
