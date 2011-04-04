@@ -173,6 +173,11 @@ class cRequirementView(QtGui.QTabWidget):
         self.detailsView = cRequirementDetailsView(self, readOnly=not isEditable)
         self.addTab(self.detailsView, self.tr('Requirement'))
         self.mapper.addObserver(self.detailsView)
+        
+        self.featureTableView = _naf_tableview.cItemTableView(_naf_tableview.cItemTableModel('features', ('id', 'priority', 'status', 'risk', 'keywords', 'title'),
+            relationType=_naf_tableview.REVERSE_RELATION), self)
+        self.addTab(self.featureTableView, self.tr('Related Features'))
+        self.mapper.addObserver(self.featureTableView)
 
         relationType = [_naf_tableview.NORMAL_RELATION, _naf_tableview.IGNORE_RELATION][isEditable]
         self.usecaseTableView = _naf_tableview.cItemTableView(
