@@ -409,7 +409,7 @@ class cTreeModel(QtCore.QAbstractItemModel):
 
 
 class cTreeView(QtGui.QTreeView):
-    def __init__(self, parent):
+    def __init__(self, parent,  contextMenuProvider=None):
         QtGui.QTreeView.__init__(self, parent, headerHidden=True)
         self.expandedItems = []
         self.setModel(cTreeModel())
@@ -417,6 +417,7 @@ class cTreeView(QtGui.QTreeView):
         self.pyqtConfigure(dragEnabled=True, showDropIndicator=True)
         self.viewport().setAcceptDrops(True)
         self.setDragDropMode(QtGui.QAbstractItemView.DragDrop)
+        self.contextMenuProvider = contextMenuProvider
 
     def saveView(self):
         "Save expanded items"
@@ -447,3 +448,12 @@ class cTreeView(QtGui.QTreeView):
         index = self.selectionModel().currentIndex()
         if not index.isValid(): return None
         return self.model().getParentFolder(index)
+
+    def contextMenuEvent(self,  event):
+        print "ContextMenu"
+        if self.contextMenuProvider is None:
+            return
+        menu = self.contextMenuProvider(event)
+        menu.exec_(event.globalPos())
+        #index = self.selectionModel().currentIndex()
+        #print self.model().getItemType(index)

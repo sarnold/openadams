@@ -4,6 +4,7 @@ openADAMS Release 0.x.x (2011-02-xx)
 
 New features
 ~~~~~~~~~~~~
+* Items in the tree view now have a context menu
 * Text editor now supports links (Menu Edit/Edit link, Edit/Delete Link, ...)
 * Text editor has new menu item to insert plain text
 * Support for opening database files by drag'n drop
