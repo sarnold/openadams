@@ -595,7 +595,7 @@ class cMainWin(QtGui.QMainWindow):
         self.itemView = QtGui.QSplitter(self)
         self.itemView.setFrameStyle(QtGui.QFrame.StyledPanel);
 
-        self.treeView = _naf_tree.cTreeView(self.itemView)
+        self.treeView = _naf_tree.cTreeView(self.itemView,  self.contextMenuProvider)
 
         self.detailView = QtGui.QStackedWidget(self.itemView)
         # see http://doc.trolltech.com/4.6/qframe.html#properties
@@ -764,6 +764,7 @@ class cMainWin(QtGui.QMainWindow):
         editMenu.addAction(addTestcaseAction)
         editMenu.addAction(addTestsuiteAction)
         editMenu.addAction(addImageAction)
+        self.editMenu = editMenu
 
         viewMenu = menuBar.addMenu(self.tr('&View'))
         viewMenu.addAction(self.filterDockViewAction)
@@ -796,6 +797,10 @@ class cMainWin(QtGui.QMainWindow):
 
         if dbName is not None:
             self.openDatabase(dbName)
+            
+    def contextMenuProvider(self,  event):
+        "Returns a menu to be shown in the treeview"
+        return self.editMenu
 
     def openRecentFile(self):
         action = self.sender()
