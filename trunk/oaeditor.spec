@@ -1,6 +1,7 @@
 # -*- mode: python -*-
 
-SRCDIR = r'C:\home\projects\openadams\trunk'
+import os
+SRCDIR = os.getcwd() 
 sys.path.append(SRCDIR)
 
 from _naf_version import VERSION
