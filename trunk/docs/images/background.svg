@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.0 r9654"
-   sodipodi:docname="Neues Dokument 1">
+   sodipodi:docname="background.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -60,8 +60,8 @@
      fit-margin-bottom="0"
      inkscape:window-width="1920"
      inkscape:window-height="1020"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -88,6 +88,9 @@
        x="6.9827423"
        y="160.74939"
        rx="0"
-       ry="0" />
+       ry="0"
+       inkscape:export-filename="C:\Dokumente und Einstellungen\Achim\Desktop\openadams\trunk\docs\images\background.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

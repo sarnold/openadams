@@ -1,16 +1,16 @@
 # -*- coding: utf-8  -*-
-import subprocess, os, os.path, shutil, zipfile
+import subprocess, os, os.path, shutil
 import _nafhelp_createtranslationsstrings
 
 
 PYTHON_SITE_PCKG = r"C:\Python27\Lib\site-packages"
 PYQTPATH = r"C:\Python27\Lib\site-packages\PyQt4"
 
-UIC = PYQTPATH + r"\bin\pyuic4.bat"
-PYLUPDATE = PYQTPATH + r"\bin\pylupdate4.exe"
-LRELEASE = PYQTPATH + r"\bin\lrelease.exe"
-PYRCC4  = PYQTPATH + r"\bin\pyrcc4.exe"
-SUBWCREF = r"C:\Programme\TortoiseSVN\bin\SubWCRev.exe"
+UIC = PYQTPATH + r"\pyuic4.bat"
+PYLUPDATE = PYQTPATH + r"\pylupdate4.exe"
+LRELEASE = PYQTPATH + r"\lrelease.exe"
+PYRCC4  = PYQTPATH + r"\pyrcc4.exe"
+SUBWCREF = r"C:\Programme\tools\SubWCRev\subwcrev.exe"
 
 SCRIPTS = "oaeditor.py oaeditor.pyw "
 SOURCES = "_naf_usecase.py _naf_tree.py _naf_tableview.py _naf_requirement.py "\
@@ -36,13 +36,18 @@ def build():
     subprocess.call(PYRCC4 + " -py2 -o _naf_resources.py nafms.qrc")
     subprocess.call('python setup.py sdist')
 
+def make_win32_zip():
+    basename = 'openadams-win32-%s' % VERSION
+    rootdir = os.getcwd() + r"\dist"
+    zipfile = rootdir + "\\%s" % basename
+    shutil.make_archive(zipfile, "zip", rootdir, basename) 
+    
 def buildbin():
     subwcref()
     if 0:
         subprocess.call('python %s\pyinstaller-1.5-rc1\Makespec.py --icon=icons/appicon.ico -w oaeditor.py' % PYTHON_SITE_PCKG)
-    subprocess.call('python %s\pyinstaller-1.5-rc1\Build.py oaeditor.spec' % PYTHON_SITE_PCKG)
-    basename = 'openadams-win32-%s' % VERSION
-    subprocess.call(r'cd dist && C:\Programme\tools\gnuwin\bin\zip -r %s.zip %s' % (basename, basename), shell=True)
+    subprocess.call('python %s\pyinstaller-1.5.1\Build.py oaeditor.spec' % PYTHON_SITE_PCKG)
+    make_win32_zip()
 
 def manifest():
     modules = SOURCES.split() + ['_naf_resources.py', '_naf_version.py']
@@ -59,6 +64,7 @@ from _naf_version import VERSION
 manifest()
 build()
 buildbin()
+make_win32_zip()
     
     
 
