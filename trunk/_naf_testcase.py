@@ -80,7 +80,8 @@ class cTestcaseDetailsView(_naf_commons.cArtifactDetailsView):
 
         layout.addWidget(QtGui.QLabel(lbl("scripturl")), 8, 0)
 
-        ledId = QtGui.QLineEdit(self, readOnly=True) # ID is always read only
+        ledId = QtGui.QSpinBox(self)
+        ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=readOnly)
         cbxKeywords = QtGui.QComboBox(self, enabled=not readOnly, editable=True)
         cbxKeywords.setModel(self.mapper.model().getHistoryModel('keywords_view'))

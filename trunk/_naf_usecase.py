@@ -77,7 +77,8 @@ class cUsecaseDetailsView(_naf_commons.cArtifactDetailsView):
         lblNotes.linkActivated.connect(self.sendEditSignal)
         layout.addWidget(lblNotes, 9, 0)
 
-        ledId = QtGui.QLineEdit(self, readOnly=True)
+        ledId = QtGui.QSpinBox(self)
+        ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=readOnly)
 
         cbxKeywords = QtGui.QComboBox(self, enabled=not readOnly, editable=True)

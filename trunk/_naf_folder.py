@@ -56,7 +56,8 @@ class cFolderView(QtGui.QWidget):
         layout = QtGui.QFormLayout()
         self.setLayout(layout)
 
-        ledId = QtGui.QLineEdit(self, readOnly=True) # ID is always read only
+        ledId = QtGui.QSpinBox(self)
+        ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=not isEditable)
 
         layout.addRow(QtGui.QLabel(lbl("id")), ledId)

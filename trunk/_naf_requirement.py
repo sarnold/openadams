@@ -73,7 +73,8 @@ class cRequirementDetailsView(_naf_commons.cArtifactDetailsView):
         lblDescription = self.makeEditLinkLabel("description", readOnly)
         lblDescription.linkActivated.connect(self.sendEditSignal)
 
-        ledId = QtGui.QLineEdit(self, readOnly=True) # ID is always read only
+        ledId = QtGui.QSpinBox(self)
+        ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=readOnly)
 
         cbxKeywords = QtGui.QComboBox(self, enabled=not readOnly, editable=True)
