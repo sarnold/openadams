@@ -4,6 +4,20 @@ openADAMS Release 0.2.2 (2012-01-22)
 
 New features
 ~~~~~~~~~~~~
+?
+
+Changes
+~~~~~~~
+Artifact Id's are displayed in a spinedit rather than a textedit; of course they are
+still read only
+
+
+====================================
+openADAMS Release 0.2.2 (2012-01-22)
+====================================
+
+New features
+~~~~~~~~~~~~
 None
 
 Changes

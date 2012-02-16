@@ -30,6 +30,7 @@ import base64,  sys,  shutil
 import argparse
 
 import _naf_database as nafdb
+
 from naf_exportxml import BROKEN_IMAGE_DATA
 
 BROKEN_IMAGE_FILENAME = "missing.png"
@@ -120,7 +121,7 @@ class cHierarchicExporter(object):
                 if self.getItemForId('images', imgId, 'id') is None:
                     # no image with given id is in the database
                     return 'img src="%s" alt="Missing image" title="Missing image"' % BROKEN_IMAGE_FILENAME
-            prefix = PREFIX[nafdb.TYPE_IMAGE]
+            prefix = nafdb.PREFIX[nafdb.TYPE_IMAGE]
             return 'img src="%s_%d.%s"' % (prefix,  imgId,  imgType)
         mo = self.htmlBodyPattern.search(s)
         if not mo:
@@ -136,19 +137,7 @@ class cHierarchicExporter(object):
         self.tearDown()
         self._tearDown()    
     
-PREFIX = {
-    nafdb.TYPE_ROOT : 'RT', 
-    nafdb.TYPE_FOLDER : 'FO', 
-    nafdb.TYPE_REQUIREMENT : 'RQ',
-    nafdb.TYPE_USECASE : 'UC',
-    nafdb.TYPE_IMAGE : 'IM',
-    nafdb.TYPE_FEATURE : 'FT',
-    nafdb.TYPE_TESTCASE : 'TC',
-    nafdb.TYPE_TESTSUITE : 'TS',
-    nafdb.TYPE_SIMPLESECTION : 'SS',
-    nafdb.TYPE_COMPONENT : 'CM',
-    nafdb.TYPE_CHANGE : 'CH',
-    }
+
 
 
 class cChmExporterArgs(object):

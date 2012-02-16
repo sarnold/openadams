@@ -20,22 +20,25 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-import sqlite3, logging
+import logging, json
 
 from PyQt4 import QtGui,  QtCore
 from PyQt4.QtCore import Qt
 
 import _naf_database as nafdb
+from _naf_database import PREFIX as ARTIFACT_PREFIX
 
 
 class cItemModel(QtCore.QAbstractTableModel):
     def __init__(self, tableName):
+        # TODO: add another argument to provide a name for a table to log changes
         QtCore.QAbstractTableModel.__init__(self)
         self.tableName = tableName
         self.resetData()
         self.modelReset.connect(self.resetData)
         self.lookupModel = {} # --
         self.historyModel = {}
+        self.submitRecord = {}
 
     def rowCount(self, parent):
         return self.rowCount
@@ -110,7 +113,6 @@ class cItemModel(QtCore.QAbstractTableModel):
     def setData(self, index, value, role):
         if role != QtCore.Qt.EditRole:
             return
-        itemid = index.row()
         columnName = self.columns[index.column()]
         if value.type() == QtCore.QVariant.Int:
             value = value.toInt()[0]
@@ -120,13 +122,36 @@ class cItemModel(QtCore.QAbstractTableModel):
             value = buffer(str(value.toPyObject()))
         else:
             raise TypeError(value.typeName())
-        self.cur = nafdb.connection.cursor()
-        cmd = "update %s set '%s'=? where id==?;" % (self.tableName, columnName)
-        self.cur.execute(cmd, (value, itemid))
+        self.submitRecord[columnName] = value 
         return True
 
     def submit(self):
+        # TODO: copy table row to change log table before updating
+        # read current item in database
+        afId = self.submitRecord['id']
+        self.cur = nafdb.connection.cursor()
+        cmd = "select * from %s where id=?" % (self.tableName, )
+        self.cur.execute(cmd, (afId, ))
+        currentData = self.cur.fetchone()
+        # compare current item to submitted item, write changes to a dictionary
+        changeRecord = []
+        for column, data in zip(self.columns, currentData):
+            if self.submitRecord.has_key(column) and data != self.submitRecord[column]:
+                changeRecord.append({'column': column, 'old': data, 'new': self.submitRecord[column]})
+        # update submitted item in database
+        clause = ','.join(['%s=?' % columnName for columnName in self.submitRecord.iterkeys()])
+        cmd = 'update %s set %s where id==?;' % (self.tableName, clause)
+        values = self.submitRecord.values() + [afId, ]
+        self.cur.execute(cmd, values)
+        # save identified changes in database
+        (user, timestamp) = nafdb.getUserAndDate()
+        title = nafdb.fmtChangeTitle(self.tableName, afId)
+        (changeId, parentId, typeid, title) = nafdb.newItem('changes', title, None, makeChangeEntry=False)
+        cmd = 'update changes set description=?, afid=?, changetype=?, date=?, user=? where id=?'
+        self.cur.execute(cmd, (json.dumps(changeRecord), afId, nafdb.CHANGETYPE_EDITED, timestamp, user, changeId))        
         nafdb.connection.commit()
+        self.submitRecord = {}
+        logging.info(cmd)
         return True
 
     def revert(self):
