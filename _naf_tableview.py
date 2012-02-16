@@ -65,10 +65,8 @@ class cItemTableModel(QtCore.QAbstractTableModel):
             query = 'select id from %(tn)s where id != ? %(wc)s %(oc)s;' % {'tn':self.tableName, 'oc':self.orderClause, 'wc':self.whereClause}
         else: # NORMAL_RELATION
             query = 'select id from %(tn)s where id in (select relatedid from relations where id=?) %(wc)s %(oc)s;' % {'tn':self.tableName, 'oc':self.orderClause, 'wc':self.whereClause}
-        logging.debug(query)
         cur.execute(query, (self.parentid,))
         self.idmap = [id[0] for id in cur.fetchall()]
-        logging.debug(str(self.idmap))
         self.rowCount = len(self.idmap)
         if updateRelatedIdMap:
             # in case of sorting or filtering the relatedidmap needs not to be updated

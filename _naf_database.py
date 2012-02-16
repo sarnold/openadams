@@ -21,9 +21,8 @@
 # -------------------------------------------------------------------
 
 import sqlite3, os, os.path, sys, logging, shutil, re
-
+import getpass, datetime
 from PyQt4 import QtCore
-
 
 TYPE_ROOT = 0
 TYPE_FOLDER = 1
@@ -37,6 +36,20 @@ TYPE_SIMPLESECTION = 8
 TYPE_COMPONENT = 9
 TYPE_CHANGE = 10
 
+PREFIX = {
+    TYPE_ROOT : 'RT', 
+    TYPE_FOLDER : 'FO', 
+    TYPE_REQUIREMENT : 'RQ',
+    TYPE_USECASE : 'UC',
+    TYPE_IMAGE : 'IM',
+    TYPE_FEATURE : 'FT',
+    TYPE_TESTCASE : 'TC',
+    TYPE_TESTSUITE : 'TS',
+    TYPE_SIMPLESECTION : 'SS',
+    TYPE_COMPONENT : 'CM',
+    TYPE_CHANGE : 'CH',
+    }
+
 DEFAULT_VIEW_POS = sys.maxint
 DATABASE_VERSION = (2,)
 
@@ -45,16 +58,22 @@ VIEW_SINGLE_LINE = 1
 VIEW_MULTI_LINE = 2
 VIEW_SPECIAL = 3
 
+CHANGETYPE_CREATED = 0
+CHANGETYPE_EDITED = 1 
+CHANGETYPE_DELETED = 2
+CHANGETYPE_MOVED = 3 
+
 connection = None
 currentFileName = None
 
 class cTable(object):
-    def __init__(self, name, isFilterable, displayname, typeid, columns):
+    def __init__(self, name, isFilterable, displayname, typeid, columns, makeBackup=True):
         self.name = name
         self.displayname = QtCore.QCoreApplication.translate('cTable', displayname)
         self.columns = columns
         self.isFilterable = isFilterable
         self.typeid = typeid
+        self.makeBackup = makeBackup
         self.hash = {}
         for column in columns:
             self.hash[column.name] = column
@@ -199,7 +218,7 @@ tables = [
             cColumn(name='date', _type='text', displayname='Date', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='user', _type='text', displayname='User', default="''", view=VIEW_SINGLE_LINE),
             cColumn(name='viewpos', _type='integer', displayname='View pos', default=DEFAULT_VIEW_POS, isFilterable=False),
-        ]),
+        ], makeBackup=False),
 ]
 
 lookupTables = {
@@ -291,6 +310,10 @@ def getTableForTypeId(typeid):
     table = [table for table in tables if table.typeid == typeid]
     return table[0]
 
+def getTypeIdForTable(tableName):
+    table = [table for table in tables if table.name == tableName]
+    return table[0].typeid
+
 def getColumnNames(tableName):
     i = getTableNames().index(tableName)
     columns = tables[i].columns
@@ -361,13 +384,21 @@ def openDatabase(filename):
         logging.error('Unable to create backup file for %s' % filename)
     connection.create_function("regexp", 2, _regexp)
 
-def newItem(tableName, itemTitle, parentId):
-    logging.debug("tableName=%s, itemTitle=%s, parentId=%d" % (tableName, itemTitle, parentId))
+def newItem(tableName, itemTitle, parentId, makeChangeEntry = True) :
+    """Create a new artifact item in the database."""
+    logging.debug("tableName=%s, itemTitle=%s, parentId=%s" % (tableName, itemTitle, parentId))
     tableObj = tables[getTableNames().index(tableName)]
     cursor = connection.cursor()
     itemId = cursor.execute("select cnt from counter").fetchone()[0]
     cursor.execute("insert into %s (id, typeid, title) values(?, ?, ?)" % tableName, (itemId, tableObj.typeid, itemTitle))
-    cursor.execute("insert into relations values (?, ?)", (parentId, itemId))
+    if parentId is not None:
+        cursor.execute("insert into relations values (?, ?)", (parentId, itemId))
+    if makeChangeEntry:
+        changeId = cursor.execute("select cnt from counter").fetchone()[0]
+        (user, timestamp) = getUserAndDate()
+        title = fmtChangeTitle(tableName, itemId)
+        cursor.execute("insert into changes (id, typeid, title, description, afid, changetype, date, user) values (?,?,?,?,?,?,?,?)",
+                       (changeId, TYPE_CHANGE, title, "", itemId, CHANGETYPE_CREATED, timestamp, user))
     connection.commit()
     return (itemId, parentId, tableObj.typeid, itemTitle)
 
@@ -396,6 +427,18 @@ def copyItem(srcId, typeId, parentId, fileName):
     connection.commit()
     destcursor.execute("select title from %s where id=?" % tableName, (newId,))
     return (newId, parentId, typeId, destcursor.fetchone()[0])
+
+def getUserAndDate():
+    try:
+        user = getpass.getuser()
+    except:
+        user = "?"
+    timestamp = datetime.datetime.now().isoformat() 
+    return (user, timestamp)
+
+def fmtChangeTitle(tableName, afId):
+    (user, timestamp) = getUserAndDate()
+    return "%s-%05d / %s / %s" % (PREFIX[getTypeIdForTable(tableName)], afId, user, timestamp)
 
 def countItemsRelatedToId(itemId):
     cursor = connection.cursor()
@@ -494,7 +537,7 @@ def createEmptyDatabase(filename, overwriteExisting=True):
     #--- create internal info table
     cursor.execute("create table __info__ (version);")
     cursor.execute("insert into __info__ (version) values (?)", DATABASE_VERSION)
-
+    
     # TODO: add trigger and tables for wastebasket feature
 
     conn.commit()

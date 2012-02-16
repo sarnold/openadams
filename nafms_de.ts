@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
 <context>
     <name>Dialog</name>
     <message>
@@ -12,7 +11,7 @@
 <context>
     <name>cAbout</name>
     <message>
-        <location filename="naf_editor.py" line="418"/>
+        <location filename="naf_editor.py" line="510"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
@@ -105,7 +104,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 &lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="420"/>
+        <location filename="naf_editor.py" line="512"/>
         <source>
         &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
         &lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Editor %s&lt;/b&gt;&lt;/p&gt;
@@ -386,55 +385,113 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cEditWin</name>
     <message>
-        <location filename="naf_editor.py" line="309"/>
+        <location filename="naf_editor.py" line="310"/>
         <source>Edit folder</source>
         <translation>Ordner bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="318"/>
+        <location filename="naf_editor.py" line="319"/>
         <source>Edit field</source>
         <translation>Feld bearbeiten</translation>
     </message>
 </context>
 <context>
+    <name>cExportToChmDialog</name>
+    <message>
+        <location filename="naf_editor.py" line="420"/>
+        <source>Export to Compressed Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="426"/>
+        <source>Help Project Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="432"/>
+        <source>Project title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="437"/>
+        <source>Output folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="445"/>
+        <source>Stylesheet</source>
+        <translation type="unfinished">Stylesheet</translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="454"/>
+        <source>Path to Help Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="472"/>
+        <source>Open Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="478"/>
+        <source>Use CSS Stylesheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="478"/>
+        <source>CSS Stylesheet Files (*.css);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="484"/>
+        <source>Help Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="484"/>
+        <source>Executable files (*.exe);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>cExportToXmlDialog</name>
     <message>
-        <location filename="naf_editor.py" line="362"/>
+        <location filename="naf_editor.py" line="363"/>
         <source>Export to Xml</source>
         <translation>Nach Xml exportieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="365"/>
+        <location filename="naf_editor.py" line="366"/>
         <source>Stylesheet</source>
         <translation>Stylesheet</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="371"/>
+        <location filename="naf_editor.py" line="372"/>
         <source>Output file</source>
         <translation>Ausgabedatei</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="377"/>
+        <location filename="naf_editor.py" line="378"/>
         <source>Plain format</source>
         <translation>Einfaches Format</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="392"/>
+        <location filename="naf_editor.py" line="393"/>
         <source>Use Xsl Stylesheet</source>
         <translation>Xsl Stylesheet</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="392"/>
+        <location filename="naf_editor.py" line="393"/>
         <source>Xsl Stylesheet Files (*.xsl);;All files (*.*)</source>
         <translation>Xsl Stylesheet Dateien (*.xsl);; Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="398"/>
+        <location filename="naf_editor.py" line="399"/>
         <source>Save to</source>
         <translation>Speichern unter</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="398"/>
+        <location filename="naf_editor.py" line="399"/>
         <source>Xml Files (*.xml);;All files (*.*)</source>
         <translation>Xml Dateien (*.xml);;Alle Dateien (*.*)</translation>
     </message>
@@ -654,28 +711,28 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cMainController</name>
     <message>
-        <location filename="naf_editor.py" line="96"/>
+        <location filename="naf_editor.py" line="97"/>
         <source>New Folder</source>
         <translation>Neuer Ordner</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="119"/>
+        <location filename="naf_editor.py" line="120"/>
         <source>Delete folder</source>
         <translation>Ordner löschen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="119"/>
+        <location filename="naf_editor.py" line="120"/>
         <source>Folder is not empty!
 Only empty folders could be deleted.</source>
         <translation>Ordner nicht leer! Nur leere Ordner können gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="124"/>
+        <location filename="naf_editor.py" line="125"/>
         <source>Delete item</source>
         <translation>Eintrag löschen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="124"/>
+        <location filename="naf_editor.py" line="125"/>
         <source>Item is related to %1 item(s)
 Found %2 item(s) related to this item.
 
@@ -685,57 +742,57 @@ Really delete this item?</source>
 Eintrag wirklich löschen?</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="266"/>
+        <location filename="naf_editor.py" line="267"/>
         <source>None</source>
         <translation>Keine</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="279"/>
+        <location filename="naf_editor.py" line="280"/>
         <source>Number of items</source>
         <translation>Anzahl Einträge</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="283"/>
+        <location filename="naf_editor.py" line="284"/>
         <source>Features w/o requirements</source>
         <translation>Features ohne Anforderungen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="284"/>
+        <location filename="naf_editor.py" line="285"/>
         <source>Requirements w/o testcases</source>
         <translation>Anforderungen ohne Testfälle</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="288"/>
+        <location filename="naf_editor.py" line="289"/>
         <source>Requirements w/o components</source>
         <translation>Anforderungen ohne Komponenten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="286"/>
+        <location filename="naf_editor.py" line="287"/>
         <source>Requirements w/o features</source>
         <translation>Anforderungen ohne Features</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="289"/>
+        <location filename="naf_editor.py" line="290"/>
         <source>Requirements w/o usecases</source>
         <translation>Anforderungen ohne Anwendungsfälle</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="291"/>
+        <location filename="naf_editor.py" line="292"/>
         <source>Usecases w/o requirements</source>
         <translation>Anwendungsfälle ohne Anforderungen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="292"/>
+        <location filename="naf_editor.py" line="293"/>
         <source>Components w/o requirements</source>
         <translation>Komponenten ohne Anforderungen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="293"/>
+        <location filename="naf_editor.py" line="294"/>
         <source>Testsuites w/o testcases</source>
         <translation>Testsuitem ohne Testfälle</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="294"/>
+        <location filename="naf_editor.py" line="295"/>
         <source>Testcases w/o testsuites</source>
         <translation>Testfälle ohne Testsuiten</translation>
     </message>
@@ -748,57 +805,57 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Artefakt Browser</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="554"/>
+        <location filename="naf_editor.py" line="646"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="556"/>
+        <location filename="naf_editor.py" line="648"/>
         <source>Exit application</source>
         <translation>Anwendung beenden</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="711"/>
+        <location filename="naf_editor.py" line="812"/>
         <source>Open database</source>
         <translation>Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="561"/>
+        <location filename="naf_editor.py" line="653"/>
         <source>Open existing database</source>
         <translation>Vorhandene Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="743"/>
+        <location filename="naf_editor.py" line="882"/>
         <source>New database</source>
         <translation>Neue Datenbank</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="566"/>
+        <location filename="naf_editor.py" line="658"/>
         <source>Create new database</source>
         <translation>Neue Datenbank erstellen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="572"/>
+        <location filename="naf_editor.py" line="667"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="574"/>
+        <location filename="naf_editor.py" line="669"/>
         <source>About this program</source>
         <translation>Über dieses Programm</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="644"/>
+        <location filename="naf_editor.py" line="739"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="672"/>
+        <location filename="naf_editor.py" line="769"/>
         <source>&amp;View</source>
         <translation>&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="676"/>
+        <location filename="naf_editor.py" line="773"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
@@ -808,52 +865,52 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Keine Datenbank</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="743"/>
+        <location filename="naf_editor.py" line="882"/>
         <source>Database Files (*.db);;All files (*.*)</source>
         <translation>Datenbank-Dateien (*.db);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="585"/>
+        <location filename="naf_editor.py" line="680"/>
         <source>Add text section</source>
         <translation>Textabschnitt hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="601"/>
+        <location filename="naf_editor.py" line="696"/>
         <source>Add feature</source>
         <translation>Feature hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="589"/>
+        <location filename="naf_editor.py" line="684"/>
         <source>Add requirement</source>
         <translation>Anforderung hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="593"/>
+        <location filename="naf_editor.py" line="688"/>
         <source>Add usecase</source>
         <translation>Anwendungsfall hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="613"/>
+        <location filename="naf_editor.py" line="708"/>
         <source>Add component</source>
         <translation>Komponente hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="605"/>
+        <location filename="naf_editor.py" line="700"/>
         <source>Add testcase</source>
         <translation>Testfall hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="609"/>
+        <location filename="naf_editor.py" line="704"/>
         <source>Add testsuite</source>
         <translation>Testsuite hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="597"/>
+        <location filename="naf_editor.py" line="692"/>
         <source>Add image</source>
         <translation>Bild hinzufügen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="679"/>
+        <location filename="naf_editor.py" line="776"/>
         <source>Toolbar</source>
         <translation>Werkzeugleiste</translation>
     </message>
@@ -863,12 +920,12 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="819"/>
+        <location filename="naf_editor.py" line="959"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="582"/>
+        <location filename="naf_editor.py" line="677"/>
         <source>Add folder</source>
         <translation>Ordner hinzufügen</translation>
     </message>
@@ -883,7 +940,7 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Strg-C</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="625"/>
+        <location filename="naf_editor.py" line="720"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
@@ -898,44 +955,65 @@ Eintrag wirklich löschen?</translation>
         <translation type="obsolete">Löschen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="647"/>
+        <location filename="naf_editor.py" line="742"/>
         <source>Recent databases</source>
         <translation>Zuletzt geöffnete Datenbanken</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="617"/>
+        <location filename="naf_editor.py" line="712"/>
         <source>Edit item</source>
         <translation>Eintrag bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="620"/>
+        <location filename="naf_editor.py" line="715"/>
         <source>Copy item</source>
         <translation>Eintrag kopieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="631"/>
+        <location filename="naf_editor.py" line="726"/>
         <source>Delete item</source>
         <translation>Eintrag löschen</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="656"/>
+        <location filename="naf_editor.py" line="752"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="549"/>
+        <location filename="naf_editor.py" line="641"/>
         <source>Report</source>
         <translation>Bericht</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="569"/>
         <source>Export database</source>
-        <translation>Datenbank exportieren</translation>
+        <translation type="obsolete">Datenbank exportieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="490"/>
+        <location filename="naf_editor.py" line="582"/>
         <source>Artifact editor</source>
         <translation>Artefakt Editor</translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="661"/>
+        <source>Export database to XML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="664"/>
+        <source>Export database to CHM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="853"/>
+        <source>Successfully created
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="854"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -994,32 +1072,32 @@ Eintrag wirklich löschen?</translation>
 <context>
     <name>cReportView</name>
     <message>
-        <location filename="naf_editor.py" line="449"/>
+        <location filename="naf_editor.py" line="541"/>
         <source>Report</source>
         <translation>Bericht</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="454"/>
+        <location filename="naf_editor.py" line="546"/>
         <source>&amp;Update</source>
         <translation>Akt&amp;ualisieren</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="456"/>
+        <location filename="naf_editor.py" line="548"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="468"/>
+        <location filename="naf_editor.py" line="560"/>
         <source>Save Report</source>
         <translation>Bericht speichern</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="468"/>
+        <location filename="naf_editor.py" line="560"/>
         <source>Html Files (*.html *.htm)</source>
         <translation>Html Dateien (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="478"/>
+        <location filename="naf_editor.py" line="570"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -1045,7 +1123,7 @@ Eintrag wirklich löschen?</translation>
         <translation>Anforderung</translation>
     </message>
     <message>
-        <location filename="_naf_requirement.py" line="183"/>
+        <location filename="_naf_requirement.py" line="188"/>
         <source>Related Usecases</source>
         <translation>Zugeordnete Anwendungsfälle</translation>
     </message>
@@ -1060,14 +1138,19 @@ Eintrag wirklich löschen?</translation>
         <translation>Anforderung bearbeiten</translation>
     </message>
     <message>
-        <location filename="_naf_requirement.py" line="192"/>
+        <location filename="_naf_requirement.py" line="197"/>
         <source>Related Testcases</source>
         <translation>Zugeordnete Testfälle</translation>
     </message>
     <message>
-        <location filename="_naf_requirement.py" line="200"/>
+        <location filename="_naf_requirement.py" line="205"/>
         <source>Related Components</source>
         <translation>Zugeordnete Komponenten</translation>
+    </message>
+    <message>
+        <location filename="_naf_requirement.py" line="179"/>
+        <source>Related Features</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1732,6 +1815,11 @@ Eintrag wirklich löschen?</translation>
         <location filename="_naf_usecase.py" line="147"/>
         <source>Edit usecase</source>
         <translation>Anwendungsfall bearbeiten</translation>
+    </message>
+    <message>
+        <location filename="_naf_usecase.py" line="160"/>
+        <source>Related Features</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
