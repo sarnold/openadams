@@ -65,7 +65,8 @@ class cSimplesectionView(_naf_commons.cArtifactDetailsView):
         lblContent.linkActivated.connect(self.sendEditSignal)
         layout.addWidget(lblContent, 3, 0)
 
-        ledId = QtGui.QLineEdit(self, readOnly=True)
+        ledId = QtGui.QSpinBox(self)
+        ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=not isEditable)
         cbxKeywords = QtGui.QComboBox(self, enabled=isEditable, editable=True)
         cbxKeywords.setModel(self.mapper.model().getHistoryModel('keywords_view'))
