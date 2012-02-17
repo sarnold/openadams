@@ -31,5 +31,6 @@ _version = {
     'wcmixed' : "$WCMIXED?yes:no$",
     'wcmods'  : "$WCMODS?tainted:untainted$"
 }
+SVN_STR = "BDATE %(bdate)s; WCREV %(wcrev)s (%(wcmods)s); WCDATE %(wcdate)s; WCRANGE %(wcrange)s; WCMIXED %(wcmixed)s" % _version
 VERSION_STR = "VERSION %(version)s; BDATE %(bdate)s; WCREV %(wcrev)s (%(wcmods)s); WCDATE %(wcdate)s; WCRANGE %(wcrange)s; WCMIXED %(wcmixed)s" % _version
 
