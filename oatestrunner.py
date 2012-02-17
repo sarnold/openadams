@@ -80,9 +80,6 @@ class cMainWin(QtGui.QMainWindow):
         self.setCentralWidget(self.mainView)
 
 # ------------------------------------------------------------------------------
-def createTestRunDatabase(srcDatabaseName, destDatabaseName):
-    
-# ------------------------------------------------------------------------------
 def start():
     parser = argparse.ArgumentParser(prog=PROGNAME,
         description=ABOUTMSG,
