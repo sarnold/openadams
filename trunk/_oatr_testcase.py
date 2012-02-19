@@ -1,8 +1,9 @@
 # -*- coding: utf-8  -*-
 # $Id: _naf_testcase.py 50 2012-02-16 18:15:16Z achimk $
 
+# TODO: check if this file is obsolete
 # -------------------------------------------------------------------
-# Copyright 2010 Achim Köhler
+# Copyright 2010 Achim Kï¿½hler
 #
 # This file is part of openADAMS.
 #
