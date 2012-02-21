@@ -35,6 +35,8 @@ import _oatr_testrun
 import _oatr_testsuite
 import _oatr_tableview
 import _oatr_database
+import _oatr_commons
+import _naf_resources
 
 PROGNAME = 'oatestrunner'
 ABOUTMSG = u"""oatestrunner %s
@@ -112,6 +114,8 @@ class cMainWin(QtGui.QMainWindow):
         self.tabView.addTab(self.testsuiteDetailView, 'Testsuite')
         self.tabView.addTab(self.testruninfoDetailView, 'Test Run Info')
         
+        self.setupMenu()
+        
         #TODO remove this after testing
         self.createSampleDatabase()
         self.tableView.resizeColumnsToContents() 
@@ -148,7 +152,47 @@ class cMainWin(QtGui.QMainWindow):
         self.testruninfoModel.reset()
         self.testruninfoModel.select()
         self.testruninfoDetailView.mapper.toFirst()
+    
+    def setupMenu(self):
+        exitAction = QtGui.QAction(self.tr('Exit'), self, statusTip=self.tr('Exit application'),
+                                   triggered=self.close, shortcut=QtGui.QKeySequence.Close)
+        openAction = QtGui.QAction(QtGui.QIcon(':/icons/database_open.png'), self.tr('Open test run'), self, statusTip=self.tr('Open existing test run'),
+                                   triggered = self.openDatabase,shortcut=QtGui.QKeySequence.Open)
+        newAction = QtGui.QAction(QtGui.QIcon(':/icons/database_new.png'), self.tr('New test run'), self, statusTip=self.tr('Create new test run'),
+                                  triggered=self.newDatabase, shortcut=QtGui.QKeySequence.New)
+        self.reportAction = QtGui.QAction(self.tr('Create test run report'), self, statusTip="Create a report of the test run",
+            enabled=False, triggered=self.createReport)
+        self.execTestcaseAction = QtGui.QAction(self.tr('Execute test'), self, statusTip="Execute selected testcase",
+            enabled=False, triggered=self.execTestcase)
+        aboutAction = QtGui.QAction(self.tr('About'), self, statusTip = self.tr('About this program'),
+                                    triggered=self.showAbout, shortcut=QtGui.QKeySequence.HelpContents)
+        
+        menuBar = self.menuBar()
+        fileMenu = menuBar.addMenu(self.tr('&File'))
+        map(fileMenu.addAction, (newAction, openAction, self.reportAction, exitAction))
+        execMenu = menuBar.addMenu(self.tr('&Run'))
+        map(execMenu.addAction, (self.execTestcaseAction, ))
+        helpMenu = menuBar.addMenu(self.tr('&Help'))
+        map(helpMenu.addAction, (aboutAction, ))
+        
+        self.toolBar = self.addToolBar(self.tr('Toolbar'))
+        self.toolBar.pyqtConfigure(objectName='maintoolbar')
+        map(self.toolBar.addAction, (openAction, newAction))
 
+    def createReport(self):
+        pass
+    
+    def openDatabase(self):
+        pass
+    
+    def newDatabase(self):
+        pass
+    
+    def execTestcase(self):
+        pass
+    
+    def showAbout(self):
+        pass
 # ------------------------------------------------------------------------------
 def start():
     parser = argparse.ArgumentParser(prog=PROGNAME,
