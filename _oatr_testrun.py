@@ -2,9 +2,7 @@ from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
 
 import _oatr_database as oadb
-import _naf_textviewer
-import _naf_database as nafdb
-import _oatr_database
+import _oatr_commons
 
 class cTestrunModel(QtSql.QSqlRelationalTableModel):
     def __init__(self, *arg, **kwarg):
@@ -22,7 +20,7 @@ class cTestrunModel(QtSql.QSqlRelationalTableModel):
         """
         if role == Qt.BackgroundRole and index.column() == 1:
             status = super(cTestrunModel, self).data(index, Qt.DisplayRole)
-            status = _oatr_database.LOOKUP_TABLES['statusLUT'].index(str(status.toString()))            
+            status = oadb.LOOKUP_TABLES['statusLUT'].index(str(status.toString()))            
             return self.backgroundBrushes[status]
         return super(cTestrunModel, self).data(index, role)
 
@@ -55,16 +53,11 @@ class cTestrunDetailsView(QtGui.QWidget):
         ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=True)
         ledKeywords = QtGui.QLineEdit(self, readOnly=True)
-        tedPurpose = _naf_textviewer.cTextEditor(self, readOnly=True)
-        tedPurpose.setImageProvider(nafdb.getImageForId)
-        tedPrerequisite = _naf_textviewer.cTextEditor(self, readOnly=True)
-        tedPrerequisite.setImageProvider(nafdb.getImageForId)
-        tedTestdata = _naf_textviewer.cTextEditor(self, readOnly=True)
-        tedTestdata.setImageProvider(nafdb.getImageForId)
-        tedSteps = _naf_textviewer.cTextEditor(self, readOnly=True)
-        tedSteps.setImageProvider(nafdb.getImageForId)
-        tedNotes = _naf_textviewer.cTextEditor(self, readOnly=True)
-        tedNotes.setImageProvider(nafdb.getImageForId)
+        tedPurpose = _oatr_commons.getTextViewer(self)
+        tedPrerequisite = _oatr_commons.getTextViewer(self)
+        tedTestdata = _oatr_commons.getTextViewer(self)
+        tedSteps = _oatr_commons.getTextViewer(self)
+        tedNotes = _oatr_commons.getTextViewer(self)
         ledScripturl = QtGui.QLineEdit(self, readOnly=True)
         ledPriority = QtGui.QLineEdit(self, readOnly=True)
         

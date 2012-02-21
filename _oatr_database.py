@@ -5,6 +5,7 @@
 import sqlite3
 import os.path
 import copy
+import re
 
 import _naf_database as nafdb
 
@@ -59,6 +60,9 @@ def createTestRunTables(dbObj):
     dbObj.exec_(_getCreateTableStatement(testsuiteTable))
     #
     dbObj.exec_(_getCreateTableStatement(TESTRUNINFO_TABLE))
+    #
+    imagesTable = nafdb.getTableForTypeId(nafdb.TYPE_IMAGE)
+    dbObj.exec_(_getCreateTableStatement(imagesTable))
     
     
 class CursorProxy(object):
@@ -68,8 +72,61 @@ class CursorProxy(object):
     def exec_(self, s):
         self.cursor.execute(s)
         
-    
 def createTestRunDatabase(srcDatabaseName, destDatabaseName, srcTestsuiteId, infoDict):
+    """
+    Create a database file for the test run. 
+    srcDatabaseName is the filename of the database with the testsuite and testcases
+    destDatabaseName is the filename of the database to be created
+    srcTestsuiteId is the id of the testsuite in srcDatabaseName to be run 
+    """
+    # get the columns of testcases
+    columnNames = nafdb.getColumnNames('testcases')
+    columnNamesList = ','.join(columnNames)
+    
+    #createTestRunTables(destDatabaseName)
+    conn = sqlite3.connect(destDatabaseName)
+    cursor = conn.cursor()
+    cursorProxy = CursorProxy(cursor)
+    createTestRunTables(cursorProxy)
+    cursor.execute("ATTACH DATABASE ? AS srcdb", (srcDatabaseName,))
+    #--- create lookup tables for enumeration types
+    for name, values in LOOKUP_TABLES.iteritems():
+        cursor.execute("CREATE TABLE %s (key INTEGER, value TEXT);" % name)
+        for value in values:
+            cursor.execute("INSERT INTO %s VALUES (?, ?);" % name, (values.index(value), value))
+    #--- populate artifact tables
+    command = 'INSERT INTO testruns (%s) select * from srcdb.testcases where id in (select relatedid from relations where id=?)' % columnNamesList
+    cursor.execute(command, (srcTestsuiteId,))
+    # copy images referenced by any testcases from src into dest
+    # --- first, identifiy table columns which may reference an image
+    testcaseTable = nafdb.getTableForTypeId(nafdb.TYPE_TESTCASE)
+    columns = [c.name for c in testcaseTable.columns if c.view == nafdb.VIEW_MULTI_LINE]
+    # --- next, read all fields containing an img tag
+    imageIds = set()
+    pattern = re.compile(r'<img src="#(\d+)"')
+    command = """select %s from testcases where %s like '%%<img src="%%'"""
+    for c in columns:
+        # iterate all fields which references an image and extract the image id's
+        cursor.execute(command % (c, c))
+        row = cursor.fetchone()
+        if row is None: continue
+        result = pattern.findall(row[0])
+        map(imageIds.add , [int(r) for r in result])
+    cursor.execute("INSERT INTO images SELECT * FROM srcdb.images WHERE id IN %s" %  str(tuple(imageIds)))
+    # copy testsuite table from src to dest
+    cursor.execute('INSERT INTO testsuites SELECT * FROM srcdb.testsuites WHERE id=?', (srcTestsuiteId,))
+    # populate info table
+    columnNames = getColumnNames(TESTRUNINFO_TABLE)
+    columnNamesList = ','.join(columnNames)
+    command = 'insert into testruninfo (%s) values (%s)' % (columnNamesList, ','.join(['?']*len(columnNames)))
+    values = [infoDict[k] for k in columnNames]
+    cursor.execute(command, values)
+    # done everything, commit and close
+    conn.commit()
+    conn.close()
+    
+    
+def _depr_createTestRunDatabase(srcDatabaseName, destDatabaseName, srcTestsuiteId, infoDict):
     """
     Create a database file for the test run. 
     srcDatabaseName is the filename of the database with the testsuite and testcases
@@ -101,6 +158,23 @@ def createTestRunDatabase(srcDatabaseName, destDatabaseName, srcTestsuiteId, inf
     for testcaseId in testcaseIds:
         srcCursor.execute(srcCommand, testcaseId)
         destCursor.execute(destCommand, srcCursor.fetchone())
+    # copy images referenced by any testcases from src into dest
+    # --- first, identifiy table columns which may reference an image
+    testcaseTable = nafdb.getTableForTypeId(nafdb.TYPE_TESTCASE)
+    columns = [c.name for c in testcaseTable.columns if c.view == nafdb.VIEW_MULTI_LINE]
+    # --- next, read all fields containing an img tag
+    imageIds = set()
+    pattern = re.compile(r'<img src="#(\d+)"')
+    srcCommand = """select %s from testcases where %s like '%%<img src="%%'"""
+    for c in columns:
+        # iterate all fields which references an image and extract the image id's
+        srcCursor.execute(srcCommand % (c, c))
+        row = srcCursor.fetchone()
+        if row is None: continue
+        result = pattern.findall(row[0])
+        map(imageIds.add , [int(r) for r in result])
+    print set(imageIds)
+    
     # copy testsuite table from src to dest
     columnNames = nafdb.getColumnNames('testsuites')
     columnNamesList = ','.join(columnNames)

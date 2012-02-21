@@ -5,7 +5,7 @@ from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
 
 import _oatr_database as oadb
-import _naf_textviewer
+import _oatr_commons
 import _naf_database as nafdb
 
 class cTestsuiteView(QtGui.QWidget):
@@ -26,7 +26,7 @@ class cTestsuiteView(QtGui.QWidget):
         ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=True)
         ledKeywords = QtGui.QLineEdit(self, readOnly=True)
-        tedDescription = _naf_textviewer.cTextEditor(self, readOnly=True)
+        tedDescription = _oatr_commons.getTextViewer(self)
         ledExecorder = QtGui.QLineEdit(self, readOnly=True)
         
 
