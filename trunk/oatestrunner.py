@@ -25,6 +25,7 @@ import sys
 import argparse
 import logging
 import os.path
+import traceback
 
 from PyQt4 import QtGui,  QtCore,  QtSql
 from PyQt4.QtCore import Qt
@@ -37,6 +38,7 @@ import _oatr_tableview
 import _oatr_database
 import _oatr_commons
 import _naf_resources
+import _naf_about
 
 PROGNAME = 'oatestrunner'
 ABOUTMSG = u"""oatestrunner %s
@@ -115,10 +117,7 @@ class cMainWin(QtGui.QMainWindow):
         self.tabView.addTab(self.testruninfoDetailView, 'Test Run Info')
         
         self.setupMenu()
-        
-        #TODO remove this after testing
-        self.createSampleDatabase()
-        self.tableView.resizeColumnsToContents() 
+        self.mainView.setEnabled(False)
 
     def testrunTableViewSelectionHandler(self,  index):
         row = index.row()
@@ -136,14 +135,17 @@ class cMainWin(QtGui.QMainWindow):
             print('\n'.join(msg))
         
     def createSampleDatabase(self):
-        testFileName = 'tests/samplerun_out.db'
+        testFileName = 'tests/samplerun_out.dbt'
         if os.path.exists(testFileName):
             os.remove(testFileName)
         _oatr_database.createTestRunDatabase('tests/samplerun_in.db', testFileName, 11, 
                                              {'title': 'Info title', 'description': 'Info description', 'source': 'unknown'})
-        self.database.setDatabaseName(testFileName)
-        self.database.open()
+        self._loadDatabase(testFileName)
         self.database.exec_('update testruns set status=1 where id=14')
+
+    def _loadDatabase(self, fileName):
+        self.database.setDatabaseName(fileName)
+        self.database.open()
         self.testrunModel.reset()
         self.testrunModel.select()
         self.testsuiteModel.reset()
@@ -152,20 +154,27 @@ class cMainWin(QtGui.QMainWindow):
         self.testruninfoModel.reset()
         self.testruninfoModel.select()
         self.testruninfoDetailView.mapper.toFirst()
-    
+        self.tableView.resizeColumnsToContents() 
+        self.actionsRequiringDatabase.setEnabled(True)
+        self.mainView.setEnabled(True)
+        
     def setupMenu(self):
         exitAction = QtGui.QAction(self.tr('Exit'), self, statusTip=self.tr('Exit application'),
                                    triggered=self.close, shortcut=QtGui.QKeySequence.Close)
         openAction = QtGui.QAction(QtGui.QIcon(':/icons/database_open.png'), self.tr('Open test run'), self, statusTip=self.tr('Open existing test run'),
-                                   triggered = self.openDatabase,shortcut=QtGui.QKeySequence.Open)
+                                   triggered = self.openActionHandler,shortcut=QtGui.QKeySequence.Open)
         newAction = QtGui.QAction(QtGui.QIcon(':/icons/database_new.png'), self.tr('New test run'), self, statusTip=self.tr('Create new test run'),
                                   triggered=self.newDatabase, shortcut=QtGui.QKeySequence.New)
         self.reportAction = QtGui.QAction(self.tr('Create test run report'), self, statusTip="Create a report of the test run",
-            enabled=False, triggered=self.createReport)
+            triggered=self.createReport)
         self.execTestcaseAction = QtGui.QAction(self.tr('Execute test'), self, statusTip="Execute selected testcase",
-            enabled=False, triggered=self.execTestcase)
+            triggered=self.execTestcase)
         aboutAction = QtGui.QAction(self.tr('About'), self, statusTip = self.tr('About this program'),
                                     triggered=self.showAbout, shortcut=QtGui.QKeySequence.HelpContents)
+        self.actionsRequiringDatabase = QtGui.QActionGroup(self)
+        self.actionsRequiringDatabase.addAction(self.reportAction)
+        self.actionsRequiringDatabase.addAction(self.execTestcaseAction)
+        self.actionsRequiringDatabase.setEnabled(False)
         
         menuBar = self.menuBar()
         fileMenu = menuBar.addMenu(self.tr('&File'))
@@ -182,8 +191,16 @@ class cMainWin(QtGui.QMainWindow):
     def createReport(self):
         pass
     
-    def openDatabase(self):
-        pass
+    def openActionHandler(self, sender=None, fileName=None):
+        if fileName is None:
+            fileName = unicode(QtGui.QFileDialog.getOpenFileName(self, self.tr("Open testrun database"), ".", self.tr("Testrun Database Files (*.dbt);;All files (*.*)")))
+        if fileName == '':
+            return
+        try:
+            self._loadDatabase(fileName)
+        except:
+            (type_, value, tb) = sys.exc_info()
+            self.showExceptionMessageBox(type_, value, tb)
     
     def newDatabase(self):
         pass
@@ -192,7 +209,27 @@ class cMainWin(QtGui.QMainWindow):
         pass
     
     def showAbout(self):
-        pass
+        aboutText = str(self.tr("""
+        <div align="center" style="font-size:large;">
+        <p style="font-size:x-large;"><b>openADAMS Testrunner %s</b></p>
+        <p><small>[%s]</small><p>
+        <p>Copyright (C) 2012 Achim K&ouml;hler</p>
+        <p>Testrunner for the Open "Artifact Documentation And Management System"</p>
+        <p>See <a href="https://sourceforge.net/projects/openadams/">openADAMS Homepage</a> for details.</p>
+        <blockquote>This program comes with ABSOLUTELY NO WARRANTY;<br/>
+        This is free software, and you are welcome to redistribute it<br/>
+        under the terms of the GNU General Public License; <br/>
+        see the accompanied file COPYING for details.
+        </blockquote>
+        </div>
+        """)) % (VERSION, VERSION_STR)
+        _naf_about.cAbout(self, aboutText).exec_()
+    
+    
+    def showExceptionMessageBox(self, type_, value, tb):
+        msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
+        msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
+        msgBox.exec_()
 # ------------------------------------------------------------------------------
 def start():
     parser = argparse.ArgumentParser(prog=PROGNAME,
