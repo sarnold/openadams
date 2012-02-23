@@ -68,6 +68,7 @@ import _naf_textviewer
 import _naf_resources
 import naf_exportxml
 import naf_exportchm
+import _naf_about
 
 MAX_RECENT_FILES = 5
 
@@ -501,35 +502,6 @@ class  cExportToChmDialog(QtGui.QDialog):
         b = os.path.exists(styleSheetName) or (styleSheetName == '')
         self.styleSheetName.setStyleSheet(["background: #FFB0B0", ""][b])
         self.btnOk.setEnabled(b and self.validateProjectName(self.projectName.text()))
-        
-
-class cAbout(QtGui.QDialog):
-    def __init__(self, parent):
-        super(cAbout, self).__init__(parent)
-        self.setSizeGripEnabled(False)
-        self.setWindowTitle(self.tr("About"))
-        self.aboutText = QtGui.QLabel(self, openExternalLinks=True)
-        self.aboutText.setText(str(self.tr("""
-        <div align="center" style="font-size:large;">
-        <p style="font-size:x-large;"><b>openADAMS Editor %s</b></p>
-        <p><small>[%s]</small><p>
-        <p>Copyright (C) 2010 Achim K&ouml;hler</p>
-        <p>Editor for the Open "Artifact Documentation And Management System"</p>
-        <p>See <a href="https://sourceforge.net/projects/openadams/">openADAMS Homepage</a> for details.</p>
-        <blockquote>This program comes with ABSOLUTELY NO WARRANTY;<br/>
-        This is free software, and you are welcome to redistribute it<br/>
-        under the terms of the GNU General Public License; <br/>
-        see the accompanied file COPYING for details.
-        </blockquote>
-        </div>
-        """)) % (VERSION, VERSION_STR))
-        self.aboutText.setFrameStyle(QtGui.QFrame.Panel | QtGui.QFrame.Sunken)
-        self.buttonBox = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Close)
-        self.buttonBox.rejected.connect(self.reject)
-        layout = QtGui.QVBoxLayout()
-        layout.addWidget(self.aboutText)
-        layout.addWidget(self.buttonBox)
-        self.setLayout(layout)
 
 
 class cReportView(QtGui.QDialog):
@@ -941,7 +913,21 @@ class cMainWin(QtGui.QMainWindow):
         self.addActionGroup.setEnabled(True)
 
     def showAbout(self):
-        cAbout(self).exec_()
+        aboutText = str(self.tr("""
+        <div align="center" style="font-size:large;">
+        <p style="font-size:x-large;"><b>openADAMS Editor %s</b></p>
+        <p><small>[%s]</small><p>
+        <p>Copyright (C) 2010 Achim K&ouml;hler</p>
+        <p>Editor for the Open "Artifact Documentation And Management System"</p>
+        <p>See <a href="https://sourceforge.net/projects/openadams/">openADAMS Homepage</a> for details.</p>
+        <blockquote>This program comes with ABSOLUTELY NO WARRANTY;<br/>
+        This is free software, and you are welcome to redistribute it<br/>
+        under the terms of the GNU General Public License; <br/>
+        see the accompanied file COPYING for details.
+        </blockquote>
+        </div>
+        """)) % (VERSION, VERSION_STR)
+        _naf_about.cAbout(self, aboutText).exec_()
 
     def showReportView(self):
         self.reportView.show()
