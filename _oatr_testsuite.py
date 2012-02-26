@@ -46,3 +46,4 @@ class cTestsuiteView(QtGui.QWidget):
         self.mapper.addMapping(tedDescription, model.fieldIndex('description'))
         self.mapper.addMapping(ledExecorder, model.fieldIndex('execorder'))
         
+        
