@@ -29,16 +29,15 @@ import traceback
 
 from PyQt4 import QtGui,  QtCore,  QtSql
 from PyQt4.QtCore import Qt
-from PyQt4.QtCore import QCoreApplication, QObject, QString
 
 from _naf_version import VERSION, VERSION_STR, SVN_STR
 import _oatr_testrun
 import _oatr_testsuite
 import _oatr_tableview
 import _oatr_database
-import _oatr_commons
-import _naf_resources
 import _naf_about
+import _naf_resources
+import _oatr_importwizard
 
 PROGNAME = 'oatestrunner'
 ABOUTMSG = u"""oatestrunner %s
@@ -155,6 +154,7 @@ class cMainWin(QtGui.QMainWindow):
         self.testruninfoModel.select()
         self.testruninfoDetailView.mapper.toFirst()
         self.tableView.resizeColumnsToContents() 
+        self.tableView.selectRow(0)
         self.actionsRequiringDatabase.setEnabled(True)
         self.mainView.setEnabled(True)
         
@@ -189,6 +189,7 @@ class cMainWin(QtGui.QMainWindow):
         map(self.toolBar.addAction, (openAction, newAction))
 
     def createReport(self):
+        # TODO: code this method
         pass
     
     def openActionHandler(self, sender=None, fileName=None):
@@ -203,9 +204,23 @@ class cMainWin(QtGui.QMainWindow):
             self.showExceptionMessageBox(type_, value, tb)
     
     def newDatabase(self):
-        pass
-    
+        # TODO: manage history settings in wizard
+        wizard = _oatr_importwizard.cTestrunnerImportWizard()
+        wizData = wizard.show()
+        if not wizData: 
+            return
+        wizData['source'] = wizData['srcDatabase']
+        try:
+            _oatr_database.createTestRunDatabase(wizData['srcDatabase'], wizData['destDatabase'],
+                                                 wizData['testsuiteId'], 
+                                                 wizData) 
+            self._loadDatabase(wizData['destDatabase'])
+        except:
+            (type_, value, tb) = sys.exc_info()
+            self.showExceptionMessageBox(type_, value, tb)
+
     def execTestcase(self):
+        # TODO: code this method
         pass
     
     def showAbout(self):
