@@ -14,10 +14,15 @@ LOOKUP_TABLES = {
     'priorityLUT': nafdb.lookupTables['priorityLUT']
 }
 
+STATUS_PENDING = 0
+STATUS_FAILED = 1
+STATUS_PASSED = 2
+STATUS_SKIPPED = 3
+
 # create testruns table class
 columns = copy.deepcopy(nafdb.getTableForTypeId(nafdb.TYPE_TESTCASE).columns)
 columns.insert(1,
-    nafdb.cColumn(name='status', _type='integer', displayname='Status', default=0))
+    nafdb.cColumn(name='status', _type='integer', displayname='Status', default=STATUS_PENDING))
 columns.append(
     nafdb.cColumn(name='user', _type='text', displayname='Tester'))
 columns.append(
@@ -124,74 +129,6 @@ def createTestRunDatabase(srcDatabaseName, destDatabaseName, srcTestsuiteId, inf
     # done everything, commit and close
     conn.commit()
     conn.close()
-    
-    
-def _depr_createTestRunDatabase(srcDatabaseName, destDatabaseName, srcTestsuiteId, infoDict):
-    """
-    Create a database file for the test run. 
-    srcDatabaseName is the filename of the database with the testsuite and testcases
-    destDatabaseName is the filename of the database to be created
-    srcTestsuiteId is the id of the testsuite in srcDatabaseName to be run 
-    """
-    # get the columns of testcases
-    columnNames = nafdb.getColumnNames('testcases')
-    columnNamesList = ','.join(columnNames)
-    
-    #createTestRunTables(destDatabaseName)
-    destConn = sqlite3.connect(destDatabaseName)
-    destCursor = destConn.cursor()
-    cursorProxy = CursorProxy(destCursor)
-    createTestRunTables(cursorProxy)
-    srcConn = sqlite3.connect(srcDatabaseName)
-    srcCursor = srcConn.cursor()
-    #--- create lookup tables for enumeration types
-    for name, values in LOOKUP_TABLES.iteritems():
-        destCursor.execute("create table %s (key integer, value text);" % name)
-        for value in values:
-            destCursor.execute("insert into %s values (?, ?);" % name, (values.index(value), value))
-    #--- populate artifact tables
-    srcCommand = 'select relatedid from relations where id=?'
-    srcCursor.execute(srcCommand, (srcTestsuiteId,))
-    testcaseIds = srcCursor.fetchall()
-    srcCommand = 'select %s from testcases where id=?' % columnNamesList
-    destCommand = 'insert into testruns (%s) values (%s)' % (columnNamesList, ','.join(['?']*len(columnNames)))
-    for testcaseId in testcaseIds:
-        srcCursor.execute(srcCommand, testcaseId)
-        destCursor.execute(destCommand, srcCursor.fetchone())
-    # copy images referenced by any testcases from src into dest
-    # --- first, identifiy table columns which may reference an image
-    testcaseTable = nafdb.getTableForTypeId(nafdb.TYPE_TESTCASE)
-    columns = [c.name for c in testcaseTable.columns if c.view == nafdb.VIEW_MULTI_LINE]
-    # --- next, read all fields containing an img tag
-    imageIds = set()
-    pattern = re.compile(r'<img src="#(\d+)"')
-    srcCommand = """select %s from testcases where %s like '%%<img src="%%'"""
-    for c in columns:
-        # iterate all fields which references an image and extract the image id's
-        srcCursor.execute(srcCommand % (c, c))
-        row = srcCursor.fetchone()
-        if row is None: continue
-        result = pattern.findall(row[0])
-        map(imageIds.add , [int(r) for r in result])
-    print set(imageIds)
-    
-    # copy testsuite table from src to dest
-    columnNames = nafdb.getColumnNames('testsuites')
-    columnNamesList = ','.join(columnNames)
-    srcCommand = 'select %s from testsuites where id=?' % columnNamesList
-    destCommand = 'insert into testsuites (%s) values (%s)' % (columnNamesList, ','.join(['?']*len(columnNames)))
-    srcCursor.execute(srcCommand, (srcTestsuiteId,))
-    destCursor.execute(destCommand, srcCursor.fetchone())
-    # populate info table
-    columnNames = getColumnNames(TESTRUNINFO_TABLE)
-    columnNamesList = ','.join(columnNames)
-    destCommand = 'insert into testruninfo (%s) values (%s)' % (columnNamesList, ','.join(['?']*len(columnNames)))
-    values = [infoDict[k] for k in columnNames]
-    destCursor.execute(destCommand, values)
-    # done everything, commit and close
-    destConn.commit()
-    destConn.close()
-    srcConn.close()
         
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':

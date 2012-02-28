@@ -63,8 +63,8 @@ subwcref()
 from _naf_version import VERSION
 manifest()
 build()
-buildbin()
-make_win32_zip()
+#buildbin()
+#make_win32_zip()
     
     
 

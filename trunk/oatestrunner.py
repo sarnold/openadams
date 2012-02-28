@@ -38,6 +38,8 @@ import _oatr_database
 import _naf_about
 import _naf_resources
 import _oatr_importwizard
+import _oatr_database
+from _naf_database import getUserAndDate
 
 PROGNAME = 'oatestrunner'
 ABOUTMSG = u"""oatestrunner %s
@@ -117,21 +119,13 @@ class cMainWin(QtGui.QMainWindow):
         
         self.setupMenu()
         self.mainView.setEnabled(False)
+        
+        if dbName:
+            self.openActionHandler(None, dbName)
 
     def testrunTableViewSelectionHandler(self,  index):
         row = index.row()
         self.testrunDetailView.mapper.setCurrentIndex(row)
-        if False:
-            model = index.model()
-            if not model: return
-            msg = []
-            for col in range(model.columnCount()):
-                index = model.createIndex(row,  col)
-                title = unicode(model.headerData(col, Qt.Horizontal) .toString())
-                content = unicode(index.data().toString())
-                msg.append(title)
-                msg.append('\t' + content)
-            print('\n'.join(msg))
         
     def createSampleDatabase(self):
         testFileName = 'tests/samplerun_out.dbt'
@@ -165,28 +159,28 @@ class cMainWin(QtGui.QMainWindow):
                                    triggered = self.openActionHandler,shortcut=QtGui.QKeySequence.Open)
         newAction = QtGui.QAction(QtGui.QIcon(':/icons/database_new.png'), self.tr('New test run'), self, statusTip=self.tr('Create new test run'),
                                   triggered=self.newDatabase, shortcut=QtGui.QKeySequence.New)
-        self.reportAction = QtGui.QAction(self.tr('Create test run report'), self, statusTip="Create a report of the test run",
+        reportAction = QtGui.QAction(self.tr('Create test run report'), self, statusTip="Create a report of the test run",
             triggered=self.createReport)
-        self.execTestcaseAction = QtGui.QAction(self.tr('Execute test'), self, statusTip="Execute selected testcase",
+        execTestcaseAction = QtGui.QAction(QtGui.QIcon(':/icons/arrow-right.png'), self.tr('Execute test'), self, statusTip="Execute selected testcase",
             triggered=self.execTestcase)
         aboutAction = QtGui.QAction(self.tr('About'), self, statusTip = self.tr('About this program'),
                                     triggered=self.showAbout, shortcut=QtGui.QKeySequence.HelpContents)
         self.actionsRequiringDatabase = QtGui.QActionGroup(self)
-        self.actionsRequiringDatabase.addAction(self.reportAction)
-        self.actionsRequiringDatabase.addAction(self.execTestcaseAction)
+        self.actionsRequiringDatabase.addAction(reportAction)
+        self.actionsRequiringDatabase.addAction(execTestcaseAction)
         self.actionsRequiringDatabase.setEnabled(False)
         
         menuBar = self.menuBar()
         fileMenu = menuBar.addMenu(self.tr('&File'))
-        map(fileMenu.addAction, (newAction, openAction, self.reportAction, exitAction))
+        map(fileMenu.addAction, (newAction, openAction, reportAction, exitAction))
         execMenu = menuBar.addMenu(self.tr('&Run'))
-        map(execMenu.addAction, (self.execTestcaseAction, ))
+        map(execMenu.addAction, (execTestcaseAction, ))
         helpMenu = menuBar.addMenu(self.tr('&Help'))
         map(helpMenu.addAction, (aboutAction, ))
         
         self.toolBar = self.addToolBar(self.tr('Toolbar'))
         self.toolBar.pyqtConfigure(objectName='maintoolbar')
-        map(self.toolBar.addAction, (openAction, newAction))
+        map(self.toolBar.addAction, (openAction, newAction, execTestcaseAction))
 
     def createReport(self):
         # TODO: code this method
@@ -221,7 +215,22 @@ class cMainWin(QtGui.QMainWindow):
 
     def execTestcase(self):
         # TODO: code this method
-        pass
+        index = self.tableView.model().index(self.tableView.currentIndex().row(), 0)
+        testrunId = self.tableView.model().data(index).toInt()[0]
+        query = QtSql.QSqlQuery("SELECT status FROM testruns WHERE id==%d" % testrunId)
+        query.next()
+        testrunStatus , valid = query.value(0).toInt()
+        if not valid:
+            raise ValueError
+        print testrunStatus 
+
+        dlg = cTestrunDialog(self.testrunModel)
+        dlg.testrunEditor.mapper.setCurrentIndex(index.row())
+        if testrunStatus == _oatr_database.STATUS_PENDING:
+            (user, timestamp) = getUserAndDate()
+            dlg.testrunEditor.setTester(user)
+            dlg.testrunEditor.setDate(timestamp)
+        dlg.exec_()
     
     def showAbout(self):
         aboutText = str(self.tr("""
@@ -245,6 +254,17 @@ class cMainWin(QtGui.QMainWindow):
         msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
         msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
         msgBox.exec_()
+        
+        
+class cTestrunDialog(QtGui.QDialog):
+    def __init__(self, model, parent=None):
+        super(cTestrunDialog, self).__init__(parent)
+        layout = QtGui.QHBoxLayout()
+        testrunEditor = _oatr_testrun.cTestrunDetailsView(self, model, readOnly=False)
+        layout.addWidget(testrunEditor)
+        self.setLayout(layout)
+        self.testrunEditor = testrunEditor
+
 # ------------------------------------------------------------------------------
 def start():
     parser = argparse.ArgumentParser(prog=PROGNAME,
@@ -266,8 +286,7 @@ def start():
     mainwin = cMainWin(namespace.databasefile)
     mainwin.show()
     sys.exit(app.exec_())
-
-
+    
 if __name__ == '__main__':
     start()
 
