@@ -89,10 +89,8 @@ class cMainWin(QtGui.QMainWindow):
         _oatr_database.createTestRunTables(self.database)
         self.testrunModel = _oatr_testrun.cTestrunModel(None,  self.database)
         self.testrunModel.setTable('testruns')
-        self.testrunModel.setRelation(self.testrunModel.fieldIndex('priority'),
-                                      QtSql.QSqlRelation('priorityLUT', 'key', 'value'))
-        self.testrunModel.setRelation(self.testrunModel.fieldIndex('status'),
-                                      QtSql.QSqlRelation('statusLUT', 'key', 'value'))
+        #!self.testrunModel.setRelation(self.testrunModel.fieldIndex('priority'), QtSql.QSqlRelation('priorityLUT', 'key', 'value'))
+        #!!self.testrunModel.setRelation(self.testrunModel.fieldIndex('status'), QtSql.QSqlRelation('statusLUT', 'key', 'value'))
         
         self.testsuiteModel = QtSql.QSqlTableModel(None, self.database)
         self.testsuiteModel.setTable('testsuites')
@@ -222,9 +220,12 @@ class cMainWin(QtGui.QMainWindow):
         testrunStatus , valid = query.value(0).toInt()
         if not valid:
             raise ValueError
-        print testrunStatus 
-
+        logging.debug(testrunStatus)
+        
+        self.testrunModel.select()
+        self.testsuiteModel.reset()
         dlg = cTestrunDialog(self.testrunModel)
+        
         dlg.testrunEditor.mapper.setCurrentIndex(index.row())
         if testrunStatus == _oatr_database.STATUS_PENDING:
             (user, timestamp) = getUserAndDate()
@@ -259,11 +260,15 @@ class cMainWin(QtGui.QMainWindow):
 class cTestrunDialog(QtGui.QDialog):
     def __init__(self, model, parent=None):
         super(cTestrunDialog, self).__init__(parent)
-        layout = QtGui.QHBoxLayout()
+        layout = QtGui.QVBoxLayout()
         testrunEditor = _oatr_testrun.cTestrunDetailsView(self, model, readOnly=False)
         layout.addWidget(testrunEditor)
-        self.setLayout(layout)
         self.testrunEditor = testrunEditor
+        buttonBox = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok | QtGui.QDialogButtonBox.Cancel)
+        buttonBox.accepted.connect(self.accept)
+        buttonBox.rejected.connect(self.reject)
+        layout.addWidget(buttonBox)
+        self.setLayout(layout)
 
 # ------------------------------------------------------------------------------
 def start():
