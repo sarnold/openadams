@@ -1,3 +1,4 @@
+import logging
 from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
 
@@ -5,7 +6,11 @@ import _oatr_database as oadb
 import _oatr_commons
 import _oatr_database
 
-class cTestrunModel(QtSql.QSqlRelationalTableModel):
+#class cTestrunModel(QtSql.QSqlRelationalTableModel):
+class cTestrunModel(QtSql.QSqlTableModel):
+    # we have foreign keys but we don't use QSqlRelationalTableModel because of
+    # troubles when using QDataWidgetMapper
+    # Instead we implement relations by programming them
     def __init__(self, *arg, **kwarg):
         super(cTestrunModel, self).__init__(*arg, **kwarg)
         self.backgroundBrushes = (
@@ -19,26 +24,36 @@ class cTestrunModel(QtSql.QSqlRelationalTableModel):
         Overrides data() method to provide background coloring of the status cell 
         in the view
         """
-        if role == Qt.BackgroundRole and index.column() == 1:
-            status = super(cTestrunModel, self).data(index, Qt.DisplayRole)
-            status = oadb.LOOKUP_TABLES['statusLUT'].index(str(status.toString()))            
-            return self.backgroundBrushes[status]
+        if index.column() == 1:
+            # status column
+            (status, valid) = super(cTestrunModel, self).data(index, Qt.DisplayRole).toInt()
+            if role == Qt.DisplayRole:
+                return oadb.LOOKUP_TABLES['statusLUT'][status] 
+            elif role == Qt.BackgroundRole:
+                return self.backgroundBrushes[status]
+        #elif index.column() == 11 and role == Qt.DisplayRole:
+        #        # priority column
+        #        (status, valid) = super(cTestrunModel, self).data(index, Qt.DisplayRole).toInt()
+        #        logging.debug(status)
+        #        return oadb.LOOKUP_TABLES['priorityLUT'][status] 
         return super(cTestrunModel, self).data(index, role)
 
-class cTestrunItemDelegate(QtSql.QSqlRelationalDelegate):
+
+class cTestrunItemDelegate(QtGui.QItemDelegate):#(QtSql.QSqlRelationalDelegate):
     def setEditorData(self, editor, index ):
-        if isinstance(editor, cTestrunStatusWidget):
-            s = index.model().data(index)
-            #TODO: status should immediately be read from the database 
-            status = _oatr_database.LOOKUP_TABLES['statusLUT'].index(s)
+        if isinstance(editor, cTestrunStatusWidget):   
+            statusStr = index.model().data(index)
+            status = oadb.LOOKUP_TABLES['statusLUT'].index(statusStr) 
             editor.checkButton(status)
-        return super(cTestrunItemDelegate,self).setEditorData(editor, index )
+        elif editor.property('oatrname').isValid() and editor.property('oatrname').toString() == 'ledPriority':
+            (priority, valid) = index.model().data(index).toInt()
+            editor.setText(oadb.LOOKUP_TABLES['priorityLUT'][priority]) 
+        super(cTestrunItemDelegate,self).setEditorData(editor, index )
         
     def setModelData(self, editor, model, index):
-        return super(cTestrunItemDelegate,self).setModelData(editor, model, index )
+        super(cTestrunItemDelegate,self).setModelData(editor, model, index )
 
     
-
 class cTestrunDetailsView(QtGui.QWidget):
     def __init__(self, parent, model, readOnly = True):
         super(cTestrunDetailsView, self).__init__(parent)
@@ -58,10 +73,10 @@ class cTestrunDetailsView(QtGui.QWidget):
         layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "scripturl")), 7, 0)
         
         layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "status")), 8, 0)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "user"), alignment=Qt.AlignRight|Qt.AlignVCenter), 8, 2)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "date"), alignment=Qt.AlignRight|Qt.AlignVCenter), 8, 4)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "action"), alignment=Qt.AlignTop), 9, 0)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "remark"), alignment=Qt.AlignTop), 10, 0)
+        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "user")), 9, 0)
+        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "date"), alignment=Qt.AlignRight|Qt.AlignVCenter), 9, 4)
+        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "action"), alignment=Qt.AlignTop), 10, 0)
+        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "remark"), alignment=Qt.AlignTop), 11, 0)
 
         ledId = QtGui.QSpinBox(self)
         ledId.setReadOnly(True) # id is always read only
@@ -74,16 +89,13 @@ class cTestrunDetailsView(QtGui.QWidget):
         tedNotes = _oatr_commons.getTextViewer(self)
         ledScripturl = QtGui.QLineEdit(self, readOnly=True)
         ledPriority = QtGui.QLineEdit(self, readOnly=True)
-        
-        self.ledStatus = QtGui.QLineEdit(self, readOnly=True)
+        ledPriority.setProperty('oatrname', 'ledPriority')
+        self.swStatus = cTestrunStatusWidget(self, readOnly=readOnly)
         self.ledTester = QtGui.QLineEdit(self, readOnly=readOnly)
         self.ledDate = QtGui.QLineEdit(self, readOnly=readOnly)
         self.tedAction = QtGui.QTextEdit(self, readOnly=readOnly)
         self.tedRemark = QtGui.QTextEdit(self, readOnly=readOnly)
         
-        self.swStatus = cTestrunStatusWidget()
-        layout.addWidget(self.swStatus, 11, 1, 1, 5)
-        self.mapper.addMapping(self.swStatus, model.fieldIndex('status'))
         self.mapper.setItemDelegate(cTestrunItemDelegate())
         
         # addWidget(widget, fromRow, fromColumn, rowSpan, columnSpan, alignment)
@@ -98,11 +110,11 @@ class cTestrunDetailsView(QtGui.QWidget):
         layout.addWidget(tedNotes,        6, 1, 1, 5)
         layout.addWidget(ledScripturl,    7, 1, 1, 5)
         
-        layout.addWidget(self.ledStatus, 8, 1, 1, 1)
-        layout.addWidget(self.ledDate,   8, 5, 1, 1)
-        layout.addWidget(self.ledTester, 8, 3, 1, 1)
-        layout.addWidget(self.tedAction, 9, 1, 1, 5)
-        layout.addWidget(self.tedRemark, 10, 1, 1, 5)
+        layout.addWidget(self.swStatus, 8, 1, 1, 5)
+        layout.addWidget(self.ledDate,   9, 5, 1, 1)
+        layout.addWidget(self.ledTester, 9, 1, 1, 3)
+        layout.addWidget(self.tedAction, 10, 1, 1, 5)
+        layout.addWidget(self.tedRemark, 11, 1, 1, 5)
                          
         layout.setColumnStretch(1, 1)
         layout.setColumnStretch(5, 5)
@@ -111,7 +123,7 @@ class cTestrunDetailsView(QtGui.QWidget):
         layout.setRowStretch(4, 2)
         layout.setRowStretch(5, 2)
         layout.setRowStretch(6, 5)
-        layout.setRowStretch(7, 2)
+        layout.setRowStretch(8, 2)
     
         self.mapper.addMapping(ledId, model.fieldIndex('id'))
         self.mapper.addMapping(ledTitle, model.fieldIndex('title'))
@@ -124,11 +136,12 @@ class cTestrunDetailsView(QtGui.QWidget):
         self.mapper.addMapping(ledScripturl, model.fieldIndex('scripturl'))
         self.mapper.addMapping(ledPriority, model.fieldIndex('priority'))
 
-        self.mapper.addMapping(self.ledStatus, model.fieldIndex('status'))
+        self.mapper.addMapping(self.swStatus, model.fieldIndex('status'))
         self.mapper.addMapping(self.ledTester, model.fieldIndex('user'))
         self.mapper.addMapping(self.ledDate, model.fieldIndex('date'))
         self.mapper.addMapping(self.tedAction, model.fieldIndex('action'))
         self.mapper.addMapping(self.tedRemark, model.fieldIndex('remark'))
+        
         
     def setTester(self, name):
         self.ledTester.setText(name)
@@ -138,13 +151,15 @@ class cTestrunDetailsView(QtGui.QWidget):
         
             
 class cTestrunStatusWidget(QtGui.QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, readOnly=True):
         super(cTestrunStatusWidget, self).__init__(parent)
         self.buttons = []
         rbGroup = QtGui.QButtonGroup(self)
+        rbGroup
         hBox = QtGui.QHBoxLayout()
         for label in _oatr_database.LOOKUP_TABLES['statusLUT']:
             rb = QtGui.QRadioButton(label)
+            rb.setDisabled(readOnly)
             self.buttons.append(rb)
             rbGroup.addButton(rb)
             hBox.addWidget(rb)
