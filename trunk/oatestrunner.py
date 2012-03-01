@@ -105,6 +105,7 @@ class cMainWin(QtGui.QMainWindow):
         hiddencols = (2,4,5,6,7,8,9,10,11,12,13,14,15, 16)
         map(self.tableView.setColumnHidden, hiddencols, [True]*len(hiddencols))
         self.tableView.horizontalHeader().setStretchLastSection(True)
+        self.tableView.activated.connect(self.execTestcase)
         self.testrunDetailView = _oatr_testrun.cTestrunDetailsView(self.mainView, self.testrunModel)
         self.testsuiteDetailView = _oatr_testsuite.cTestsuiteView(self.mainView, self.testsuiteModel)
         self.testruninfoDetailView = _oatr_testrun.cTestrunInfoView(self.mainView, self.testruninfoModel)
@@ -222,16 +223,19 @@ class cMainWin(QtGui.QMainWindow):
             raise ValueError
         logging.debug(testrunStatus)
         
-        self.testrunModel.select()
-        self.testsuiteModel.reset()
-        dlg = cTestrunDialog(self.testrunModel)
+        #self.testrunModel.select()
+        #self.testsuiteModel.reset()
         
+        dlg = cTestrunDialog(self.testrunModel)
         dlg.testrunEditor.mapper.setCurrentIndex(index.row())
         if testrunStatus == _oatr_database.STATUS_PENDING:
             (user, timestamp) = getUserAndDate()
             dlg.testrunEditor.setTester(user)
             dlg.testrunEditor.setDate(timestamp)
-        dlg.exec_()
+        if QtGui.QDialog.Accepted == dlg.exec_():
+            self.testrunModel.submit()
+            #dlg.testrunEditor.mapper.submit()
+        
     
     def showAbout(self):
         aboutText = str(self.tr("""
