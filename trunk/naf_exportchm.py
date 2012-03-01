@@ -241,7 +241,7 @@ class cChmExporter(cHierarchicExporter):
             linkstr = '<link rel="stylesheet" type="text/css" media="screen" href="%s">' %  self.args.cssfile
         else:
             linkstr = ''
-        prefix = PREFIX[table.typeid]
+        prefix = nafdb.PREFIX[table.typeid]
         label = '%s_%05d' % (prefix ,  itemid)
         fname = os.path.join("%(projectfolder)s" % self.args,  "%s.html" % label)
         fp = codecs.open(fname,  'w', 'utf-8')
@@ -260,7 +260,7 @@ class cChmExporter(cHierarchicExporter):
         fp.close()
         
     def renderTocItem(self, table, itemid, nodeName='item', indent=0):
-        prefix = PREFIX[table.typeid]
+        prefix = nafdb.PREFIX[table.typeid]
         label = '%s_%05d' % (prefix ,  itemid)
         # append file name to list of files in hhp file
         self.fpHhp.write('%s.html\n' % label)
@@ -299,7 +299,7 @@ class cChmExporter(cHierarchicExporter):
     def getHeadline(self, table, itemid, tag='h1', withanchor=False):
         id = unicode(self.getItemForId(table.name, itemid, 'id'))
         title = saxutils.escape(unicode(self.getItemForId(table.name, itemid, 'title')))
-        prefix = PREFIX[table.typeid]
+        prefix = nafdb.PREFIX[table.typeid]
         dict = {'tag':tag, 'prefix':prefix, 'id': int(id), 'title':title}
         format = ((
                    "<%(tag)s class='%(prefix)s'>%(prefix)s-%(id)s: %(title)s</%(tag)s>",   # withanchor=False, isFolder = False
@@ -317,7 +317,7 @@ class cChmExporter(cHierarchicExporter):
             for relatedItem in relatedItems:
                 id = unicode(self.getItemForId(relatedItem['table'].name, relatedItem['id'], 'id'))
                 title = unicode(self.getItemForId(relatedItem['table'].name, relatedItem['id'], 'title'))
-                prefix = PREFIX[relatedItem['table'].typeid]
+                prefix = nafdb.PREFIX[relatedItem['table'].typeid]
                 s.append(self.getHeadline(relatedItem['table'], relatedItem['id'], 'li',  withanchor=True))
             s.append('</ul>')
         return '\n'.join(s)
@@ -351,7 +351,7 @@ class cChmExporter(cHierarchicExporter):
         source = self.getItemForId(table.name, itemid, 'source')
         keywords = self.getItemForId(table.name, itemid, 'keywords')
         data = self.getItemForId(table.name, itemid, 'image')        
-        prefix = PREFIX[nafdb.TYPE_IMAGE]
+        prefix = nafdb.PREFIX[nafdb.TYPE_IMAGE]
         fname = '%s_%d.%s' % (prefix,  itemid,  format)
         s = [self.getHeadline(table, itemid)]
         s.append('<div class="user">')
