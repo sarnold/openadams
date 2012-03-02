@@ -233,8 +233,8 @@ class cMainWin(QtGui.QMainWindow):
             dlg.testrunEditor.setTester(user)
             dlg.testrunEditor.setDate(timestamp)
         if QtGui.QDialog.Accepted == dlg.exec_():
-            self.testrunModel.submit()
-            #dlg.testrunEditor.mapper.submit()
+            #self.testrunModel.submit()
+            dlg.testrunEditor.submit()
         
     
     def showAbout(self):
