@@ -51,6 +51,9 @@ class cTestrunItemDelegate(QtGui.QItemDelegate):#(QtSql.QSqlRelationalDelegate):
         super(cTestrunItemDelegate,self).setEditorData(editor, index )
         
     def setModelData(self, editor, model, index):
+        if isinstance(editor, cTestrunStatusWidget):   
+            print "HERE"
+            model.setData(index, editor.getChecked(), QtCore.Qt.EditRole)
         super(cTestrunItemDelegate,self).setModelData(editor, model, index )
 
     
@@ -59,6 +62,8 @@ class cTestrunDetailsView(QtGui.QWidget):
         super(cTestrunDetailsView, self).__init__(parent)
         self.mapper = QtGui.QDataWidgetMapper()
         self.mapper.setModel(model)
+        self.mapper.setItemDelegate(cTestrunItemDelegate())
+        self.mapper.setSubmitPolicy(QtGui.QDataWidgetMapper.ManualSubmit)
         layout = QtGui.QGridLayout()
         self.setLayout(layout)
         layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "id")), 1, 0)
@@ -96,7 +101,6 @@ class cTestrunDetailsView(QtGui.QWidget):
         self.tedAction = QtGui.QTextEdit(self, readOnly=readOnly)
         self.tedRemark = QtGui.QTextEdit(self, readOnly=readOnly)
         
-        self.mapper.setItemDelegate(cTestrunItemDelegate())
         
         # addWidget(widget, fromRow, fromColumn, rowSpan, columnSpan, alignment)
         layout.addWidget(ledId,           1, 1, 1, 1)
@@ -148,6 +152,12 @@ class cTestrunDetailsView(QtGui.QWidget):
         
     def setDate(self, datestr):
         self.ledDate.setText(datestr)
+
+    def model(self):
+        return self.mapper.model()
+
+    def submit(self):
+        self.mapper.submit()
         
             
 class cTestrunStatusWidget(QtGui.QWidget):
@@ -168,6 +178,9 @@ class cTestrunStatusWidget(QtGui.QWidget):
     def checkButton(self, index):
         for rb in self.buttons: rb.setChecked(False)
         self.buttons[index].setChecked(True)
+        
+    def getChecked(self):
+        return [btn.isChecked() for btn in self.buttons].index(True)
     
 class cTestrunInfoView(QtGui.QWidget):
     def __init__(self, parent, model):
@@ -195,4 +208,3 @@ class cTestrunInfoView(QtGui.QWidget):
         self.mapper.addMapping(ledTitle, model.fieldIndex('title'))
         self.mapper.addMapping(tedDescription, model.fieldIndex('description'))
         self.mapper.addMapping(ledSource, model.fieldIndex('source'))
-        
