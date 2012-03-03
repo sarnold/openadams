@@ -3,7 +3,7 @@
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2012 Achim K�hler
+# Copyright 2012 Achim K?hler
 #
 # This file is part of openADAMS.
 #
@@ -82,64 +82,14 @@ class cMainWin(QtGui.QMainWindow):
         self.restoreGeometry(settings.value("mainwindow/geometry").toByteArray());
         self.restoreState(settings.value("mainwindow/windowState").toByteArray());
 
-        self.database = QtSql.QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setHostName("")
-        # create an empty database in memory, just to setup GUI correctly
-        self.database.setDatabaseName(":memory:")
-        self.database.open()
-        _oatr_database.createTestRunTables(self.database)
-        self._createTestrunModel()
-        
-        self.testsuiteModel = QtSql.QSqlTableModel(None, self.database)
-        self.testsuiteModel.setTable('testsuites')
-        
-        self.testruninfoModel = QtSql.QSqlTableModel(None, self.database)
-        self.testruninfoModel.setTable('testruninfo')
-        
         self.mainView = QtGui.QSplitter(self)
-        self.mainView.setFrameStyle(QtGui.QFrame.StyledPanel);
-        
-        self.tableView = _oatr_tableview.cTestrunTableView(self.mainView, self.testrunModel, self.testrunTableViewSelectionHandler)
-        hiddencols = (2,4,5,6,7,8,9,10,11,12,13,14,15, 16)
-        map(self.tableView.setColumnHidden, hiddencols, [True]*len(hiddencols))
-        self.tableView.horizontalHeader().setStretchLastSection(True)
-        self.tableView.activated.connect(self.execTestcase)
-        self.testrunDetailView = _oatr_testrun.cTestrunDetailsView(self.mainView, self.testrunModel)
-        self.testsuiteDetailView = _oatr_testsuite.cTestsuiteView(self.mainView, self.testsuiteModel)
-        self.testruninfoDetailView = _oatr_testrun.cTestrunInfoView(self.mainView, self.testruninfoModel)
+        self.mainView.setFrameStyle(QtGui.QFrame.StyledPanel)
         self.setCentralWidget(self.mainView)
-
-        self.tabView = QtGui.QTabWidget(self.mainView)
-        self.tabView.addTab(self.testrunDetailView, 'Test Details')
-        self.tabView.addTab(self.testsuiteDetailView, 'Testsuite')
-        self.tabView.addTab(self.testruninfoDetailView, 'Test Run Info')
-        
         self.setupMenu()
-        self.mainView.setEnabled(False)
         
         if dbName:
             self.openActionHandler(None, dbName)
-
-    def _createTestrunModel(self):
-        self.testrunModel = _oatr_testrun.cTestrunModel(None,  self.database)
-        self.testrunModel.setTable('testruns')
-        #self.testrunModel.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit)
-        self.testrunModel.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
-        
-    def testrunTableViewSelectionHandler(self,  index):
-        row = index.row()
-        self.testrunDetailView.mapper.setCurrentIndex(row)
-        
-    #TODO: remove this method
-    def createSampleDatabase(self):
-        testFileName = 'tests/samplerun_out.dbt'
-        if os.path.exists(testFileName):
-            os.remove(testFileName)
-        _oatr_database.createTestRunDatabase('tests/samplerun_in.db', testFileName, 11, 
-                                             {'title': 'Info title', 'description': 'Info description', 'source': 'unknown'})
-        self._loadDatabase(testFileName)
-        self.database.exec_('update testruns set status=1 where id=14')
-
+            
     def setupMenu(self):
         exitAction = QtGui.QAction(self.tr('Exit'), self, statusTip=self.tr('Exit application'),
                                    triggered=self.close, shortcut=QtGui.QKeySequence.Close)
@@ -169,52 +119,7 @@ class cMainWin(QtGui.QMainWindow):
         self.toolBar = self.addToolBar(self.tr('Toolbar'))
         self.toolBar.pyqtConfigure(objectName='maintoolbar')
         map(self.toolBar.addAction, (openAction, newAction, execTestcaseAction))
-    
-    def _loadDatabase(self, fileName):
-        # TODO: probe database file before loading
-        self.database.close()
-        self.database.setDatabaseName(fileName)
-        self.database.open()
         
-        self.testrunModel = None
-        self._createTestrunModel()
-        self.tableView.setModel(self.testrunModel)
-        self.testrunDetailView.setModel(self.testrunModel)
-        
-        self.testrunModel.reset()
-        self.testrunModel.select()
-        self.testsuiteModel.reset()
-        self.testsuiteModel.select()
-        self.testsuiteDetailView.mapper.toFirst()
-        self.testruninfoModel.reset()
-        self.testruninfoModel.select()
-        self.testruninfoDetailView.mapper.toFirst()
-        self.tableView.resizeColumnsToContents() 
-        self.tableView.selectRow(0)
-        self.actionsRequiringDatabase.setEnabled(True)
-        self.mainView.setEnabled(True)
-        self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + self.windowTitleStr)
-        self.updateStatusBar()
-        
-    def updateStatusBar(self):
-        # TODO: provide statistic in statusbar
-        querystr = "SELECT count(*) FROM testruns where status==%d"
-        cnts = []
-        for i in range(len(_oatr_database.LOOKUP_TABLES['statusLUT'])):
-            query = QtSql.QSqlQuery(querystr % i)
-            query.next()
-            cnt, _ = query.value(0).toInt()
-            cnts.append(cnt)
-        s = ', '.join(["%d %s" % (cnt, lbl) for lbl, cnt in zip(_oatr_database.LOOKUP_TABLES['statusLUT'], cnts)])
-        self.statusBar().showMessage(s)
-        
-    def createReport(self):
-        # TODO: code this method
-        print "createReport"
-        self.testrunModel.submit()
-        self.testrunModel.revertAll()
-        pass
-    
     def openActionHandler(self, sender=None, fileName=None):
         if fileName is None:
             fileName = unicode(QtGui.QFileDialog.getOpenFileName(self, self.tr("Open testrun database"), ".", self.tr("Testrun Database Files (*.dbt);;All files (*.*)")))
@@ -225,25 +130,56 @@ class cMainWin(QtGui.QMainWindow):
         except:
             (type_, value, tb) = sys.exc_info()
             self.showExceptionMessageBox(type_, value, tb)
-    
+        
     def newDatabase(self):
         # TODO: manage history settings in wizard
-        wizard = _oatr_importwizard.cTestrunnerImportWizard()
-        wizData = wizard.show()
-        if not wizData: 
-            return
-        wizData['source'] = wizData['srcDatabase']
-        try:
-            _oatr_database.createTestRunDatabase(wizData['srcDatabase'], wizData['destDatabase'],
-                                                 wizData['testsuiteId'], 
-                                                 wizData) 
-            self._loadDatabase(wizData['destDatabase'])
-        except:
-            (type_, value, tb) = sys.exc_info()
-            self.showExceptionMessageBox(type_, value, tb)
+        pass
+        
+    def _loadDatabase(self, fileName):
+        # TODO: probe database for existence and correctness
+        self.database = None
+        self.database = QtSql.QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setHostName("")
+        self.database.setDatabaseName(fileName)
+        self.database.open()
+        
+        self.testrunModel = _oatr_testrun.cTestrunModel(None,  self.database)
+        self.testrunModel.setTable('testruns')
+        self.testrunModel.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
+        
+        self.testsuiteModel = QtSql.QSqlTableModel(None, self.database)
+        self.testsuiteModel.setTable('testsuites')
+        self.testsuiteModel.select()
+
+        self.testruninfoModel = QtSql.QSqlTableModel(None, self.database)
+        self.testruninfoModel.setTable('testruninfo')
+        self.testruninfoModel.select()
+
+        for i in range(self.mainView.count()):
+            self.mainView.widget(i).close()
+        
+        self.testrunDetailView = _oatr_testrun.cTestrunDetailsView(self.mainView, self.testrunModel)
+        self.testsuiteDetailView = _oatr_testsuite.cTestsuiteView(self.mainView, self.testsuiteModel)
+        self.testsuiteDetailView.mapper.toFirst()
+        self.testruninfoDetailView = _oatr_testrun.cTestrunInfoView(self.mainView, self.testruninfoModel)
+        self.testruninfoDetailView.mapper.toFirst()
+
+        self.tableView = _oatr_tableview.cTestrunTableView(self.mainView, self.testrunModel, self.testrunTableViewSelectionHandler)
+        self.tableView.activated.connect(self.execTestcase)
+
+        self.tabView = QtGui.QTabWidget(self.mainView)
+        self.tabView.addTab(self.testrunDetailView, 'Test Details')
+        self.tabView.addTab(self.testsuiteDetailView, 'Testsuite')
+        self.tabView.addTab(self.testruninfoDetailView, 'Test Run Info')
+                
+        self.actionsRequiringDatabase.setEnabled(True)
+        self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + self.windowTitleStr)
+        self.updateStatusBar()
 
     def execTestcase(self):
-        index = self.tableView.model().index(self.tableView.currentIndex().row(), 0)
+        tableViewIndex = self.tableView.currentIndex()
+        row = self.tableView.currentIndex().row()
+        index = self.tableView.model().index(row, 0)
         testrunId = self.tableView.model().data(index).toInt()[0]
         query = QtSql.QSqlQuery("SELECT status FROM testruns WHERE id==%d" % testrunId)
         query.next()
@@ -251,20 +187,40 @@ class cMainWin(QtGui.QMainWindow):
         if not valid:
             raise ValueError
                 
-        dlg = cTestrunDialog(self.testrunModel)
+        dlg = _oatr_testrun.cTestrunDialog(self.testrunModel)
         dlg.testrunEditor.mapper.setCurrentIndex(index.row())
         if testrunStatus == _oatr_database.STATUS_PENDING:
             (user, timestamp) = getUserAndDate()
             dlg.testrunEditor.setTester(user)
             dlg.testrunEditor.setDate(timestamp)
         if QtGui.QDialog.Accepted == dlg.exec_():
-            dlg.testrunEditor.submit()
-            #self.testrunModel.submitAll()
-            print ">>" + self.testrunModel.lastError().text() + "<<"
+            record = self.testrunModel.record(row)
+            for k, v in dlg.testrunEditor.getData().iteritems():
+                record.setValue(k, v)
+            self.testrunModel.setRecord(row, record)
             self.updateStatusBar()
-            print self.database.databaseName()
+        self.tableView.setCurrentIndex(tableViewIndex)
         
+    def createReport(self):
+        # TODO: code this method
+        pass
+        self.updateStatusBar()
     
+    def updateStatusBar(self):
+        querystr = "SELECT count(*) FROM testruns where status==%d"
+        cnts = []
+        for i in range(len(_oatr_database.LOOKUP_TABLES['statusLUT'])):
+            query = QtSql.QSqlQuery(querystr % i)
+            query.next()
+            cnt, _ = query.value(0).toInt()
+            cnts.append(cnt)
+        s = ', '.join(["%d %s" % (cnt, lbl) for lbl, cnt in zip(_oatr_database.LOOKUP_TABLES['statusLUT'], cnts)])
+        self.statusBar().showMessage(s)
+
+    def testrunTableViewSelectionHandler(self,  index):
+        row = index.row()
+        self.testrunDetailView.mapper.setCurrentIndex(row)
+        
     def showAbout(self):
         aboutText = str(self.tr("""
         <div align="center" style="font-size:large;">
@@ -282,26 +238,13 @@ class cMainWin(QtGui.QMainWindow):
         """)) % (VERSION, VERSION_STR)
         _naf_about.cAbout(self, aboutText).exec_()
     
-    
     def showExceptionMessageBox(self, type_, value, tb):
         msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
         msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
         msgBox.exec_()
-        
-        
-class cTestrunDialog(QtGui.QDialog):
-    def __init__(self, model, parent=None):
-        super(cTestrunDialog, self).__init__(parent)
-        self.setWindowTitle(self.tr("Execute testcase"))
-        layout = QtGui.QVBoxLayout()
-        testrunEditor = _oatr_testrun.cTestrunDetailsView(self, model, readOnly=False)
-        layout.addWidget(testrunEditor)
-        self.testrunEditor = testrunEditor
-        buttonBox = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok | QtGui.QDialogButtonBox.Cancel)
-        buttonBox.accepted.connect(self.accept)
-        buttonBox.rejected.connect(self.reject)
-        layout.addWidget(buttonBox)
-        self.setLayout(layout)
+
+# ------------------------------------------------------------------------------
+
 
 # ------------------------------------------------------------------------------
 def start():
@@ -329,4 +272,3 @@ if __name__ == '__main__':
     start()
 
 # TODO: fix help output on command line
-# TODO: deal with images in testcase fields
