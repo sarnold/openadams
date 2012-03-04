@@ -2,7 +2,7 @@
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2012 Achim Köhler
+# Copyright 2012 Achim KÃ¶hler
 #
 # This file is part of openADAMS.
 #
@@ -24,6 +24,11 @@ from PyQt4 import QtGui, QtCore
 from PyQt4.QtCore import pyqtSignal
 
 class cFilePicker(QtCore.QObject):
+    """
+    A file picker widget with a label, a combobox and a button.
+    Pressing the button opens a file dialog.
+    Layouting the label, line edit and button is not done by this class.
+    """
     # Signal emitted when the picker filename changes
     sigValidFilename = pyqtSignal('bool')
     
@@ -40,6 +45,7 @@ class cFilePicker(QtCore.QObject):
         self.btnFileDlg.clicked.connect(self.showFileDialog)
     
     def getWidgets(self):
+        """Return the sub widgets to be layouted externally"""
         return {'label': self.lblCaption, 'combobox': self.cbxFilename, 
                 'button': self.btnFileDlg, 'dialog': self.fileDialog}
     
