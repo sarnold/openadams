@@ -20,10 +20,9 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-from PyQt4 import QtGui,  QtCore, QtSql
+from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 
-import _oatr_database as oadb
 import _oatr_commons
 import _naf_database as nafdb
 
@@ -48,7 +47,6 @@ class cTestsuiteView(QtGui.QWidget):
         tedDescription = _oatr_commons.getTextViewer(self)
         ledExecorder = QtGui.QLineEdit(self, readOnly=True)
         
-
         # addWidget(widget, fromRow, fromColumn, rowSpan, columnSpan, alignment)
         layout.addWidget(ledTitle,        0, 1, 1, 1)
         layout.addWidget(ledId,           1, 1, 1, 1)
