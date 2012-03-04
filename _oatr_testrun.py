@@ -19,6 +19,7 @@ class cTestrunModel(QtSql.QSqlTableModel):
                                   QtGui.QBrush(QtGui.QColor(64,255,64)), # passed
                                   QtGui.QBrush(QtGui.QColor(96,96,255)), # skipped
                                   )
+        
     def data(self, index, role = Qt.DisplayRole):
         """
         Overrides data() method to provide background coloring of the status cell 
@@ -31,11 +32,6 @@ class cTestrunModel(QtSql.QSqlTableModel):
                 return oadb.LOOKUP_TABLES['statusLUT'][status] 
             elif role == Qt.BackgroundRole:
                 return self.backgroundBrushes[status]
-        #elif index.column() == 11 and role == Qt.DisplayRole:
-        #        # priority column
-        #        (status, valid) = super(cTestrunModel, self).data(index, Qt.DisplayRole).toInt()
-        #        logging.debug(status)
-        #        return oadb.LOOKUP_TABLES['priorityLUT'][status] 
         return super(cTestrunModel, self).data(index, role)
 
 
@@ -52,9 +48,9 @@ class cTestrunItemDelegate(QtGui.QItemDelegate):#(QtSql.QSqlRelationalDelegate):
         
     def setModelData(self, editor, model, index):
         if isinstance(editor, cTestrunStatusWidget):   
-            print "HERE"
             model.setData(index, editor.getChecked(), QtCore.Qt.EditRole)
-        super(cTestrunItemDelegate,self).setModelData(editor, model, index )
+        else:
+            super(cTestrunItemDelegate,self).setModelData(editor, model, index )
 
     
 class cTestrunDetailsView(QtGui.QWidget):
@@ -77,11 +73,18 @@ class cTestrunDetailsView(QtGui.QWidget):
         layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "notes"), alignment=Qt.AlignTop), 6, 0)
         layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "scripturl")), 7, 0)
         
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "status")), 8, 0)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "user")), 9, 0)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "date"), alignment=Qt.AlignRight|Qt.AlignVCenter), 9, 4)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "action"), alignment=Qt.AlignTop), 10, 0)
-        layout.addWidget(QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, "remark"), alignment=Qt.AlignTop), 11, 0)
+        columns = "status user date action remark".split()
+        labels = []
+        for c in columns:
+            lbl = QtGui.QLabel(oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, c))
+            if not readOnly:
+                lbl.setStyleSheet('color:red; text-decoration:underline')
+            labels.append(lbl)
+        layout.addWidget(labels[0], 8, 0)
+        layout.addWidget(labels[1], 9, 0)
+        layout.addWidget(labels[2], 9, 4, alignment=Qt.AlignRight|Qt.AlignVCenter)
+        layout.addWidget(labels[3], 10, 0, alignment=Qt.AlignTop)
+        layout.addWidget(labels[4], 11, 0, alignment=Qt.AlignTop)
 
         ledId = QtGui.QSpinBox(self)
         ledId.setReadOnly(True) # id is always read only
@@ -99,8 +102,9 @@ class cTestrunDetailsView(QtGui.QWidget):
         self.ledTester = QtGui.QLineEdit(self, readOnly=readOnly)
         self.ledDate = QtGui.QLineEdit(self, readOnly=readOnly)
         self.tedAction = QtGui.QTextEdit(self, readOnly=readOnly)
+        self.tedAction.setWhatsThis(self.tr("Action taken when the testcase has failed"))
         self.tedRemark = QtGui.QTextEdit(self, readOnly=readOnly)
-        
+        self.tedRemark.setWhatsThis(self.tr("Remark for executed testcase"))
         
         # addWidget(widget, fromRow, fromColumn, rowSpan, columnSpan, alignment)
         layout.addWidget(ledId,           1, 1, 1, 1)
@@ -146,7 +150,6 @@ class cTestrunDetailsView(QtGui.QWidget):
         self.mapper.addMapping(self.tedAction, model.fieldIndex('action'))
         self.mapper.addMapping(self.tedRemark, model.fieldIndex('remark'))
         
-        
     def setTester(self, name):
         self.ledTester.setText(name)
         
@@ -158,6 +161,11 @@ class cTestrunDetailsView(QtGui.QWidget):
 
     def submit(self):
         self.mapper.submit()
+        
+    def getData(self):
+        return {'status' : self.swStatus.getChecked(), 'user' : self.ledTester.text(),
+         'date' : self.ledDate.text(), 'action' : self.tedAction.toPlainText(),
+         'remark' : self.tedRemark.toPlainText()}
         
             
 class cTestrunStatusWidget(QtGui.QWidget):
@@ -181,6 +189,7 @@ class cTestrunStatusWidget(QtGui.QWidget):
         
     def getChecked(self):
         return [btn.isChecked() for btn in self.buttons].index(True)
+    
     
 class cTestrunInfoView(QtGui.QWidget):
     def __init__(self, parent, model):
@@ -208,3 +217,25 @@ class cTestrunInfoView(QtGui.QWidget):
         self.mapper.addMapping(ledTitle, model.fieldIndex('title'))
         self.mapper.addMapping(tedDescription, model.fieldIndex('description'))
         self.mapper.addMapping(ledSource, model.fieldIndex('source'))
+
+
+class cTestrunDialog(QtGui.QDialog):
+    def __init__(self, model, parent=None):
+        super(cTestrunDialog, self).__init__(parent)
+        self.setWindowTitle(self.tr("Execute testcase"))
+        layout = QtGui.QVBoxLayout()
+        testrunEditor = cTestrunDetailsView(self, model, readOnly=False)
+        layout.addWidget(testrunEditor)
+        self.testrunEditor = testrunEditor
+        buttonBox = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok | QtGui.QDialogButtonBox.Cancel)
+        buttonBox.accepted.connect(self.accept)
+        buttonBox.rejected.connect(self.reject)
+        layout.addWidget(buttonBox)
+        self.setLayout(layout)
+        
+    def updateRow(self, row):
+        model = self.testrunEditor.model()
+        record = model.record(row)
+        for k, v in self.testrunEditor.getData().iteritems():
+            record.setValue(k, v)
+        model.setRecord(row, record)

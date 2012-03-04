@@ -15,8 +15,14 @@ class cTestrunTableView(QtGui.QTableView):
         self.setSelectionBehavior(QtGui.QTableView.SelectRows)
         self.setSelectionMode(QtGui.QTableView.SingleSelection)
         self.setModel(model)
+        model.reset()
         model.select()
         self.setHeader()
+        hiddencols = (2,4,5,6,7,8,9,10,11,12,13,14,15, 16)
+        map(self.setColumnHidden, hiddencols, [True]*len(hiddencols))
+        self.horizontalHeader().setStretchLastSection(True)
+        self.resizeColumnsToContents() 
+        self.selectRow(0)
         
     def setHeader(self):
         model = self.model()
