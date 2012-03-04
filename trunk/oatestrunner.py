@@ -133,7 +133,19 @@ class cMainWin(QtGui.QMainWindow):
         
     def newDatabase(self):
         # TODO: manage history settings in wizard
-        pass
+        wizard = _oatr_importwizard.cTestrunnerImportWizard()
+        wizData = wizard.show()
+        if not wizData: 
+            return
+        wizData['source'] = wizData['srcDatabase']
+        try:
+            _oatr_database.createTestRunDatabase(wizData['srcDatabase'], wizData['destDatabase'],
+                                                 wizData['testsuiteId'], 
+                                                 wizData) 
+            self._loadDatabase(wizData['destDatabase'])
+        except:
+            (type_, value, tb) = sys.exc_info()
+            self.showExceptionMessageBox(type_, value, tb)
         
     def _loadDatabase(self, fileName):
         # TODO: probe database for existence and correctness
@@ -194,17 +206,13 @@ class cMainWin(QtGui.QMainWindow):
             dlg.testrunEditor.setTester(user)
             dlg.testrunEditor.setDate(timestamp)
         if QtGui.QDialog.Accepted == dlg.exec_():
-            record = self.testrunModel.record(row)
-            for k, v in dlg.testrunEditor.getData().iteritems():
-                record.setValue(k, v)
-            self.testrunModel.setRecord(row, record)
+            dlg.updateRow(row)
             self.updateStatusBar()
         self.tableView.setCurrentIndex(tableViewIndex)
         
     def createReport(self):
         # TODO: code this method
         pass
-        self.updateStatusBar()
     
     def updateStatusBar(self):
         querystr = "SELECT count(*) FROM testruns where status==%d"
@@ -215,6 +223,7 @@ class cMainWin(QtGui.QMainWindow):
             cnt, _ = query.value(0).toInt()
             cnts.append(cnt)
         s = ', '.join(["%d %s" % (cnt, lbl) for lbl, cnt in zip(_oatr_database.LOOKUP_TABLES['statusLUT'], cnts)])
+        s = "%d testcases: %s" % (sum(cnts), s)
         self.statusBar().showMessage(s)
 
     def testrunTableViewSelectionHandler(self,  index):
