@@ -1,3 +1,25 @@
+# -*- coding: utf-8  -*-
+# $Id$
+
+# -------------------------------------------------------------------
+# Copyright 2012 Achim Köhler
+#
+# This file is part of openADAMS.
+#
+# openADAMS is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 2 of the License,
+# or (at your option) any later version.
+#
+# openADAMS is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
+# -------------------------------------------------------------------
+
 import logging
 from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
@@ -6,7 +28,6 @@ import _oatr_database as oadb
 import _oatr_commons
 import _oatr_database
 
-#class cTestrunModel(QtSql.QSqlRelationalTableModel):
 class cTestrunModel(QtSql.QSqlTableModel):
     # we have foreign keys but we don't use QSqlRelationalTableModel because of
     # troubles when using QDataWidgetMapper

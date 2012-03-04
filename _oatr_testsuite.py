@@ -1,5 +1,24 @@
 # -*- coding: utf-8  -*-
-# $Id: _naf_testcase.py 50 2012-02-16 18:15:16Z achimk $
+# $Id$
+
+# -------------------------------------------------------------------
+# Copyright 2012 Achim Köhler
+#
+# This file is part of openADAMS.
+#
+# openADAMS is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 2 of the License,
+# or (at your option) any later version.
+#
+# openADAMS is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
+# -------------------------------------------------------------------
 
 from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
