@@ -24,11 +24,9 @@
 import sys
 import argparse
 import logging
-import os.path
 import traceback
 
 from PyQt4 import QtGui,  QtCore,  QtSql
-from PyQt4.QtCore import Qt
 
 from _naf_version import VERSION, VERSION_STR, SVN_STR
 import _oatr_testrun
@@ -38,9 +36,9 @@ import _oatr_database
 import _naf_about
 import _naf_resources
 import _oatr_importwizard
-import _oatr_database
 from _naf_database import getUserAndDate
 
+WINTITLE = "Test Runner"
 PROGNAME = 'oatestrunner'
 ABOUTMSG = u"""oatestrunner %s
 openADAMS Test Runner 
@@ -73,8 +71,7 @@ app.installTranslator(appTranslator)
 class cMainWin(QtGui.QMainWindow):
     def __init__(self, dbName=None):
         super(cMainWin,  self).__init__()
-        self.windowTitleStr = self.tr('Test Runner')
-        self.winTitle = self.windowTitleStr
+        self.winTitle = WINTITLE
         self.setWindowTitle(self.winTitle)
         self.setMinimumSize(800, 600)
 
@@ -83,9 +80,11 @@ class cMainWin(QtGui.QMainWindow):
         self.restoreState(settings.value("mainwindow/windowState").toByteArray());
 
         self.mainView = QtGui.QSplitter(self)
+        self.mainView.setChildrenCollapsible(False)
         self.mainView.setFrameStyle(QtGui.QFrame.StyledPanel)
         self.setCentralWidget(self.mainView)
         self.setupMenu()
+        self.statusBar().showMessage('')
         
         if dbName:
             self.openActionHandler(None, dbName)
@@ -185,7 +184,7 @@ class cMainWin(QtGui.QMainWindow):
         self.tabView.addTab(self.testruninfoDetailView, 'Test Run Info')
                 
         self.actionsRequiringDatabase.setEnabled(True)
-        self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + self.windowTitleStr)
+        self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + WINTITLE)
         self.updateStatusBar()
 
     def execTestcase(self):
@@ -251,7 +250,47 @@ class cMainWin(QtGui.QMainWindow):
         msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
         msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
         msgBox.exec_()
+        
+    def closeEvent(self, event):
+        settings = QtCore.QSettings()
+        settings.setValue("mainwindow/geometry", self.saveGeometry())
+        settings.setValue("mainwindow/windowState", self.saveState())
 
+STARTUP_CMD_OPEN = 0
+STARTUP_CMD_NEW = 1
+
+class cStartupDialog(QtGui.QDialog):
+    def __init__(self, *args, **kwargs):
+        super(cStartupDialog, self).__init__(*args, **kwargs)
+        self.setWindowTitle(WINTITLE)
+        self.aboutDlgFn = None
+        self.retVal = None
+        vbox = QtGui.QVBoxLayout()
+        labels = ["Open existing test run ...", "Create new test run from test suite ...", "About this program ...", 'Exit']
+        callbacks = [self.openTestrun, self.newTestrun, self.showAbout, self.reject]
+        for lbl, cb in zip(labels, callbacks):
+            btn = QtGui.QPushButton(lbl)
+            btn.clicked.connect(cb)
+            vbox.addWidget(btn)
+        self.setLayout(vbox)
+        
+    def registerAboutDlgFn(self, dlgFn):
+        self.aboutDlgFn = dlgFn
+        
+    def openTestrun(self):
+        self.retVal = STARTUP_CMD_OPEN
+        self.accept()
+    
+    def newTestrun(self):
+        self.retVal = STARTUP_CMD_NEW
+        self.accept()
+        
+    def showAbout(self):
+        if self.aboutDlgFn:
+            self.aboutDlgFn()
+            
+    def getResult(self):
+        return self.retVal
 # ------------------------------------------------------------------------------
 
 
@@ -275,9 +314,20 @@ def start():
                         )
     mainwin = cMainWin(namespace.databasefile)
     mainwin.show()
-    sys.exit(app.exec_())
+    if not namespace.databasefile:
+        dlg = cStartupDialog()
+        dlg.registerAboutDlgFn(mainwin.showAbout)
+        if dlg.exec_() !=  QtGui.QDialog.Rejected:
+            result = dlg.getResult()
+            if result == STARTUP_CMD_OPEN:
+                mainwin.openActionHandler(None, None)
+            elif result == STARTUP_CMD_NEW:
+                mainwin.newDatabase()
+            sys.exit(app.exec_())
     
 if __name__ == '__main__':
     start()
 
 # TODO: fix help output on command line
+# TODO: save/restore geometry
+# TODO: recent files functionality in importer and file menu

@@ -20,7 +20,6 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-import logging
 from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
 
@@ -48,7 +47,7 @@ class cTestrunModel(QtSql.QSqlTableModel):
         """
         if index.column() == 1:
             # status column
-            (status, valid) = super(cTestrunModel, self).data(index, Qt.DisplayRole).toInt()
+            (status, _) = super(cTestrunModel, self).data(index, Qt.DisplayRole).toInt()
             if role == Qt.DisplayRole:
                 return oadb.LOOKUP_TABLES['statusLUT'][status] 
             elif role == Qt.BackgroundRole:
@@ -63,7 +62,7 @@ class cTestrunItemDelegate(QtGui.QItemDelegate):#(QtSql.QSqlRelationalDelegate):
             status = oadb.LOOKUP_TABLES['statusLUT'].index(statusStr) 
             editor.checkButton(status)
         elif editor.property('oatrname').isValid() and editor.property('oatrname').toString() == 'ledPriority':
-            (priority, valid) = index.model().data(index).toInt()
+            (priority, _) = index.model().data(index).toInt()
             editor.setText(oadb.LOOKUP_TABLES['priorityLUT'][priority]) 
         super(cTestrunItemDelegate,self).setEditorData(editor, index )
         
