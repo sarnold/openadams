@@ -2,7 +2,7 @@
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2012 Achim Köhler
+# Copyright 2012 Achim Kï¿½hler
 #
 # This file is part of openADAMS.
 #
@@ -65,8 +65,6 @@ class cTestrunnerImportWizard(QtCore.QObject):
         widgets['label'].setText(self.tr("Database"))
         widgets['dialog'].setNameFilter(self.tr("Database files (*.db);;All files (*.*)"))
         widgets['dialog'].setFileMode(QtGui.QFileDialog.ExistingFile)
-        #TODO: remove next line
-        self.inputFilePicker.setHistory(['C:/work/openadams/trunk/tests/samplerun_in.db', 'aaa', 'bbb'])
         map(layout.addWidget, [w for w in (widgets['label'], widgets['combobox'], widgets['button'])])
         layout.setStretch(1, 10)
         page.setLayout(layout)

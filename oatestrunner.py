@@ -77,8 +77,16 @@ class cMainWin(QtGui.QMainWindow):
         self.setMinimumSize(800, 600)
 
         settings = QtCore.QSettings()
-        self.restoreGeometry(settings.value("mainwindow/geometry").toByteArray());
-        self.restoreState(settings.value("mainwindow/windowState").toByteArray());
+        self.restoreGeometry(settings.value("mainwindow/geometry").toByteArray())
+        self.restoreState(settings.value("mainwindow/windowState").toByteArray())
+        
+        self.importFileList = []
+        size = settings.beginReadArray("importfiles")
+        for i in range(size):
+            settings.setArrayIndex(i)
+            filename = settings.value("name").toString()
+            self.importFileList.append(filename)
+        settings.endArray()
 
         self.mainView = QtGui.QSplitter(self)
         self.mainView.setChildrenCollapsible(False)
@@ -132,8 +140,8 @@ class cMainWin(QtGui.QMainWindow):
             self.showExceptionMessageBox(type_, value, tb)
         
     def newDatabase(self):
-        # TODO: manage history settings in wizard
         wizard = _oatr_importwizard.cTestrunnerImportWizard()
+        wizard.inputFilePicker.setHistory(self.importFileList)
         wizData = wizard.show()
         if not wizData: 
             return
@@ -143,6 +151,11 @@ class cMainWin(QtGui.QMainWindow):
                                                  wizData['testsuiteId'], 
                                                  wizData) 
             self._loadDatabase(wizData['destDatabase'])
+            if self.importFileList.count(wizData['srcDatabase']) == 0:
+                # srcDatabase is not in history
+                self.importFileList.insert(0, wizData['srcDatabase'])
+                if len(self.importFileList) > 5:
+                    del self.importFileList[-1]
         except:
             (type_, value, tb) = sys.exc_info()
             self.showExceptionMessageBox(type_, value, tb)
@@ -256,6 +269,11 @@ class cMainWin(QtGui.QMainWindow):
         settings = QtCore.QSettings()
         settings.setValue("mainwindow/geometry", self.saveGeometry())
         settings.setValue("mainwindow/windowState", self.saveState())
+        settings.beginWriteArray("importfiles")
+        for i in range(len(self.importFileList)):
+            settings.setArrayIndex(i)
+            settings.setValue("name", self.importFileList[i])
+        settings.endArray()
 
 STARTUP_CMD_OPEN = 0
 STARTUP_CMD_NEW = 1
