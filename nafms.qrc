@@ -50,6 +50,8 @@
     <file>icons/editpaste.png</file>
     <file>icons/file_delete.png</file>
     <file>icons/arrow-right.png</file>
+    <file>icons/help-browser.png</file>
+    <file>icons/system-log-out.png</file>
     <file>icons/textedit/list_square.png</file>
     <file>icons/textedit/list_alpha_lowcase.png</file>
     <file>icons/textedit/list_alpha_upcase.png</file>

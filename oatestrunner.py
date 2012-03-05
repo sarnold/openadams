@@ -27,6 +27,7 @@ import logging
 import traceback
 
 from PyQt4 import QtGui,  QtCore,  QtSql
+from PyQt4.QtCore import Qt
 
 from _naf_version import VERSION, VERSION_STR, SVN_STR
 import _oatr_testrun
@@ -258,20 +259,68 @@ class cMainWin(QtGui.QMainWindow):
 
 STARTUP_CMD_OPEN = 0
 STARTUP_CMD_NEW = 1
+STARTUP_CMD_ABOUT = 2
 
 class cStartupDialog(QtGui.QDialog):
     def __init__(self, *args, **kwargs):
         super(cStartupDialog, self).__init__(*args, **kwargs)
         self.setWindowTitle(WINTITLE)
+        self.setWindowFlags(Qt.Popup)
+        self.setStyleSheet("background: qradialgradient(cx:0, cy:0, radius: 1,fx:0.5, fy:0.5, stop:0 white, stop:1 gray)")
         self.aboutDlgFn = None
         self.retVal = None
+        openAction = QtGui.QAction(QtGui.QIcon(':/icons/database_open.png'), self.tr('Open existing test run'), self,
+                                   triggered = self.openTestrun,shortcut=QtGui.QKeySequence.Open)
+        newAction = QtGui.QAction(QtGui.QIcon(':/icons/database_new.png'), self.tr('Create new test run'), self,
+                                  triggered=self.newTestrun, shortcut=QtGui.QKeySequence.New)
+        aboutAction = QtGui.QAction(QtGui.QIcon(':/icons/help-browser.png'), self.tr('About'), self,
+                                  triggered=self.showAbout, shortcut=QtGui.QKeySequence.HelpContents)
+        exitAction = QtGui.QAction(QtGui.QIcon(':/icons/system-log-out.png'), self.tr('Exit'), self,
+                                  triggered=self.reject, shortcut=QtGui.QKeySequence('Alt+X'))
         vbox = QtGui.QVBoxLayout()
-        labels = ["Open existing test run ...", "Create new test run from test suite ...", "About this program ...", 'Exit']
-        callbacks = [self.openTestrun, self.newTestrun, self.showAbout, self.reject]
-        for lbl, cb in zip(labels, callbacks):
-            btn = QtGui.QPushButton(lbl)
-            btn.clicked.connect(cb)
-            vbox.addWidget(btn)
+        hbox = QtGui.QHBoxLayout()
+        lbl = QtGui.QLabel()
+        lbl.setPixmap(QtGui.QPixmap(':/icons/appicon.png'))
+        lbl.setStyleSheet("background-color:rgba(255, 0, 0, 0%)")
+        hbox.addWidget(lbl)
+        lbl = QtGui.QLabel('<font size="+3"><i><b>openADAMS</b> Test Runner</i></font>')
+        lbl.setStyleSheet("color: #404040; background-color:rgba(255, 0, 0, 0%);")
+        hbox.addWidget(lbl)
+        vbox.addLayout(hbox)
+        vbox.addSpacing(30)
+        btn = QtGui.QToolButton()
+        btn.setStyleSheet("color:white; background-color:rgba(255, 0, 0, 0%);")
+        btn.setDefaultAction(openAction)
+        lbl = QtGui.QLabel('<font size="+1"><a href="new">' + openAction.text() + '</a></font>')
+        lbl.setStyleSheet("background-color:rgba(255, 0, 0, 0%);")
+        lbl.linkActivated.connect(self.openTestrun)
+        hbox = QtGui.QHBoxLayout()
+        hbox.addSpacing(20)
+        hbox.addWidget(btn)
+        hbox.addWidget(lbl)
+        vbox.addLayout(hbox)
+        btn = QtGui.QToolButton()
+        btn.setStyleSheet("color:white; background-color:rgba(255, 0, 0, 0%);")
+        btn.setDefaultAction(newAction)
+        lbl = QtGui.QLabel('<font size="+1"><a href="new">' + newAction.text() + '</a></font>')
+        lbl.setStyleSheet("background-color:rgba(255, 0, 0, 0%);")
+        lbl.linkActivated.connect(self.newTestrun)
+        hbox = QtGui.QHBoxLayout()
+        hbox.addSpacing(20)
+        hbox.addWidget(btn)
+        hbox.addWidget(lbl)
+        vbox.addLayout(hbox)
+        vbox.addSpacing(30)
+        hbox = QtGui.QHBoxLayout()
+        btn = QtGui.QToolButton()
+        btn.setStyleSheet("color:white; background-color:rgba(255, 0, 0, 0%);")
+        btn.setDefaultAction(aboutAction)
+        hbox.addWidget(btn)
+        btn = QtGui.QToolButton()
+        btn.setStyleSheet("color:white; background-color:rgba(255, 0, 0, 0%);")
+        btn.setDefaultAction(exitAction)
+        hbox.addWidget(btn)
+        vbox.addLayout(hbox)
         self.setLayout(vbox)
         
     def registerAboutDlgFn(self, dlgFn):
@@ -288,6 +337,8 @@ class cStartupDialog(QtGui.QDialog):
     def showAbout(self):
         if self.aboutDlgFn:
             self.aboutDlgFn()
+        self.retVal = STARTUP_CMD_ABOUT
+        self.accept()
             
     def getResult(self):
         return self.retVal
@@ -315,7 +366,7 @@ def start():
     mainwin = cMainWin(namespace.databasefile)
     mainwin.show()
     if not namespace.databasefile:
-        dlg = cStartupDialog()
+        dlg = cStartupDialog(mainwin)
         dlg.registerAboutDlgFn(mainwin.showAbout)
         if dlg.exec_() !=  QtGui.QDialog.Rejected:
             result = dlg.getResult()
@@ -323,7 +374,7 @@ def start():
                 mainwin.openActionHandler(None, None)
             elif result == STARTUP_CMD_NEW:
                 mainwin.newDatabase()
-            sys.exit(app.exec_())
+    sys.exit(app.exec_())
     
 if __name__ == '__main__':
     start()
