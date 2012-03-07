@@ -136,6 +136,7 @@ class cItemModel(QtCore.QAbstractTableModel):
         # compare current item to submitted item, write changes to a dictionary
         changeRecord = []
         for column, data in zip(self.columns, currentData):
+            #TODO: check if this work for blob columns also
             if self.submitRecord.has_key(column) and data != self.submitRecord[column]:
                 changeRecord.append({'column': column, 'old': data, 'new': self.submitRecord[column]})
         # update submitted item in database

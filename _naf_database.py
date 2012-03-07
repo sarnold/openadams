@@ -64,6 +64,13 @@ CHANGETYPE_EDITED = 1
 CHANGETYPE_DELETED = 2
 CHANGETYPE_MOVED = 3 
 
+CHANGESTRING = {
+                CHANGETYPE_CREATED: "created",
+                CHANGETYPE_EDITED:  "edited",
+                CHANGETYPE_DELETED: "deleted",
+                CHANGETYPE_MOVED: "moved"                 
+}
+
 connection = None
 currentFileName = None
 
