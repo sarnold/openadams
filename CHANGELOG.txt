@@ -1,16 +1,22 @@
 ====================================
-openADAMS Release 0.2.2 (2012-01-22)
+openADAMS Release 0.3.0 (2012-03-10)
 ====================================
 
 New features
 ~~~~~~~~~~~~
-?
+* oaeditor now records changes
+* New programm oatestrunner to execute test runs from test suites 
+* New programm oalogview to view changes in an openADAMS database (very basic)
 
 Changes
 ~~~~~~~
 Artifact Id's are displayed in a spinedit rather than a textedit; of course they are
 still read only
 
+Known issues
+~~~~~~~~~~~~
+* "Create report" in oatestrunner is not implemented yet
+* Localisation of oatestrunner and oalogview is rather incomplete
 
 ====================================
 openADAMS Release 0.2.2 (2012-01-22)

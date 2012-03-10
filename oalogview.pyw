@@ -1,8 +1,9 @@
+#!/usr/bin/python
 # -*- coding: utf-8  -*-
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2010 Achim Köhler
+# Copyright 2010 Achim K??r
 #
 # This file is part of openADAMS.
 #
@@ -20,17 +21,6 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-VERSION = "0.3.0"
+import oalogview
 
-_version = {
-    'version' : VERSION,
-    'bdate'   : "$WCNOW=%Y/%m/%d %H:%M:%S$",
-    'wcrev'   : "$WCREV$",
-    'wcdate'  : "$WCDATE$",
-    'wcrange' : "$WCRANGE$",
-    'wcmixed' : "$WCMIXED?yes:no$",
-    'wcmods'  : "$WCMODS?tainted:untainted$"
-}
-SVN_STR = "BDATE %(bdate)s; WCREV %(wcrev)s (%(wcmods)s); WCDATE %(wcdate)s; WCRANGE %(wcrange)s; WCMIXED %(wcmixed)s" % _version
-VERSION_STR = "VERSION %(version)s; BDATE %(bdate)s; WCREV %(wcrev)s (%(wcmods)s); WCDATE %(wcdate)s; WCRANGE %(wcrange)s; WCMIXED %(wcmixed)s" % _version
-
+oalogview.start()
