@@ -24,7 +24,9 @@ INSTALLATION
 2. For the artifact editor run naf_editor.py
 
 For Win32 binary distribution: unpack all files from the .zip archive
-in a folder. Run oaeditor.exe.
+in a folder. Run oaeditor.exe to manage artifacts. Run oatestrunner to execute test artifacts.
+Run oalogview to inspect changes in an openADAMS database file.
+
 
 
 COPYRIGHT
