@@ -1,16 +1,36 @@
 import sys
 import json
+import types
+import argparse
+import logging
+import traceback
+
 from PyQt4 import QtGui,  QtCore,  QtSql
 from PyQt4.QtCore import Qt
+
 import _naf_database as nafdb
+import _naf_resources
+import _naf_about
+from _naf_version import VERSION, VERSION_STR, SVN_STR
 
 WINTITLE = "Log Viewer"
+PROGNAME = 'oalogviewer'
+ABOUTMSG = u"""oaviewer %s
+openADAMS Log Viewer
+
+Copyright (C) 2012 Achim Koehler
+
+%s
+""" % (VERSION, SVN_STR)
 
 class cChangeModel(QtSql.QSqlTableModel):
     def __init__(self, *args, **kwargs):
         super(cChangeModel, self).__init__(*args, **kwargs)
         self.setTable("changes")
         self.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
+        
+    def origdata(self, index):
+        return super(cChangeModel, self).data(index, Qt.DisplayRole)
         
     def data(self, index, role = Qt.DisplayRole):
         """
@@ -65,30 +85,159 @@ class cChangeTableView(QtGui.QTableView):
         super(cChangeTableView, self).currentChanged(current,  previous)
         if self.selectionHandler: self.selectionHandler(current)
     
+class cDetailView(QtGui.QWidget):
+    def __init__(self, *args, **kwargs):
+        super(cDetailView, self).__init__(*args, **kwargs)
+        self.setLayout(QtGui.QGridLayout())
+        self.setMinimumSize(200, 200)
+        
+    def _isHtml(self, string):
+        if type(string) in types.StringTypes:
+            return string.startswith("<!")
+        else:
+            return False
+    
+    def updateView(self, data):
+        try:
+            itemList = json.loads(data)
+        except:
+            return
+        for label, col in zip(['Old value', 'New value'], [1, 2]):
+            lbl = QtGui.QLabel(label)
+            lbl.setStyleSheet("font-weight: bold; background-color:rgba(255, 10, 10, 10%); border-style: outset; border-width:2px; border-color:#909090;")
+            self.layout().addWidget(lbl, 0, col, alignment=Qt.AlignTop)
+        row = 1
+        for item in itemList:
+            for field, col in zip(['old', 'new'], [1, 2]):
+                if self._isHtml(item['old']) or self._isHtml(item['new']):
+                    widget = QtGui.QTextBrowser()
+                    widget.setHtml(item[field])
+                    alignment=Qt.AlignTop 
+                else:
+                    widget = QtGui.QLineEdit()
+                    widget.setText(str(item[field]))
+                    alignment=Qt.AlignVCenter
+                self.layout().addWidget(widget, row, col, alignment=Qt.AlignTop)
+            self.layout().addWidget(QtGui.QLabel(item['column'], alignment=alignment), row, 0)
+            row = row + 1
+        self.layout().addItem(QtGui.QSpacerItem(1,1, 1, -1), row, 0)
     
 class cMainWin(QtGui.QMainWindow):
-    def __init__(self, database, *args, **kwargs):
-        super(cMainWin, self).__init__(*args, **kwargs)
+    def __init__(self, dbName=None):
+        super(cMainWin, self).__init__()
         self.winTitle = WINTITLE
         self.setWindowTitle(self.winTitle)
         self.setMinimumSize(800, 600)
-        model = cChangeModel(None, database)
-        model.select()
-        self.tableView = cChangeTableView(None, model, self.tableSelectionChanged)
-        self.setCentralWidget(self.tableView)
+        self.setBaseSize(800, 750)                                                          
+        self.dockWidget = QtGui.QDockWidget(self.tr("Details"), self)
+        self.dockWidget.setAllowedAreas(Qt.RightDockWidgetArea | Qt.BottomDockWidgetArea)
+
+        openAction = QtGui.QAction(QtGui.QIcon(':/icons/database_open.png'), self.tr('Open database'), self,
+                                   triggered = self.openDatabase,shortcut=QtGui.QKeySequence.Open)
+        aboutAction = QtGui.QAction(QtGui.QIcon(':/icons/help-browser.png'), self.tr('About'), self,
+                                  triggered=self.showAbout, shortcut=QtGui.QKeySequence.HelpContents)
+        exitAction = QtGui.QAction(QtGui.QIcon(':/icons/system-log-out.png'), self.tr('Exit'), self,
+                                  triggered=self.close, shortcut=QtGui.QKeySequence('Alt+X'))
+
+        menuBar = self.menuBar()
+        fileMenu = menuBar.addMenu(self.tr('&File'))
+        map(fileMenu.addAction, (openAction, exitAction))
+        viewMenu = menuBar.addMenu(self.tr('&View'))
+        map(viewMenu.addAction, (self.dockWidget.toggleViewAction(), ))
+        helpMenu = menuBar.addMenu(self.tr('&Help'))
+        map(helpMenu.addAction, (aboutAction, ))
         
+        if dbName:
+            self.openDatabase(None, dbName)        
+
+    def openDatabase(self, sender=None, fileName=None):
+        if fileName is None:
+            fileName = unicode(QtGui.QFileDialog.getOpenFileName(self, self.tr("Open database"), ".", self.tr("Database Files (*.db);;All files (*.*)")))
+        if fileName == '':
+            return
+        try:
+            self._loadDatabase(fileName)
+        except:
+            (type_, value, tb) = sys.exc_info()
+            self.showExceptionMessageBox(type_, value, tb)
+    
+    def showAbout(self):
+        aboutText = str(self.tr("""
+        <div align="center" style="font-size:large;">
+        <p style="font-size:x-large;"><b>openADAMS Log Viewer %s</b></p>
+        <p><small>[%s]</small><p>
+        <p>Copyright (C) 2012 Achim K&ouml;hler</p>
+        <p>Log viewer for the Open "Artifact Documentation And Management System"</p>
+        <p>See <a href="https://sourceforge.net/projects/openadams/">openADAMS Homepage</a> for details.</p>
+        <blockquote>This program comes with ABSOLUTELY NO WARRANTY;<br/>
+        This is free software, and you are welcome to redistribute it<br/>
+        under the terms of the GNU General Public License; <br/>
+        see the accompanied file COPYING for details.
+        </blockquote>
+        </div>
+        """)) % (VERSION, VERSION_STR)
+        _naf_about.cAbout(self, aboutText).exec_()
+    
+    def _loadDatabase(self, fileName):
+        self.database = None
+        self.database = QtSql.QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setHostName("")
+        self.database.setDatabaseName(fileName)
+        self.database.open()
+        
+        model = cChangeModel(None, self.database)
+        model.select()
+        self.tableView = cChangeTableView(self, model, self.tableSelectionChanged)
+        self.setCentralWidget(self.tableView)
+        self.detailView = cDetailView(self.dockWidget)
+        self.dockWidget.setWidget(self.detailView)
+        self.addDockWidget(Qt.BottomDockWidgetArea, self.dockWidget)
+        self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + WINTITLE)
+        
+    
     def tableSelectionChanged(self, index):
-        print index.row()
-        pass
+        row = self.tableView.currentIndex().row()
+        index = self.tableView.model().index(row, 3)
+        data = str(self.tableView.model().origdata(index).toString())
+        self.updateView(data)
+        
+    def updateView(self, data):
+        self.detailView.close()
+        self.detailView = cDetailView(self.dockWidget)
+        self.detailView.updateView(data)
+        self.dockWidget.setWidget(self.detailView)
      
+    def showExceptionMessageBox(self, type_, value, tb):
+        msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
+        msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
+        msgBox.exec_()
 # ------------------------------------------------------------------------------
 app = QtGui.QApplication(sys.argv)
+app.setOrganizationName("")
+app.setOrganizationDomain("macht-publik.de")
+app.setApplicationName("oalogviewer")
+app.setWindowIcon(QtGui.QIcon(":/icons/appicon.png"))
 
-database = QtSql.QSqlDatabase.addDatabase("QSQLITE")
-database.setHostName("")
-database.setDatabaseName("tests/samplerun_in.db")
-database.open()
+def start():
+    parser = argparse.ArgumentParser(prog=PROGNAME,
+        description=ABOUTMSG,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('-V', '--version', action='version', version='%s %s\n%s' % (PROGNAME,  VERSION, SVN_STR))
+    parser.add_argument('-l',  '--log',  action='store',  nargs=1, default=['critical'],  type=str,
+                        help='log level, either debug, info, error',  metavar='lvl',  dest='loglevel',
+                        choices=['debug',  'info', 'error'])
+    parser.add_argument('databasefile',  action='store',  type=str, nargs='?',
+                        help='Database file')
+    namespace=parser.parse_args()
+    level = {'critical':logging.CRITICAL, 'debug': logging.DEBUG,
+                'info': logging.INFO, 'error': logging.ERROR}[namespace.loglevel[0]]
+    logFormat = '%(module)s:%(lineno)s (%(funcName)s): %(message)s'
+    logging.basicConfig(format=logFormat, level=level,
+                        ##, filemode='w', filename='myapp.log'
+                        )
+    mainwin = cMainWin(namespace.databasefile)
+    mainwin.show()
+    sys .exit(app.exec_())
 
-mainwin = cMainWin(database)
-mainwin.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    start()
