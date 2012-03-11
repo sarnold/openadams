@@ -398,5 +398,4 @@ if __name__ == '__main__':
     start()
 
 # TODO: fix help output on command line
-# TODO: save/restore geometry
 # TODO: recent files functionality in importer and file menu
