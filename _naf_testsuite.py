@@ -67,6 +67,7 @@ class cTestsuiteDetailsView(_naf_commons.cArtifactDetailsView):
         cbxKeywords = QtGui.QComboBox(self, enabled=not readOnly, editable=True)
         cbxKeywords.setModel(self.mapper.model().getHistoryModel('keywords_view'))
         tedDescription = _naf_textviewer.cTextEditor(self, readOnly=readOnly)
+        tedDescription.setImageProvider(nafdb.getImageForId)
 
         # addWidget(widget, fromRow, fromColumn, rowSpan, columnSpan, alignment)
         layout.addWidget(ledId,           0, 1, 1, 1)

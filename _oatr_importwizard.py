@@ -75,8 +75,8 @@ class cTestrunnerImportWizard(QtCore.QObject):
             return {'srcDatabase': self.inputFilePicker.getFilename(),
                     'destDatabase': self.infoWizardPage.outputFilePicker.getFilename(),
                     'testsuiteId': self.testsuiteWizardPage.getSelectedTestsuiteId(),
-                    'title': str(self.infoWizardPage.leTitle.text()),
-                    'description': str(self.infoWizardPage.teDescription.toPlainText())}
+                    'title': unicode(self.infoWizardPage.leTitle.text()),
+                    'description': unicode(self.infoWizardPage.teDescription.toPlainText())}
         else:
             return None
         

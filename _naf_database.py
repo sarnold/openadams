@@ -22,6 +22,7 @@
 
 import sqlite3, os, os.path, sys, logging, shutil, re
 import getpass, datetime
+import json
 from PyQt4 import QtCore
 
 TYPE_ROOT = 0
@@ -275,7 +276,11 @@ def getRawItemForId(tableName, id, columnName):
 
 def saveItemForId(tableName, id, columnName, item):
     cursor = connection.cursor()
+    cursor.execute("SELECT %s FROM %s WHERE id=?" % (columnName, tableName), (id,))
+    oldData = cursor.fetchone()[0]
     cursor.execute("update %s set %s=? where id=?" % (tableName, columnName), (item, id))
+    changeRecord = [{'column': columnName, 'old': oldData, 'new': item}] 
+    _recordChange(cursor, tableName, id, CHANGETYPE_EDITED, json.dumps(changeRecord))
     connection.commit()
 
 def getItemForIdAndParentId(tableName, id, parentId, columnName):
@@ -392,6 +397,13 @@ def openDatabase(filename):
         logging.error('Unable to create backup file for %s' % filename)
     connection.create_function("regexp", 2, _regexp)
 
+def _recordChange(cursor, tableName, itemId, changeType, description=""):
+    changeId = cursor.execute("select cnt from counter").fetchone()[0]
+    (user, timestamp) = getUserAndDate()
+    title = getArtifactShortname(tableName, itemId)
+    cursor.execute("insert into changes (id, typeid, title, description, afid, changetype, date, user) values (?,?,?,?,?,?,?,?)",
+                   (changeId, TYPE_CHANGE, title, description, itemId, changeType, timestamp, user))
+        
 def newItem(tableName, itemTitle, parentId, makeChangeEntry = True) :
     """Create a new artifact item in the database."""
     logging.debug("tableName=%s, itemTitle=%s, parentId=%s" % (tableName, itemTitle, parentId))
@@ -402,11 +414,7 @@ def newItem(tableName, itemTitle, parentId, makeChangeEntry = True) :
     if parentId is not None:
         cursor.execute("insert into relations values (?, ?)", (parentId, itemId))
     if makeChangeEntry:
-        changeId = cursor.execute("select cnt from counter").fetchone()[0]
-        (user, timestamp) = getUserAndDate()
-        title = fmtChangeTitle(tableName, itemId)
-        cursor.execute("insert into changes (id, typeid, title, description, afid, changetype, date, user) values (?,?,?,?,?,?,?,?)",
-                       (changeId, TYPE_CHANGE, title, "", itemId, CHANGETYPE_CREATED, timestamp, user))
+        _recordChange(cursor, tableName, itemId, CHANGETYPE_CREATED)
     connection.commit()
     return (itemId, parentId, tableObj.typeid, itemTitle)
 
@@ -415,6 +423,7 @@ def deleteItem(tableName, itemId):
     cursor.execute("delete from %s where id=?" % tableName, (itemId, ))
     cursor.execute("delete from relations where id=?", (itemId, ))
     cursor.execute("delete from relations where relatedid=?", (itemId, ))
+    _recordChange(cursor, tableName, itemId, CHANGETYPE_DELETED)
     connection.commit()
 
 def copyItem(srcId, typeId, parentId, fileName):
@@ -434,6 +443,7 @@ def copyItem(srcId, typeId, parentId, fileName):
     destcursor.execute("insert into relations values (?, ?)", (parentId, newId))
     connection.commit()
     destcursor.execute("select title from %s where id=?" % tableName, (newId,))
+    _recordChange(destcursor, tableName, newId, CHANGETYPE_CREATED)
     return (newId, parentId, typeId, destcursor.fetchone()[0])
 
 def getUserAndDate():
@@ -444,9 +454,8 @@ def getUserAndDate():
     timestamp = datetime.datetime.now().isoformat() 
     return (user, timestamp)
 
-def fmtChangeTitle(tableName, afId):
-    (user, timestamp) = getUserAndDate()
-    return "%s-%05d / %s / %s" % (PREFIX[getTypeIdForTable(tableName)], afId, user, timestamp)
+def getArtifactShortname(tableName, afId):
+    return "%s-%05d" % (PREFIX[getTypeIdForTable(tableName)], afId)
 
 def countItemsRelatedToId(itemId):
     cursor = connection.cursor()
@@ -461,6 +470,13 @@ def countItemsWhereIdIsRelatedTo(itemId):
 def changeParentId(itemId, fromParentId, toParentId):
     cursor = connection.cursor()
     cursor.execute("update relations set id=? where id=? and relatedid=?;", (toParentId, fromParentId, itemId))
+    # record change
+    changeId = cursor.execute("select cnt from counter").fetchone()[0]
+    (user, timestamp) = getUserAndDate()
+    title = "AF-%05d" % (itemId, )
+    description = """[{"column": "folder", "new": "%d", "old": "%d"}]""" % (toParentId, fromParentId)
+    cursor.execute("insert into changes (id, typeid, title, description, afid, changetype, date, user) values (?,?,?,?,?,?,?,?)",
+                   (changeId, TYPE_CHANGE, title, description, itemId, CHANGETYPE_MOVED, timestamp, user))    
     connection.commit()
 
 def updateViewPos(itemlist):

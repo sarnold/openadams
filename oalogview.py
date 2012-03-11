@@ -10,6 +10,7 @@ from PyQt4.QtCore import Qt
 
 import _naf_database as nafdb
 import _naf_resources
+import _naf_textviewer
 import _naf_about
 from _naf_version import VERSION, VERSION_STR, SVN_STR
 
@@ -43,7 +44,7 @@ class cChangeModel(QtSql.QSqlTableModel):
                 return nafdb.CHANGESTRING[changetype] 
             elif index.column() == 3:
                 # description column
-                description = str(super(cChangeModel, self).data(index, Qt.DisplayRole).toString())
+                description = unicode(super(cChangeModel, self).data(index, Qt.DisplayRole).toString())
                 try:
                     descriptionList = json.loads(description)
                     value = [item['column'] for item in descriptionList]
@@ -78,7 +79,7 @@ class cChangeTableView(QtGui.QTableView):
     def setHeader(self):
         model = self.model()
         for section in range(model.columnCount()):
-            colname = str(model.headerData(section, Qt.Horizontal) .toString())
+            colname = unicode(model.headerData(section, Qt.Horizontal) .toString())
             model.setHeaderData(section, Qt.Horizontal, self.getHeaderString(colname))
             
     def currentChanged(self, current, previous):
@@ -86,8 +87,8 @@ class cChangeTableView(QtGui.QTableView):
         if self.selectionHandler: self.selectionHandler(current)
     
 class cDetailView(QtGui.QWidget):
-    def __init__(self, *args, **kwargs):
-        super(cDetailView, self).__init__(*args, **kwargs)
+    def __init__(self, parent):
+        super(cDetailView, self).__init__(parent)
         self.setLayout(QtGui.QGridLayout())
         self.setMinimumSize(200, 200)
         
@@ -110,17 +111,20 @@ class cDetailView(QtGui.QWidget):
         for item in itemList:
             for field, col in zip(['old', 'new'], [1, 2]):
                 if self._isHtml(item['old']) or self._isHtml(item['new']):
-                    widget = QtGui.QTextBrowser()
+                    widget = _naf_textviewer.cTextEditor(self, readOnly=True)
+                    widget.setImageProvider(_imageProvider)
+                    QtGui.QTextEdit(readOnly=True)
                     widget.setHtml(item[field])
                     alignment=Qt.AlignTop 
                 else:
                     widget = QtGui.QLineEdit()
-                    widget.setText(str(item[field]))
+                    widget.setText(unicode(item[field]))
                     alignment=Qt.AlignVCenter
                 self.layout().addWidget(widget, row, col, alignment=Qt.AlignTop)
             self.layout().addWidget(QtGui.QLabel(item['column'], alignment=alignment), row, 0)
             row = row + 1
         self.layout().addItem(QtGui.QSpacerItem(1,1, 1, -1), row, 0)
+    
     
 class cMainWin(QtGui.QMainWindow):
     def __init__(self, dbName=None):
@@ -162,7 +166,7 @@ class cMainWin(QtGui.QMainWindow):
             self.showExceptionMessageBox(type_, value, tb)
     
     def showAbout(self):
-        aboutText = str(self.tr("""
+        aboutText = unicode(self.tr("""
         <div align="center" style="font-size:large;">
         <p style="font-size:x-large;"><b>openADAMS Log Viewer %s</b></p>
         <p><small>[%s]</small><p>
@@ -194,11 +198,10 @@ class cMainWin(QtGui.QMainWindow):
         self.addDockWidget(Qt.BottomDockWidgetArea, self.dockWidget)
         self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + WINTITLE)
         
-    
     def tableSelectionChanged(self, index):
         row = self.tableView.currentIndex().row()
         index = self.tableView.model().index(row, 3)
-        data = str(self.tableView.model().origdata(index).toString())
+        data = unicode(self.tableView.model().origdata(index).toString())
         self.updateView(data)
         
     def updateView(self, data):
@@ -208,10 +211,18 @@ class cMainWin(QtGui.QMainWindow):
         self.dockWidget.setWidget(self.detailView)
      
     def showExceptionMessageBox(self, type_, value, tb):
-        msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(str(value)))
+        msgBox = QtGui.QMessageBox(QtGui.QMessageBox.Warning, self.tr("Error"), QtCore.QString(unicode(value)))
         msgBox.setDetailedText(QtCore.QString(''.join(traceback.format_exception( type_, value, tb))))
         msgBox.exec_()
 # ------------------------------------------------------------------------------
+
+def _imageProvider(imgId):
+    query = QtSql.QSqlQuery("SELECT image FROM images WHERE id==%d" % imgId)
+    query.next()
+    return query.value(0).toByteArray()
+
+# ------------------------------------------------------------------------------
+
 app = QtGui.QApplication(sys.argv)
 app.setOrganizationName("")
 app.setOrganizationDomain("macht-publik.de")

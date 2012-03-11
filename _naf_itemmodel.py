@@ -125,6 +125,15 @@ class cItemModel(QtCore.QAbstractTableModel):
         self.submitRecord[columnName] = value 
         return True
 
+    def _fmtChangeTitle(self, afId, currentData):
+        short = nafdb.getArtifactShortname(self.tableName, afId)
+        title = currentData[self.columns.index('title')]
+        if len(title) > 0:
+            title = short + ': ' + title
+        else:
+            title = short
+        return title
+    
     def submit(self):
         # TODO: copy table row to change log table before updating
         # read current item in database
@@ -138,7 +147,11 @@ class cItemModel(QtCore.QAbstractTableModel):
         for column, data in zip(self.columns, currentData):
             #TODO: check if this work for blob columns also
             if self.submitRecord.has_key(column) and data != self.submitRecord[column]:
-                changeRecord.append({'column': column, 'old': data, 'new': self.submitRecord[column]})
+                if column == 'image':
+                    # TODO: is this nice to handle image this way
+                    changeRecord.append({'column': column, 'old': 'not shown', 'new': 'not shown'})
+                else:
+                    changeRecord.append({'column': column, 'old': data, 'new': self.submitRecord[column]})
         # update submitted item in database
         clause = ','.join(['%s=?' % columnName for columnName in self.submitRecord.iterkeys()])
         cmd = 'update %s set %s where id==?;' % (self.tableName, clause)
@@ -146,7 +159,7 @@ class cItemModel(QtCore.QAbstractTableModel):
         self.cur.execute(cmd, values)
         # save identified changes in database
         (user, timestamp) = nafdb.getUserAndDate()
-        title = nafdb.fmtChangeTitle(self.tableName, afId)
+        title = self._fmtChangeTitle(afId, currentData)
         (changeId, parentId, typeid, title) = nafdb.newItem('changes', title, None, makeChangeEntry=False)
         cmd = 'update changes set description=?, afid=?, changetype=?, date=?, user=? where id=?'
         self.cur.execute(cmd, (json.dumps(changeRecord), afId, nafdb.CHANGETYPE_EDITED, timestamp, user, changeId))        
