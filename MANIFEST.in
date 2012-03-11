@@ -21,7 +21,8 @@ include naf_updatedb_v1_to_v2.py
 include _naf_about.py
 include _oatr_database.py
 include _oatr_tableview.py
-include filepicker.pyoaxml2db.py
+include filepicker.py
+include oaxml2db.py
 include _oatr_importwizard.py
 include _oatr_testrun.py
 include _oatr_commons.py

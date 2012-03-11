@@ -1,4 +1,5 @@
 # -*- coding: utf-8  -*-
+# $Id$
 import subprocess, os, os.path, shutil
 import _nafhelp_createtranslationsstrings
 
