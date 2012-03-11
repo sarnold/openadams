@@ -2,7 +2,7 @@
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2012 Achim Köhler
+# Copyright 2012 Achim Kï¿½hler
 #
 # This file is part of openADAMS.
 #
@@ -49,7 +49,7 @@ class cTestrunTableView(QtGui.QTableView):
     def setHeader(self):
         model = self.model()
         for section in range(model.columnCount()):
-            coltitle = str(model.headerData(section, Qt.Horizontal) .toString())
+            coltitle = unicode(model.headerData(section, Qt.Horizontal) .toString())
             model.setHeaderData(section, Qt.Horizontal, oadb.getDisplayNameForColumn(oadb.TESTRUN_TABLE, coltitle))
             
     def currentChanged(self, current, previous):
@@ -71,6 +71,6 @@ class cTestsuiteTableView(QtGui.QTableView):
     def setHeader(self):
         self.horizontalHeader().setStretchLastSection(True)
         for section in range(self.model().columnCount()):
-            coltitle = str(self.model().headerData(section, Qt.Horizontal).toString())
+            coltitle = unicode(self.model().headerData(section, Qt.Horizontal).toString())
             self.model().setHeaderData(section, Qt.Horizontal, nafdb.getColumnDisplayName('testsuites', coltitle))
             

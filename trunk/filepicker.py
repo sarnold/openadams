@@ -80,4 +80,4 @@ class cFilePicker(QtCore.QObject):
         return QtCore.QFile.exists(self.cbxFilename.currentText())
     
     def getFilename(self):
-        return str(self.cbxFilename.currentText())
+        return unicode(self.cbxFilename.currentText())
