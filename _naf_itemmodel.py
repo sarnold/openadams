@@ -31,7 +31,6 @@ from _naf_database import PREFIX as ARTIFACT_PREFIX
 
 class cItemModel(QtCore.QAbstractTableModel):
     def __init__(self, tableName):
-        # TODO: add another argument to provide a name for a table to log changes
         QtCore.QAbstractTableModel.__init__(self)
         self.tableName = tableName
         self.resetData()
@@ -91,13 +90,6 @@ class cItemModel(QtCore.QAbstractTableModel):
     def getColumns(self):
         return self.columns
 
-    ##def getLookupTableRows(self, columnName):
-    ##    #TODO: check if this is a dead function
-    ##    lutTableName = nafdb.getLookupTableName(self.tableName, columnName)
-    ##    lutTableRows = [QtCore.QCoreApplication.translate('lookupTable', item) for item in nafdb.getLookupTableRows(lutTableName)]
-    ##    print lutTableRows 
-    ##    return lutTableRows#nafdb.getLookupTableRows(lutTableName)
-
     def getLookupModel(self, lutTableName):
         if not self.lookupModel.has_key(lutTableName):
             lutTableRows = nafdb.getLookupTableRows(lutTableName)
@@ -135,7 +127,6 @@ class cItemModel(QtCore.QAbstractTableModel):
         return title
     
     def submit(self):
-        # TODO: copy table row to change log table before updating
         # read current item in database
         afId = self.submitRecord['id']
         self.cur = nafdb.connection.cursor()
@@ -145,7 +136,6 @@ class cItemModel(QtCore.QAbstractTableModel):
         # compare current item to submitted item, write changes to a dictionary
         changeRecord = []
         for column, data in zip(self.columns, currentData):
-            #TODO: check if this work for blob columns also
             if self.submitRecord.has_key(column) and data != self.submitRecord[column]:
                 if column == 'image':
                     # TODO: is this nice to handle image this way
