@@ -1,6 +1,6 @@
 # -*- coding: utf-8  -*-
 # $Id$
-import subprocess, os, os.path, shutil
+import subprocess, os, os.path, shutil, sys, glob
 import _nafhelp_createtranslationsstrings
 
 
@@ -16,10 +16,12 @@ SUBWCREF = r"C:\Programme\tools\SubWCRev\subwcrev.exe"
 SCRIPTS = "oaeditor.py oaeditor.pyw oalogview.py oalogview.pyw oatestrunner.py oatestrunner.pyw"
 SOURCES = "_naf_usecase.py _naf_tree.py _naf_tableview.py _naf_requirement.py "\
     "_naf_itemmodel.py _naf_filter.py _naf_commons.py _naf_component.py _naf_database.py _naf_feature.py "\
-    "_naf_folder.py _naf_image.py _naf_imageviewer.py _naf_simplesection.py "\
+    "_naf_folder.py _naf_image.py _naf_imageviewer.py _naf_simplesection.py naf_exportchm.py "\
     "_naf_testcase.py _naf_testsuite.py _naf_textviewer.py naf_exportxml.py naf_editor.py " \
     "naf_updatedb_v1_to_v2.py _naf_about.py _oatr_database.py _oatr_tableview.py filepicker.py "\
     "oaxml2db.py _oatr_importwizard.py _oatr_testrun.py _oatr_commons.py _oatr_testsuite.py "
+ADDFILES = '_naf_resources.py _naf_version.py'
+IGNOREFILES = 'build.py naf_diff.py setup.py _nafhelp_createtranslationsstrings.py _nafhelp_translationsstrings.py'
 DATAFILES = 'nafms_de.qm oareport.css oareport.xsl oareportlang.xsl README.txt CHANGELOG.txt COPYING.txt'
 
 TRANSLATIONSOURCES = SCRIPTS + SOURCES + '_nafhelp_translationsstrings.py'
@@ -57,7 +59,7 @@ def buildbin():
     make_win32_zip()
 
 def manifest():
-    modules = SOURCES.split() + ['_naf_resources.py', '_naf_version.py']
+    modules = SOURCES.split() + ADDFILES.split()
     modules += SCRIPTS.split()
     data_files = DATAFILES.split()
 
@@ -76,14 +78,19 @@ def copy_files():
     shutil.copyfile(r'dist\oatestrunner\QtSql4.dll', r'dist\%s\QtSql4.dll' % basename)
     shutil.copytree(r'dist\oatestrunner\qt4_plugins\sqldrivers', r'dist\%s\qt4_plugins\sqldrivers' % basename)
 
-
-subwcref()
-from _naf_version import VERSION
-manifest()
-build()
-buildbin()
-copy_files()
-make_win32_zip()
+if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == 'checkfiles':
+        workfiles = glob.glob("*.py") + glob.glob("*.pyw")
+        difffiles = [workfile for workfile in workfiles if workfile not in SOURCES+SCRIPTS+ADDFILES+IGNOREFILES]
+        print difffiles
+    else:
+        subwcref()
+        from _naf_version import VERSION
+        manifest()
+        build()
+        buildbin()
+        copy_files()
+        make_win32_zip()
     
     
 
