@@ -12,6 +12,7 @@ include _naf_folder.py
 include _naf_image.py
 include _naf_imageviewer.py
 include _naf_simplesection.py
+include naf_exportchm.py
 include _naf_testcase.py
 include _naf_testsuite.py
 include _naf_textviewer.py
