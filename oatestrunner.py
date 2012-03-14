@@ -29,29 +29,9 @@ import traceback
 from PyQt4 import QtGui,  QtCore,  QtSql
 from PyQt4.QtCore import Qt
 
-from _naf_version import VERSION, VERSION_STR, SVN_STR
-import _oatr_testrun
-import _oatr_testsuite
-import _oatr_tableview
-import _oatr_database
-import _naf_about
-import _naf_resources
-import _oatr_importwizard
-from _naf_database import getUserAndDate
-
-WINTITLE = "Test Runner"
-PROGNAME = 'oatestrunner'
-ABOUTMSG = u"""oatestrunner %s
-openADAMS Test Runner 
-
-Copyright (C) 2012 Achim Koehler
-
-%s
-""" % (VERSION, SVN_STR)
-
 # ------------------------------------------------------------------------------
 # Initialize application and translators here, because we have static strings
-# in _naf_database which needs to be translated
+# in _oatr_database which needs to be translated
 # ------------------------------------------------------------------------------
 app = QtGui.QApplication(sys.argv)
 app.setOrganizationName("")
@@ -66,8 +46,29 @@ qtTranslator.load("qt_" + QtCore.QLocale.system().name(), QtCore.QLibraryInfo.lo
 app.installTranslator(qtTranslator)
 
 appTranslator = QtCore.QTranslator()
-appTranslator.load("oatr_" + QtCore.QLocale.system().name())
+appTranslator.load("nafms_" + QtCore.QLocale.system().name())
 app.installTranslator(appTranslator)
+# ------------------------------------------------------------------------------
+
+from _naf_version import VERSION, VERSION_STR, SVN_STR
+import _oatr_testrun
+import _oatr_testsuite
+import _oatr_tableview
+import _oatr_database
+import _naf_about
+import _naf_resources
+import _oatr_importwizard
+from _naf_database import getUserAndDate
+
+WINTITLE = QtCore.QCoreApplication.translate("winTitle", "Test Runner")
+PROGNAME = 'oatestrunner'
+ABOUTMSG = u"""oatestrunner %s
+openADAMS Test Runner 
+
+Copyright (C) 2012 Achim Koehler
+
+%s
+""" % (VERSION, SVN_STR)
 # ------------------------------------------------------------------------------
 class cMainWin(QtGui.QMainWindow):
     def __init__(self, dbName=None):
@@ -105,9 +106,9 @@ class cMainWin(QtGui.QMainWindow):
                                    triggered = self.openActionHandler,shortcut=QtGui.QKeySequence.Open)
         newAction = QtGui.QAction(QtGui.QIcon(':/icons/database_new.png'), self.tr('New test run'), self, statusTip=self.tr('Create new test run'),
                                   triggered=self.newDatabase, shortcut=QtGui.QKeySequence.New)
-        reportAction = QtGui.QAction(self.tr('Create test run report'), self, statusTip="Create a report of the test run",
+        reportAction = QtGui.QAction(self.tr('Create test run report'), self, statusTip=self.tr("Create a report of the test run"),
             triggered=self.createReport)
-        execTestcaseAction = QtGui.QAction(QtGui.QIcon(':/icons/arrow-right.png'), self.tr('Execute test'), self, statusTip="Execute selected testcase",
+        execTestcaseAction = QtGui.QAction(QtGui.QIcon(':/icons/arrow-right.png'), self.tr('Execute test'), self, statusTip=self.tr("Execute selected testcase"),
             triggered=self.execTestcase)
         aboutAction = QtGui.QAction(self.tr('About'), self, statusTip = self.tr('About this program'),
                                     triggered=self.showAbout, shortcut=QtGui.QKeySequence.HelpContents)
@@ -193,9 +194,9 @@ class cMainWin(QtGui.QMainWindow):
         self.tableView.activated.connect(self.execTestcase)
 
         self.tabView = QtGui.QTabWidget(self.mainView)
-        self.tabView.addTab(self.testrunDetailView, 'Test Details')
-        self.tabView.addTab(self.testsuiteDetailView, 'Testsuite')
-        self.tabView.addTab(self.testruninfoDetailView, 'Test Run Info')
+        self.tabView.addTab(self.testrunDetailView, self.tr("Testcase"))
+        self.tabView.addTab(self.testsuiteDetailView, self.tr("Testsuite"))
+        self.tabView.addTab(self.testruninfoDetailView, self.tr("Test Run Info"))
                 
         self.actionsRequiringDatabase.setEnabled(True)
         self.setWindowTitle(QtCore.QFileInfo(fileName).baseName() + ' - ' + WINTITLE)
