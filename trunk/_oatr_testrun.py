@@ -55,7 +55,7 @@ class cTestrunModel(QtSql.QSqlTableModel):
         return super(cTestrunModel, self).data(index, role)
 
 
-class cTestrunItemDelegate(QtGui.QItemDelegate):#(QtSql.QSqlRelationalDelegate):
+class cTestrunItemDelegate(QtGui.QItemDelegate):
     def setEditorData(self, editor, index ):
         if isinstance(editor, cTestrunStatusWidget):   
             statusStr = index.model().data(index)

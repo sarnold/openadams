@@ -13,7 +13,7 @@ LRELEASE = PYQTPATH + r"\lrelease.exe"
 PYRCC4  = PYQTPATH + r"\pyrcc4.exe"
 SUBWCREF = r"C:\Programme\tools\SubWCRev\subwcrev.exe"
 
-SCRIPTS = "oaeditor.py oaeditor.pyw oalogview.py oalogview.pyw oatestrunner.py oatestrunner.pyw"
+SCRIPTS = "oaeditor.py oaeditor.pyw oalogview.py oalogview.pyw oatestrunner.py oatestrunner.pyw "
 SOURCES = "_naf_usecase.py _naf_tree.py _naf_tableview.py _naf_requirement.py "\
     "_naf_itemmodel.py _naf_filter.py _naf_commons.py _naf_component.py _naf_database.py _naf_feature.py "\
     "_naf_folder.py _naf_image.py _naf_imageviewer.py _naf_simplesection.py naf_exportchm.py "\
@@ -32,6 +32,20 @@ def add(f, names):
     
 def subwcref():
     subprocess.call(SUBWCREF + " . _naf_version.tmpl _naf_version.py")
+    
+def testbuild():
+    subwcref()
+    _nafhelp_createtranslationsstrings.run()
+    fd = open("test.pro", "w")
+    fd.write("TRANSLATIONS  = nafms_de.ts\n\n")
+    s = "SOURCES = %s\\\n"
+    for fname in TRANSLATIONSOURCES.split():
+        fd.write(s % fname)
+        s = "\t%s\\\n"
+    fd.close()
+    subprocess.call(PYLUPDATE + ' -verbose test.pro')
+    subprocess.call(LRELEASE + ' nafms_de.ts')
+    subprocess.call(PYRCC4 + " -py2 -o _naf_resources.py nafms.qrc")
     
 def build():
     subwcref()
@@ -79,10 +93,13 @@ def copy_files():
     shutil.copytree(r'dist\oatestrunner\qt4_plugins\sqldrivers', r'dist\%s\qt4_plugins\sqldrivers' % basename)
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and sys.argv[1] == 'checkfiles':
-        workfiles = glob.glob("*.py") + glob.glob("*.pyw")
-        difffiles = [workfile for workfile in workfiles if workfile not in SOURCES+SCRIPTS+ADDFILES+IGNOREFILES]
-        print difffiles
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'checkfiles':
+            workfiles = glob.glob("*.py") + glob.glob("*.pyw")
+            difffiles = [workfile for workfile in workfiles if workfile not in SOURCES+SCRIPTS+ADDFILES+IGNOREFILES]
+            print difffiles
+        elif sys.argv[1] == 'test':
+            testbuild()
     else:
         subwcref()
         from _naf_version import VERSION

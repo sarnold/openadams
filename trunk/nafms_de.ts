@@ -11,9 +11,9 @@
 <context>
     <name>cAbout</name>
     <message>
-        <location filename="naf_editor.py" line="510"/>
+        <location filename="_naf_about.py" line="29"/>
         <source>About</source>
-        <translation type="obsolete">Über</translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="409"/>
@@ -154,6 +154,54 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <location filename="_naf_filter.py" line="344"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
+    </message>
+</context>
+<context>
+    <name>cChangeTableView</name>
+    <message>
+        <location filename="oalogview.py" line="110"/>
+        <source>Change ID</source>
+        <translation>Änderungs-ID</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="111"/>
+        <source>Artifact Type</source>
+        <translation>Artefact Typ</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="112"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="113"/>
+        <source>Affected fields</source>
+        <translation>Geänderte Felder</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="114"/>
+        <source>Artifact ID</source>
+        <translation>Artefakt ID</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="115"/>
+        <source>Change type</source>
+        <translation>Änderungsart</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="116"/>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="117"/>
+        <source>User</source>
+        <translation>Benutzer</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="118"/>
+        <source>View pos</source>
+        <translation>Anzeigeposition</translation>
     </message>
 </context>
 <context>
@@ -339,11 +387,6 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <translation>Benutzer</translation>
     </message>
     <message>
-        <location filename="_nafhelp_translationsstrings.py" line="105"/>
-        <source>View pos</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="_nafhelp_translationsstrings.py" line="94"/>
         <source>Kind</source>
         <translation>Art</translation>
@@ -357,6 +400,16 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <location filename="_nafhelp_translationsstrings.py" line="23"/>
         <source>Baseline</source>
         <translation>Zielversion</translation>
+    </message>
+    <message>
+        <location filename="_nafhelp_translationsstrings.py" line="105"/>
+        <source>View pos</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="_oatr_database.py" line="61"/>
+        <source>Source</source>
+        <translation>Quelle</translation>
     </message>
 </context>
 <context>
@@ -383,6 +436,19 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     </message>
 </context>
 <context>
+    <name>cDetailView</name>
+    <message>
+        <location filename="oalogview.py" line="147"/>
+        <source>Old value</source>
+        <translation>Alter Wert</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="147"/>
+        <source>New value</source>
+        <translation>Neuer Wert</translation>
+    </message>
+</context>
+<context>
     <name>cEditWin</name>
     <message>
         <location filename="naf_editor.py" line="311"/>
@@ -398,59 +464,59 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cExportToChmDialog</name>
     <message>
+        <location filename="naf_editor.py" line="446"/>
+        <source>Stylesheet</source>
+        <translation>Stylesheet</translation>
+    </message>
+    <message>
         <location filename="naf_editor.py" line="421"/>
         <source>Export to Compressed Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als Compressed Help</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="427"/>
         <source>Help Project Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name Hilfeprojekt</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="433"/>
         <source>Project title</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekttitel</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="438"/>
         <source>Output folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="naf_editor.py" line="446"/>
-        <source>Stylesheet</source>
-        <translation type="unfinished">Stylesheet</translation>
+        <translation>Ausgabeordner</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="455"/>
         <source>Path to Help Compiler</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad zum Hilfe-Compiler</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="473"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzeichnis öffnen</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="479"/>
         <source>Use CSS Stylesheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwende CSS Stylesheet</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="479"/>
         <source>CSS Stylesheet Files (*.css);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSS Stylesheet Dateien (*.css);;Alle Dateien (*.*)</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="485"/>
         <source>Help Compiler</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfe-Compiler</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="485"/>
         <source>Executable files (*.exe);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausführbare Dateien (*.exe);;Alle Dateie (*.*)</translation>
     </message>
 </context>
 <context>
@@ -478,7 +544,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     <message>
         <location filename="naf_editor.py" line="394"/>
         <source>Use Xsl Stylesheet</source>
-        <translation>Xsl Stylesheet</translation>
+        <translation>Xsl Stylesheet verwenden</translation>
     </message>
     <message>
         <location filename="naf_editor.py" line="394"/>
@@ -675,7 +741,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     <message>
         <location filename="_naf_imageviewer.py" line="133"/>
         <source>Could not import image from file %1</source>
-        <translation>Kann kein Bild aus Datei %s importieren</translation>
+        <translation>Kann kein Bild aus Datei %1 importieren</translation>
     </message>
     <message>
         <location filename="_naf_imageviewer.py" line="139"/>
@@ -706,6 +772,54 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <location filename="_naf_imageviewer.py" line="155"/>
         <source>Import Image</source>
         <translation>Bild importieren</translation>
+    </message>
+</context>
+<context>
+    <name>cInfoWizardPage</name>
+    <message>
+        <location filename="_oatr_importwizard.py" line="122"/>
+        <source>Enter testrun information</source>
+        <translation>Eingabe Testlauf-Informationen</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="126"/>
+        <source>Testrun file</source>
+        <translation>Testlauf-Datei</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="127"/>
+        <source>Testrun files (*.%s);;All files (*.*)</source>
+        <translation>Testlauf-Dateien (*.%s);;Alle Dateien (*.*)</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="133"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="137"/>
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="146"/>
+        <source>Overwrite file</source>
+        <translation>Datei überschreiben</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="146"/>
+        <source>File %s already exists. Okay to overwrite?</source>
+        <translation>Datei %s existiert. Überschreiben erlauben?</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="152"/>
+        <source>Failure</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="152"/>
+        <source>Failed to remove file %s</source>
+        <translation>Löschen der Datei %s fehlgeschlagen</translation>
     </message>
 </context>
 <context>
@@ -995,27 +1109,6 @@ Eintrag wirklich löschen?</translation>
         <translation>Artefakt Editor</translation>
     </message>
     <message>
-        <location filename="naf_editor.py" line="633"/>
-        <source>Export database to XML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="naf_editor.py" line="636"/>
-        <source>Export database to CHM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="naf_editor.py" line="825"/>
-        <source>Successfully created
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="naf_editor.py" line="826"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="naf_editor.py" line="916"/>
         <source>
         &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
@@ -1031,7 +1124,7 @@ Eintrag wirklich löschen?</translation>
         &lt;/blockquote&gt;
         &lt;/div&gt;
         </source>
-        <translation type="unfinished">        &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
+        <translation>        &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
         &lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Editor %s&lt;/b&gt;&lt;/p&gt;
         &lt;p&gt;&lt;small&gt;[%s]&lt;/small&gt;&lt;p&gt;
         &lt;p&gt;Copyright (C) 2010 Achim K&amp;ouml;hler&lt;/p&gt;
@@ -1045,6 +1138,167 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         &lt;/blockquote&gt;
         &lt;/div&gt;
         </translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="177"/>
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <location filename="oalogview.py" line="210"/>
+        <source>
+        &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
+        &lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Log Viewer %s&lt;/b&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;small&gt;[%s]&lt;/small&gt;&lt;p&gt;
+        &lt;p&gt;Copyright (C) 2012 Achim K&amp;ouml;hler&lt;/p&gt;
+        &lt;p&gt;Log viewer for the Open &quot;Artifact Documentation And Management System&quot;&lt;/p&gt;
+        &lt;p&gt;See &lt;a href=&quot;https://sourceforge.net/projects/openadams/&quot;&gt;openADAMS Homepage&lt;/a&gt; for details.&lt;/p&gt;
+        &lt;blockquote&gt;This program comes with ABSOLUTELY NO WARRANTY;&lt;br/&gt;
+        This is free software, and you are welcome to redistribute it&lt;br/&gt;
+        under the terms of the GNU General Public License; &lt;br/&gt;
+        see the accompanied file COPYING for details.
+        &lt;/blockquote&gt;
+        &lt;/div&gt;
+        </source>
+        <translation>&lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
+&lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Editor %s&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;[%s]&lt;/small&gt;&lt;p&gt;
+&lt;p&gt;Copyright (C) 2010 Achim K&amp;ouml;hler&lt;/p&gt;
+&lt;p&gt;Log-Betrachter f&amp;uuml;r das &quot;Open Artifact Documentation And Management System&quot;&lt;/p&gt;
+&lt;p&gt;Siehe &lt;a href=&quot;https://sourceforge.net/projects/openadams/&quot;&gt;openADAMS Homepage&lt;/a&gt; f&amp;uuml;r weitere Informationen.&lt;/p&gt;
+&lt;blockquote&gt;
+F&amp;uuml;r dieses Programm besteht KEINERLEI GARANTIE;&lt;br/&gt;
+Dies ist freie Software, die Sie unter den Bedingungen &lt;br/&gt;
+der GNU General Public License weitergeben d&amp;uuml;rfen;&lt;br/&gt;
+Details siehe beigef&amp;uuml;gte Datei COPYING.
+&lt;/blockquote&gt;
+&lt;/div&gt;      </translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="105"/>
+        <source>Open test run</source>
+        <translation>Testlauf öffnen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="105"/>
+        <source>Open existing test run</source>
+        <translation>Vorhandenen Testlauf öffnen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="107"/>
+        <source>New test run</source>
+        <translation>Neuer Testlauf</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="107"/>
+        <source>Create new test run</source>
+        <translation>Neuen Testlauf erstellen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="109"/>
+        <source>Create test run report</source>
+        <translation>Erstelle Testlauf-Bericht</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="111"/>
+        <source>Execute test</source>
+        <translation>Test ausführen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="123"/>
+        <source>&amp;Run</source>
+        <translation>Ausfüh&amp;ren</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="134"/>
+        <source>Open testrun database</source>
+        <translation>Testlauf-Datenbank öffnen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="134"/>
+        <source>Testrun Database Files (*.dbt);;All files (*.*)</source>
+        <translation>Testalu-Dateien (*.dbt);;Alle Dateien (*.*)</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="248"/>
+        <source>
+        &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
+        &lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Testrunner %s&lt;/b&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;small&gt;[%s]&lt;/small&gt;&lt;p&gt;
+        &lt;p&gt;Copyright (C) 2012 Achim K&amp;ouml;hler&lt;/p&gt;
+        &lt;p&gt;Testrunner for the Open &quot;Artifact Documentation And Management System&quot;&lt;/p&gt;
+        &lt;p&gt;See &lt;a href=&quot;https://sourceforge.net/projects/openadams/&quot;&gt;openADAMS Homepage&lt;/a&gt; for details.&lt;/p&gt;
+        &lt;blockquote&gt;This program comes with ABSOLUTELY NO WARRANTY;&lt;br/&gt;
+        This is free software, and you are welcome to redistribute it&lt;br/&gt;
+        under the terms of the GNU General Public License; &lt;br/&gt;
+        see the accompanied file COPYING for details.
+        &lt;/blockquote&gt;
+        &lt;/div&gt;
+        </source>
+        <translation>&lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
+&lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Editor %s&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;[%s]&lt;/small&gt;&lt;p&gt;
+&lt;p&gt;Copyright (C) 2010 Achim K&amp;ouml;hler&lt;/p&gt;
+&lt;p&gt;Testrunner f&amp;uuml;r das &quot;Open Artifact Documentation And Management System&quot;&lt;/p&gt;
+&lt;p&gt;Siehe &lt;a href=&quot;https://sourceforge.net/projects/openadams/&quot;&gt;openADAMS Homepage&lt;/a&gt; f&amp;uuml;r weitere Informationen.&lt;/p&gt;
+&lt;blockquote&gt;
+F&amp;uuml;r dieses Programm besteht KEINERLEI GARANTIE;&lt;br/&gt;
+Dies ist freie Software, die Sie unter den Bedingungen &lt;br/&gt;
+der GNU General Public License weitergeben d&amp;uuml;rfen;&lt;br/&gt;
+Details siehe beigef&amp;uuml;gte Datei COPYING.
+&lt;/blockquote&gt;
+&lt;/div&gt;      </translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="633"/>
+        <source>Export database to XML</source>
+        <translation>Datenbank nach XML exportieren</translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="636"/>
+        <source>Export database to CHM</source>
+        <translation>Datenbank nach Compressed Help exportieren</translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="825"/>
+        <source>Successfully created
+</source>
+        <translation>Erfolgreich erstellt</translation>
+    </message>
+    <message>
+        <location filename="naf_editor.py" line="826"/>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="109"/>
+        <source>Create a report of the test run</source>
+        <translation>Erstelle einen Bericht für den Testlauf</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="111"/>
+        <source>Execute selected testcase</source>
+        <translation>Markierten Testfall ausführen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="196"/>
+        <source>Test Details</source>
+        <translation type="obsolete">Testfall</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="198"/>
+        <source>Testsuite</source>
+        <translation>Testsuite</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="197"/>
+        <source>Testcase</source>
+        <translation>Testfall</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="199"/>
+        <source>Test Run Info</source>
+        <translation>Info Testlauf</translation>
     </message>
 </context>
 <context>
@@ -1181,7 +1435,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     <message>
         <location filename="_naf_requirement.py" line="180"/>
         <source>Related Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Zugeordnete Features</translation>
     </message>
 </context>
 <context>
@@ -1195,6 +1449,29 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <location filename="_naf_simplesection.py" line="50"/>
         <source>Edit text section</source>
         <translation>Textabschnitt bearbeiten</translation>
+    </message>
+</context>
+<context>
+    <name>cStartupDialog</name>
+    <message>
+        <location filename="oatestrunner.py" line="291"/>
+        <source>Open existing test run</source>
+        <translation>Vorhandenen Testlauf öffnen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="293"/>
+        <source>Create new test run</source>
+        <translation>Neuen Testlauf erstellen</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="295"/>
+        <source>About</source>
+        <translation>Über</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="297"/>
+        <source>Exit</source>
+        <translation>Beenden</translation>
     </message>
 </context>
 <context>
@@ -1297,26 +1574,78 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     </message>
 </context>
 <context>
+    <name>cTestrunDetailsView</name>
+    <message>
+        <location filename="_oatr_testrun.py" line="125"/>
+        <source>Action taken when the testcase has failed</source>
+        <translation>Durchgeführte Aktion bei fehlgeschlagenem Testfall</translation>
+    </message>
+    <message>
+        <location filename="_oatr_testrun.py" line="127"/>
+        <source>Remark for executed testcase</source>
+        <translation>Bemerkung zum ausgeführten Testfall</translation>
+    </message>
+</context>
+<context>
+    <name>cTestrunDialog</name>
+    <message>
+        <location filename="_oatr_testrun.py" line="245"/>
+        <source>Execute testcase</source>
+        <translation>Testfall ausführen</translation>
+    </message>
+</context>
+<context>
+    <name>cTestrunnerImportWizard</name>
+    <message>
+        <location filename="_oatr_importwizard.py" line="39"/>
+        <source>Create new testrun</source>
+        <translation>Neuen Testlauf erstellen</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="60"/>
+        <source>Select database with testsuite to run</source>
+        <translation>Datenbank mit auszuführender Testsuite wählen</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="65"/>
+        <source>Database</source>
+        <translation>Datenbank</translation>
+    </message>
+    <message>
+        <location filename="_oatr_importwizard.py" line="66"/>
+        <source>Database files (*.db);;All files (*.*)</source>
+        <translation>Datenbank-Dateien (*.db);;Alle Dateien (*.*)</translation>
+    </message>
+</context>
+<context>
     <name>cTestsuiteView</name>
     <message>
-        <location filename="_naf_testsuite.py" line="92"/>
+        <location filename="_naf_testsuite.py" line="93"/>
         <source>New Testsuite</source>
         <translation>Neue Testsuite</translation>
     </message>
     <message>
-        <location filename="_naf_testsuite.py" line="93"/>
+        <location filename="_naf_testsuite.py" line="94"/>
         <source>Edit testsuite</source>
         <translation>Testsuite bearbeiten</translation>
     </message>
     <message>
-        <location filename="_naf_testsuite.py" line="96"/>
+        <location filename="_naf_testsuite.py" line="97"/>
         <source>Testsuite</source>
         <translation>Testsuite</translation>
     </message>
     <message>
-        <location filename="_naf_testsuite.py" line="105"/>
+        <location filename="_naf_testsuite.py" line="106"/>
         <source>Related Testcases</source>
         <translation>Zugeordnete Testfälle</translation>
+    </message>
+</context>
+<context>
+    <name>cTestsuiteWizardPage</name>
+    <message>
+        <location filename="_oatr_importwizard.py" line="89"/>
+        <source>Select testsuite to run</source>
+        <translation>Auszuführende Testsuite wählen</translation>
     </message>
 </context>
 <context>
@@ -1564,12 +1893,12 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     <message>
         <location filename="_naf_textviewer.py" line="413"/>
         <source>Indent less</source>
-        <translation>Einrückung erhöhen</translation>
+        <translation>Einrückung erniedrigen</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="415"/>
         <source>Indent more</source>
-        <translation>Einrückung erniedrigen</translation>
+        <translation>Einrückung erhöhen</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="418"/>
@@ -1712,34 +2041,29 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <translation>Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="_naf_textviewer.py" line="473"/>
-        <source>&amp;Edit</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="_naf_textviewer.py" line="479"/>
         <source>&amp;Search</source>
-        <translation>Suchen</translation>
+        <translation>&amp;Suchen</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="484"/>
         <source>&amp;Table</source>
-        <translation>Tabelle</translation>
+        <translation>&amp;Tabelle</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="489"/>
         <source>&amp;Image</source>
-        <translation>Bild</translation>
+        <translation>B&amp;ild</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="492"/>
         <source>&amp;List</source>
-        <translation>Liste</translation>
+        <translation>&amp;Liste</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="495"/>
         <source>&amp;Format</source>
-        <translation>Format</translation>
+        <translation>&amp;Format</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="506"/>
@@ -1749,7 +2073,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
     <message>
         <location filename="_naf_textviewer.py" line="511"/>
         <source>&amp;Options</source>
-        <translation>Optionen</translation>
+        <translation>&amp;Optionen</translation>
     </message>
     <message>
         <location filename="_naf_textviewer.py" line="593"/>
@@ -1811,6 +2135,11 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <source>Paste plain text</source>
         <translation>Einfügen als Text</translation>
     </message>
+    <message>
+        <location filename="_naf_textviewer.py" line="473"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;Bearbeiten</translation>
+    </message>
 </context>
 <context>
     <name>cTextEditor</name>
@@ -1833,11 +2162,6 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <translation>Anwendungsfall</translation>
     </message>
     <message>
-        <location filename="_naf_usecase.py" line="156"/>
-        <source>Related Requirements</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="_naf_usecase.py" line="147"/>
         <source>New Usecase</source>
         <translation>Neuer Anwendungsfall</translation>
@@ -1848,9 +2172,14 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <translation>Anwendungsfall bearbeiten</translation>
     </message>
     <message>
+        <location filename="_naf_usecase.py" line="156"/>
+        <source>Related Requirements</source>
+        <translation>Zugeordnete Anforderungen</translation>
+    </message>
+    <message>
         <location filename="_naf_usecase.py" line="161"/>
         <source>Related Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Zugeordnete Features</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2418,19 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         <location filename="_nafhelp_translationsstrings.py" line="110"/>
         <source>Rejected</source>
         <translation>abgelehnt</translation>
+    </message>
+</context>
+<context>
+    <name>winTitle</name>
+    <message>
+        <location filename="oalogview.py" line="58"/>
+        <source>Log Viewer</source>
+        <translation>Log Betrachter</translation>
+    </message>
+    <message>
+        <location filename="oatestrunner.py" line="63"/>
+        <source>Test Runner</source>
+        <translation>Test Runner</translation>
     </message>
 </context>
 </TS>

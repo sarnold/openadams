@@ -24,7 +24,7 @@ import sqlite3
 import os.path
 import copy
 import re
-
+from PyQt4 import QtCore
 import _naf_database as nafdb
 
 LOOKUP_TABLES = {
@@ -58,6 +58,7 @@ TESTRUNINFO_TABLE = nafdb.cTable(name='testruninfo', displayname="Test Run Infor
                                  nafdb.cColumn(name='description', _type='text', displayname='Description'),
                                  nafdb.cColumn(name='source', _type='text', displayname='Source'),
                                  ))
+QtCore.QCoreApplication.translate('cColumn', 'Source')                                 
 
 def getDisplayNameForColumn(table, name):
     return table[name].displayname

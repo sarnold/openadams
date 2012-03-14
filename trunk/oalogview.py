@@ -30,13 +30,32 @@ import traceback
 from PyQt4 import QtGui,  QtCore,  QtSql
 from PyQt4.QtCore import Qt
 
+# ------------------------------------------------------------------------------
+app = QtGui.QApplication(sys.argv)
+app.setOrganizationName("")
+app.setOrganizationDomain("macht-publik.de")
+app.setApplicationName("oalogviewer")
+app.setWindowIcon(QtGui.QIcon(":/icons/appicon.png"))
+
+QtCore.QSettings.setDefaultFormat(QtCore.QSettings.IniFormat)
+
+qtTranslator = QtCore.QTranslator()
+qtTranslator.load("qt_" + QtCore.QLocale.system().name(), QtCore.QLibraryInfo.location(QtCore.QLibraryInfo.TranslationsPath))
+app.installTranslator(qtTranslator)
+
+appTranslator = QtCore.QTranslator()
+appTranslator.load("nafms_" + QtCore.QLocale.system().name())
+app.installTranslator(appTranslator)
+# ------------------------------------------------------------------------------
+
+
 import _naf_database as nafdb
 import _naf_resources
 import _naf_textviewer
 import _naf_about
 from _naf_version import VERSION, VERSION_STR, SVN_STR
 
-WINTITLE = "Log Viewer"
+WINTITLE = QtCore.QCoreApplication.translate("winTitle", "Log Viewer")
 PROGNAME = 'oalogviewer'
 ABOUTMSG = u"""oaviewer %s
 openADAMS Log Viewer
@@ -125,7 +144,7 @@ class cDetailView(QtGui.QWidget):
             itemList = json.loads(data)
         except:
             return
-        for label, col in zip(['Old value', 'New value'], [1, 2]):
+        for label, col in zip([self.tr('Old value'), self.tr('New value')], [1, 2]):
             lbl = QtGui.QLabel(label)
             lbl.setStyleSheet("font-weight: bold; background-color:rgba(255, 10, 10, 10%); border-style: outset; border-width:2px; border-color:#909090;")
             self.layout().addWidget(lbl, 0, col, alignment=Qt.AlignTop)
@@ -143,7 +162,8 @@ class cDetailView(QtGui.QWidget):
                     widget.setText(unicode(item[field]))
                     alignment=Qt.AlignVCenter
                 self.layout().addWidget(widget, row, col, alignment=Qt.AlignTop)
-            self.layout().addWidget(QtGui.QLabel(item['column'], alignment=alignment), row, 0)
+                # TODO: supply L10N for the label
+            self.layout().addWidget(QtGui.QLabel(item['column']), alignment=alignment), row, 0)
             row = row + 1
         self.layout().addItem(QtGui.QSpacerItem(1,1, 1, -1), row, 0)
     
@@ -245,11 +265,7 @@ def _imageProvider(imgId):
 
 # ------------------------------------------------------------------------------
 
-app = QtGui.QApplication(sys.argv)
-app.setOrganizationName("")
-app.setOrganizationDomain("macht-publik.de")
-app.setApplicationName("oalogviewer")
-app.setWindowIcon(QtGui.QIcon(":/icons/appicon.png"))
+
 
 def start():
     parser = argparse.ArgumentParser(prog=PROGNAME,
