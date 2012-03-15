@@ -2,7 +2,7 @@
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2012 Achim Köhler
+# Copyright 2012 Achim Kï¿½hler
 #
 # This file is part of openADAMS.
 #
@@ -162,8 +162,12 @@ class cDetailView(QtGui.QWidget):
                     widget.setText(unicode(item[field]))
                     alignment=Qt.AlignVCenter
                 self.layout().addWidget(widget, row, col, alignment=Qt.AlignTop)
-                # TODO: supply L10N for the label
-            self.layout().addWidget(QtGui.QLabel(item['column']), alignment=alignment), row, 0)
+            if item.has_key('table'):
+                # this key is available in version 0.3.1 and newer
+                s = nafdb.getColumnDisplayName(item['table'], item['column'])
+            else:
+                s = item['column']
+            self.layout().addWidget(QtGui.QLabel(s, alignment=alignment), row, 0)
             row = row + 1
         self.layout().addItem(QtGui.QSpacerItem(1,1, 1, -1), row, 0)
     
