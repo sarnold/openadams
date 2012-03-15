@@ -139,9 +139,9 @@ class cItemModel(QtCore.QAbstractTableModel):
             if self.submitRecord.has_key(column) and data != self.submitRecord[column]:
                 if column == 'image':
                     # TODO: is this nice to handle image this way
-                    changeRecord.append({'column': column, 'old': 'not shown', 'new': 'not shown'})
+                    changeRecord.append({'table':self.tableName, 'column': column, 'old': 'not shown', 'new': 'not shown'})
                 else:
-                    changeRecord.append({'column': column, 'old': data, 'new': self.submitRecord[column]})
+                    changeRecord.append({'table':self.tableName, 'column': column, 'old': data, 'new': self.submitRecord[column]})
         # update submitted item in database
         clause = ','.join(['%s=?' % columnName for columnName in self.submitRecord.iterkeys()])
         cmd = 'update %s set %s where id==?;' % (self.tableName, clause)
