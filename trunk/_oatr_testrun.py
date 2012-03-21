@@ -20,6 +20,8 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
+import sys
+
 from PyQt4 import QtGui,  QtCore, QtSql
 from PyQt4.QtCore import Qt
 
@@ -106,7 +108,7 @@ class cTestrunDetailsView(QtGui.QWidget):
         layout.addWidget(labels[3], 10, 0, alignment=Qt.AlignTop)
         layout.addWidget(labels[4], 11, 0, alignment=Qt.AlignTop)
 
-        ledId = QtGui.QSpinBox(self)
+        ledId = QtGui.QSpinBox(self, maximum=sys.maxint)
         ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=True)
         ledKeywords = QtGui.QLineEdit(self, readOnly=True)

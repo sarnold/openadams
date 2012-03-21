@@ -20,6 +20,8 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
+import sys
+
 from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 
@@ -40,7 +42,7 @@ class cTestsuiteView(QtGui.QWidget):
         layout.addWidget(QtGui.QLabel(nafdb.getColumnDisplayName("testsuites", "description"), alignment=Qt.AlignTop), 3, 0)
         layout.addWidget(QtGui.QLabel(nafdb.getColumnDisplayName("testsuites", "execorder")), 4, 0)
                 
-        ledId = QtGui.QSpinBox(self)
+        ledId = QtGui.QSpinBox(self, maximum=sys.maxint)
         ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=True)
         ledKeywords = QtGui.QLineEdit(self, readOnly=True)
