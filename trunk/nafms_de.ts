@@ -415,22 +415,22 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cComponentView</name>
     <message>
-        <location filename="_naf_component.py" line="94"/>
+        <location filename="_naf_component.py" line="96"/>
         <source>New Component</source>
         <translation>Neue Komponente</translation>
     </message>
     <message>
-        <location filename="_naf_component.py" line="95"/>
+        <location filename="_naf_component.py" line="97"/>
         <source>Edit component</source>
         <translation>Komponente Bearbeiten</translation>
     </message>
     <message>
-        <location filename="_naf_component.py" line="98"/>
+        <location filename="_naf_component.py" line="100"/>
         <source>Component</source>
         <translation>Komponente</translation>
     </message>
     <message>
-        <location filename="_naf_component.py" line="107"/>
+        <location filename="_naf_component.py" line="109"/>
         <source>Related Requirements</source>
         <translation>Zugeordnete Anforderungen</translation>
     </message>
@@ -565,27 +565,27 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cFeatureView</name>
     <message>
-        <location filename="_naf_feature.py" line="106"/>
+        <location filename="_naf_feature.py" line="108"/>
         <source>New Feature</source>
         <translation>Neues Feature</translation>
     </message>
     <message>
-        <location filename="_naf_feature.py" line="107"/>
+        <location filename="_naf_feature.py" line="109"/>
         <source>Edit feature</source>
         <translation>Feature bearbeiten</translation>
     </message>
     <message>
-        <location filename="_naf_feature.py" line="110"/>
+        <location filename="_naf_feature.py" line="112"/>
         <source>Feature</source>
         <translation>Feature</translation>
     </message>
     <message>
-        <location filename="_naf_feature.py" line="119"/>
+        <location filename="_naf_feature.py" line="121"/>
         <source>Related Requirements</source>
         <translation>Zugeordnete Anforderungen</translation>
     </message>
     <message>
-        <location filename="_naf_feature.py" line="127"/>
+        <location filename="_naf_feature.py" line="129"/>
         <source>Related Usecases</source>
         <translation>Zugeordnete Anwendungsfälle</translation>
     </message>
@@ -1140,12 +1140,12 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
         </translation>
     </message>
     <message>
-        <location filename="oalogview.py" line="177"/>
+        <location filename="oalogview.py" line="182"/>
         <source>Details</source>
         <translation>Details</translation>
     </message>
     <message>
-        <location filename="oalogview.py" line="210"/>
+        <location filename="oalogview.py" line="215"/>
         <source>
         &lt;div align=&quot;center&quot; style=&quot;font-size:large;&quot;&gt;
         &lt;p style=&quot;font-size:x-large;&quot;&gt;&lt;b&gt;openADAMS Log Viewer %s&lt;/b&gt;&lt;/p&gt;
@@ -1576,12 +1576,12 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cTestrunDetailsView</name>
     <message>
-        <location filename="_oatr_testrun.py" line="125"/>
+        <location filename="_oatr_testrun.py" line="127"/>
         <source>Action taken when the testcase has failed</source>
         <translation>Durchgeführte Aktion bei fehlgeschlagenem Testfall</translation>
     </message>
     <message>
-        <location filename="_oatr_testrun.py" line="127"/>
+        <location filename="_oatr_testrun.py" line="129"/>
         <source>Remark for executed testcase</source>
         <translation>Bemerkung zum ausgeführten Testfall</translation>
     </message>
@@ -1589,7 +1589,7 @@ Details siehe beigef&amp;uuml;gte Datei COPYING.
 <context>
     <name>cTestrunDialog</name>
     <message>
-        <location filename="_oatr_testrun.py" line="245"/>
+        <location filename="_oatr_testrun.py" line="247"/>
         <source>Execute testcase</source>
         <translation>Testfall ausführen</translation>
     </message>
