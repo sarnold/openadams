@@ -20,7 +20,7 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-import logging
+import logging, sys
 
 from PyQt4 import QtGui,  QtCore
 from PyQt4.QtCore import Qt
@@ -61,7 +61,7 @@ class cTestsuiteDetailsView(_naf_commons.cArtifactDetailsView):
         lblDescription.linkActivated.connect(self.sendEditSignal)
         layout.addWidget(lblDescription, 3, 0)
 
-        ledId = QtGui.QSpinBox(self)
+        ledId = QtGui.QSpinBox(self, maximum=sys.maxint)
         ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=readOnly)
         cbxKeywords = QtGui.QComboBox(self, enabled=not readOnly, editable=True)

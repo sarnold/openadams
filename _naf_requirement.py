@@ -20,7 +20,7 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-import sqlite3, logging
+import sqlite3, logging, sys
 
 from PyQt4 import QtGui,  QtCore
 from PyQt4.QtCore import Qt
@@ -73,7 +73,7 @@ class cRequirementDetailsView(_naf_commons.cArtifactDetailsView):
         lblDescription = self.makeEditLinkLabel("description", readOnly)
         lblDescription.linkActivated.connect(self.sendEditSignal)
 
-        ledId = QtGui.QSpinBox(self)
+        ledId = QtGui.QSpinBox(self, maximum=sys.maxint)
         ledId.setReadOnly(True) # id is always read only
         ledTitle = QtGui.QLineEdit(self, readOnly=readOnly)
 
