@@ -8,32 +8,11 @@ None
 
 Changes
 ~~~~~~~
-None
-
-Bug fixes
-~~~~~~~~~
-* Fixed bug #3509677, editing artifacts with id > 99 
-
-Known issues
-~~~~~~~~~~~~
-* "Create report" in oatestrunner is not implemented yet
-
-
-====================================
-openADAMS Release 0.3.0 (2012-03-10)
-====================================
-
-New features
-~~~~~~~~~~~~
-None
-
-Changes
-~~~~~~~
 * Localisation of oatestrunner and oalogview is done
 
 Bug fixes
 ~~~~~~~~~
-None
+* Fixed bug #3509677, editing artifacts with id > 99 
 
 Known issues
 ~~~~~~~~~~~~
