@@ -332,13 +332,11 @@ class cEditWin(QtGui.QDialog):
         self.editButtonBox.accepted.connect(self.accept)
         self.editButtonBox.rejected.connect(self.reject)
 
-        self.accepted = self.editButtonBox.accepted
-        self.rejected = self.editButtonBox.rejected
-
     def accept(self):
         self.editView.currentWidget().submit()
         self.lastGeometry = self.geometry()
         self.hide()
+        self.accepted.emit()
 
     def reject(self):
         try:
@@ -348,6 +346,7 @@ class cEditWin(QtGui.QDialog):
             pass
         self.lastGeometry = self.geometry()
         self.hide()
+        self.rejected.emit()
 
     def updateTitle(self, index):
         self.setWindowTitle(self.dialogTitles[index])
