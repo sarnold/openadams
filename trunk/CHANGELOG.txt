@@ -1,4 +1,27 @@
 ====================================
+openADAMS Release 0.x.y (2012-xx-yy)
+====================================
+
+New features
+~~~~~~~~~~~~
+None
+
+Changes
+~~~~~~~
+* None
+
+Bug fixes
+~~~~~~~~~
+* fixed bug #3304514 
+  (Toolbar stays disabled when exiting edit dialog with "ESC")
+
+Known issues
+~~~~~~~~~~~~
+* "Create report" in oatestrunner is not implemented yet
+
+
+
+====================================
 openADAMS Release 0.3.1 (2012-03-21)
 ====================================
 
