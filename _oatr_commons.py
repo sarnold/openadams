@@ -2,7 +2,7 @@
 # $Id$
 
 # -------------------------------------------------------------------
-# Copyright 2012 Achim Köhler
+# Copyright 2012 Achim KÃ¶hler
 #
 # This file is part of openADAMS.
 #

@@ -3,7 +3,7 @@
 # $Id: oaeditor.pyw$
 
 # -------------------------------------------------------------------
-# Copyright 2010 Achim Köhler
+# Copyright 2010 Achim KÃ¶hler
 #
 # This file is part of openADAMS.
 #

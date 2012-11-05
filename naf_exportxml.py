@@ -26,6 +26,8 @@ __id__ = '$Id$'
 
 
 import os, sys, getopt, sqlite3, datetime, codecs, base64, logging, traceback
+from HTMLParser import HTMLParser
+import StringIO
 from xml.dom.minidom import getDOMImplementation, XMLNS_NAMESPACE, parseString, parse
 from xml.parsers.expat import ExpatError 
 import re, traceback
@@ -107,6 +109,51 @@ class cCommandLineProcessor(object):
         if self.args.outputFileName is None:
             self.args.outputFileName =  os.path.splitext(args[0])[0] + ".xml"
         self.args.databaseName = args[0]
+
+
+class PurifyHTMLParser(HTMLParser):
+    def set_output_file(self, fh):
+        self.fh = fh
+        
+    def handle_decl(self, decl):
+        self.fh.writelines(["<!", decl, ">"])
+
+    def handle_startendtag(self, tag, attrs):
+        (out_attr, seperator) = self._handle_attrs(attrs)
+        self.fh.writelines(["<", tag, seperator, out_attr, " />"])
+        
+    def handle_starttag(self, tag, attrs):
+        (out_attr, seperator) = self._handle_attrs(attrs)
+        self.fh.writelines(["<", tag, seperator, out_attr, ">"])
+        
+    def _handle_attrs(self, attrs):
+        attr_dict = {}
+        out_attr = ""
+        seperator = ""
+        for attr in attrs:
+            if attr[0].lower() == "style" and attr_dict.has_key("style"):
+                    attr_dict["style"] += attr[1]
+            else:
+                attr_dict[attr[0]] = attr[1]
+        out_attr = ";".join(['%s="%s"' % (key, value) for (key, value) in attr_dict.items()])
+        if out_attr:
+            seperator = " "
+        return out_attr, seperator
+
+    def handle_endtag(self, tag):
+        self.fh.writelines(["</", tag, ">"])
+        
+    def handle_data(self, data):
+        self.fh.write(data)
+        
+    def handle_charref(self, name):
+        self.fh.writelines(["&#", name, ";"])
+        
+    def handle_entityref(self, name):
+        self.fh.writelines(["&", name, ";"])
+        
+    def handle_comment(self, data):
+        self.fh.writelines(["<!--", data, "-->"])
 
 
 class cExportBaseXml(object):
@@ -290,6 +337,16 @@ class cExportPrettyXml(cExportPlainXml):
                     if mo is not None:
                         data = mo.group(1)
                         data = '<div class="__from_qt__">'+data+"</div>"
+                        # fix issue with two or more 'style' attributes by calling PurifyHtmlParser
+                        # we do not change the database because QTextEdit seems to revert these changes
+                        shandle = StringIO.StringIO()
+                        parser = PurifyHTMLParser()
+                        parser.set_output_file(shandle)
+                        parser.feed(data)
+                        parser.close()
+                        data = shandle.getvalue()
+                        shandle.close()
+                        # fixing done
                         try:
                             dom = parseString(data.encode('UTF-8'))
                         except ExpatError:
