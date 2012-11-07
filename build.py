@@ -12,6 +12,7 @@ PYLUPDATE = PYQTPATH + r"\pylupdate4.exe"
 LRELEASE = PYQTPATH + r"\lrelease.exe"
 PYRCC4  = PYQTPATH + r"\pyrcc4.exe"
 SUBWCREF = r"C:\Programme\tools\SubWCRev\subwcrev.exe"
+SUBWCREF = r"C:\Programme\TortoiseSVN\bin\SubWCRev.exe"
 
 SCRIPTS = "oaeditor.py oaeditor.pyw oalogview.py oalogview.pyw oatestrunner.py oatestrunner.pyw "
 SOURCES = "_naf_usecase.py _naf_tree.py _naf_tableview.py _naf_requirement.py "\
