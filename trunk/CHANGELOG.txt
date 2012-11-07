@@ -1,5 +1,5 @@
 ====================================
-openADAMS Release 0.x.y (2012-xx-yy)
+openADAMS Release 0.3.2 (2012-11-06)
 ====================================
 
 New features
@@ -12,8 +12,8 @@ Changes
 
 Bug fixes
 ~~~~~~~~~
-* fixed bug #3304514 
-  (Toolbar stays disabled when exiting edit dialog with "ESC")
+* fixed bug in naf_exportxml.py, exporting of HTML text
+  with two or more style attributes from QTextEdit now works
 
 Known issues
 ~~~~~~~~~~~~
