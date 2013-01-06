@@ -28,7 +28,6 @@
   <a href="history.shtml"><span>History</span></a>
   </li>
    <ul class="submenu">
-        <li><a href="#devel">openADAMS Devel</a></li>
         <li><a href="#r_0_3_2">openADAMS Release 0.3.2</a></li>
         <li><a href="#r_0_3_1">openADAMS Release 0.3.1</a></li>
         <li><a href="#r_0_3_0">openADAMS Release 0.3.0</a></li>
@@ -113,10 +112,10 @@ Fixed bug #3509677, editing artifacts with id > 99
 oaeditor now records changes 
 </li>
 <li> 
-New programm oatestrunner to execute test runs from test suites 
+New program oatestrunner to execute test runs from test suites 
 </li>
 <li>
-New programm oalogview to view changes in an openADAMS database (very basic)
+New program oalogview to view changes in an openADAMS database (very basic)
 </li>
 </ul>
 

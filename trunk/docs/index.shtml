@@ -127,7 +127,7 @@ Here are the main new features of openADAMS:
 
 <p>
 The test runner tool from <a href="http://sourceforge.net/projects/afms/">AFMS</a> is
-yet not available in openADAMS.
+available in openADAMS, documentation is coming soon.
 </p>
 <p>
 openADAMS is implemented in <a href="http://www.python.org/">Python</a> and 
