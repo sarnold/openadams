@@ -4,8 +4,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>openADAMS</title>
-<meta name="author" content="Achim&nbsp;Köhler" />
-<meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
+<meta name="author" content="Achim&nbsp;Kï¿½hler" />
+<meta name="copyright" content="Achim&nbsp;Kï¿½hler, 2010" />
 <meta content="openADAMS Short Manual" name="description" />
 <meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
 <link rel="stylesheet" href="css/oadoc.css" type="text/css" />
@@ -29,6 +29,10 @@
   </li>
    <ul class="submenu">
         <li><a href="#devel">openADAMS Devel</a></li>
+        <li><a href="#r_0_3_2">openADAMS Release 0.3.2</a></li>
+        <li><a href="#r_0_3_1">openADAMS Release 0.3.1</a></li>
+        <li><a href="#r_0_3_0">openADAMS Release 0.3.0</a></li>
+        <li><a href="#r_0_2_2">openADAMS Release 0.2.2</a></li>
         <li><a href="#r_0_2_1">openADAMS Release 0.2.1</a></li>
         <li><a href="#r_0_2_0">openADAMS Release 0.2.0</a></li>
     </ul>
@@ -41,28 +45,14 @@
 <div class="document" id="artefact-management-system-afms">
 <h1>History</h1>
 
-<h2><a name="devel">openADAMS Devel</a></h2>
+<!-- ******************************************************************** -->
+<h2><a name="r_0_3_2">openADAMS Release 0.3.2 (2012-11-06)</a></h2>
 <h3>New features</h3>
 <ul>
 <li>
-Text editor now supports links (Menu Edit/Edit link, Edit/Delete Link, ...)
-</li>
-<li>
-Text editor has new menu item to insert plain text
-</li>
-<li>Support for opening database files by drag'n drop
-</li>
-<li>Command line switches '-DEBUG',  '-INFO',  '-ERROR' for different log levels
-</li>
-<li>oareport.xsl now includes oareport.css for screen output and
-  oaprintreport.css for print output
-</li>
-<li>
-Export to Compressed Help Format (using Microsoft Help Compiler), either from main window or using script
-<kbd>naf_exportchm.py</kbd>
+None
 </li>
 </ul>
-
 
 <h3>Changes</h3>
 <ul>
@@ -74,21 +64,119 @@ None
 <h3>Bug fixes</h3>
 <ul>
 <li>
-oareport.xsl: removed whitespaces from links
+fixed bug in naf_exportxml.py, exporting of HTML 
+text with two or more style attributes from QTextEdit now works</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+"Create report" in oatestrunner is not implemented yet 
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_3_1">openADAMS Release 0.3.1 (2012-03-21)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+Localisation of oatestrunner and oalogview is done
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+Fixed bug #3509677, editing artifacts with id > 99 
 </li>
 </ul>
 
 <h3>Known issues</h3>
 <ul>
 <li>
-oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash
-  of the application
+"Create report" in oatestrunner is not implemented yet 
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_3_0">openADAMS Release 0.3.0 (2012-03-11)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+oaeditor now records changes 
+</li>
+<li> 
+New programm oatestrunner to execute test runs from test suites 
+</li>
+<li>
+New programm oalogview to view changes in an openADAMS database (very basic)
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+Artifact Id's are displayed in a spinedit rather than a textedit; of course they are still read only 
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+Images are know handled properly in the description of a testsuite
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+"Create report" in oatestrunner is not implemented yet 
+</li>
+<li>
+Localisation of oatestrunner and oalogview is rather incomplete
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_2_2">openADAMS Release 0.2.2 (2012-01-22)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+bug #3477275 (http://sourceforge.net/tracker/?func=detail&aid=3477275&group_id=339181&atid=1420428) 
+concerning the broken image editor/viewer on Windows 7 resolved.
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash of the application
 </li>
 <li>
 Documentation is missing
 </li>
-<li>
-oaxml2db.py: experimental
+<li>oaxml2db.py: experimental
 </li>
 </ul>
 
