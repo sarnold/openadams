@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>openADAMS</title>
+<meta name="author" content="Achim&nbsp;K�hler" />
+<meta name="copyright" content="Achim&nbsp;K�hler, 2010" />
+<meta content="openADAMS Short Manual" name="description" />
+<meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
+<link rel="stylesheet" href="css/oadoc.css" type="text/css" />
+</head>
+<body>
+<div class="header">
+<!-- begin_mainmenu $select -->
+<div class="tabs">
+  <ul>
+  <li>
+  <a href="index.shtml"><span>Main page</span></a>
+  </li>
+  <li>
+  <a href="getstarted.shtml"><span>Getting started</span></a>
+  </li>
+  <li>
+  <a href="acknowledgement.shtml"><span>Acknowledgement</span></a>
+  </li>
+  <li id="current">
+  <a href="history.shtml"><span>History</span></a>
+  </li>
+   <ul class="submenu">
+        <li><a href="#r_0_3_2">openADAMS Release 0.3.2</a></li>
+        <li><a href="#r_0_3_1">openADAMS Release 0.3.1</a></li>
+        <li><a href="#r_0_3_0">openADAMS Release 0.3.0</a></li>
+        <li><a href="#r_0_2_2">openADAMS Release 0.2.2</a></li>
+        <li><a href="#r_0_2_1">openADAMS Release 0.2.1</a></li>
+        <li><a href="#r_0_2_0">openADAMS Release 0.2.0</a></li>
+    </ul>
+  </ul>
+</div>
+<!-- end_mainmenu -->
+<hr class="header"/>
+</div>
+
+<div class="document" id="artefact-management-system-afms">
+<h1>History</h1>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_3_2">openADAMS Release 0.3.2 (2012-11-06)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+fixed bug in naf_exportxml.py, exporting of HTML 
+text with two or more style attributes from QTextEdit now works</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+"Create report" in oatestrunner is not implemented yet 
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_3_1">openADAMS Release 0.3.1 (2012-03-21)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+Localisation of oatestrunner and oalogview is done
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+Fixed bug #3509677, editing artifacts with id > 99 
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+"Create report" in oatestrunner is not implemented yet 
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_3_0">openADAMS Release 0.3.0 (2012-03-11)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+oaeditor now records changes 
+</li>
+<li> 
+New program oatestrunner to execute test runs from test suites 
+</li>
+<li>
+New program oalogview to view changes in an openADAMS database (very basic)
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+Artifact Id's are displayed in a spinedit rather than a textedit; of course they are still read only 
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+Images are know handled properly in the description of a testsuite
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+"Create report" in oatestrunner is not implemented yet 
+</li>
+<li>
+Localisation of oatestrunner and oalogview is rather incomplete
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_2_2">openADAMS Release 0.2.2 (2012-01-22)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+bug #3477275 (http://sourceforge.net/tracker/?func=detail&aid=3477275&group_id=339181&atid=1420428) 
+concerning the broken image editor/viewer on Windows 7 resolved.
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash of the application
+</li>
+<li>
+Documentation is missing
+</li>
+<li>oaxml2db.py: experimental
+</li>
+</ul>
+
+<!-- ******************************************************************** -->
+<h2><a name="r_0_2_1">openADAMS Release 0.2.1 (2011-01-22)</a></h2>
+<h3>New features</h3>
+<ul>
+<li>
+None
+</li>
+</ul>
+
+<h3>Changes</h3>
+<ul>
+<li>
+naf_exportxml.py, added some debug output if xml parser fails
+</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>
+#3163190, edit HTML behavior when canceling editor
+</li>
+</ul>
+
+<h3>Known issues</h3>
+<ul>
+<li>
+oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash of the application
+</li>
+<li>
+Documentation is missing
+</li>
+<li>oaxml2db.py: experimental
+</li>
+</ul>
+
+<h2><a name="r_0_2_0">openADAMS Release 0.2.0 (2010-08-08)</a></h2>
+<p>
+First release
+</p>
+
+<h3>Known issues</h3>
+<ul>
+<li>oaeditor: playing extensively with drag and drop in the artifact tree may cause a crash of the application
+  </li>
+<li>
+Documentation is missing
+</li>
+<li>
+oaxml2db.py: experimental
+</li>
+</ul>
+
+</div>
+
+<div class="footer">
+<hr class="footer" />
+<em>This document last modified</em><!--#flastmod file="history.shtml" -->
+<a class="external" href="http://sourceforge.net"><img class="norm" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+</div>
+</body>
+</html>

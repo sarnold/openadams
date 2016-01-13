@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>openADAMS</title>
+<meta name="author" content="Achim&nbsp;Köhler" />
+<meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
+<meta content="openADAMS Short Manual" name="description" />
+<meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
+<link rel="stylesheet" href="css/oadoc.css" type="text/css" />
+<script type="text/javascript">
+<!--
+var svgDoc = null;
+var svgWin = null;
+var explainTextElement = null;
+var defaultText;
+
+function init()
+{
+	var object = document.getElementById('explain_gui_image');
+	svgDoc = object.contentDocument;    
+	svgWin = svgDoc.defaultView;
+	svgWin.dispatch=explain;
+	explainTextElement = document.getElementById('explain_gui_text');
+	explainHintElement = document.getElementById('explain_gui_hint');
+	explain(0);
+}
+
+function explain(n) {
+	/*explainTextElement.style.visibility = "visible";
+	explainHintElement.style.visibility = "collapse";
+	*/
+    if (n == 1) 
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"The tree view shows all folders and artifacts organized in folders.";
+	}
+	else if (n == 2)
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"Folders are used to organize artifacts. Double clicking a folder brings up a dialog " +
+			"to rename the folder";
+	}
+	else if (n == 3)
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"Artifacts are organized in folders. Double clicking an artifact opens a dialog to edit the different " +
+			"fields of an artifact.";
+	}
+	else if (n == 4)
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"Tabs are used to show different information in the details panel. If an artifact is " +
+			"selected in the tree view the details and relations of the artifacts are available in different tabs." +
+			"If a folder is selected in the tree view lists for each kind of artifacts contained in the folder are available in different tabs.";
+	}
+	else if (n == 5)
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"The contents of the details panel shows details of the selected item in the tree view.";
+	}
+	else if (n == 6)
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"Toggle the artifact filter panel on and off. With artifact filters the artifacts shown " +
+			"in the tree view and folder lists could be filtered.";
+	}
+	else if (n == 7)
+	{
+		explainTextElement.firstChild.nodeValue = 
+			"Multiline text fields of artifacts have a clickable label. Clicking brings up a " +
+			"more or less comfortable text editor to edit the text field content.";
+	}
+	else
+	{
+		/*
+        explainTextElement.style.visibility = "hidden";
+		explainHintElement.style.visibility = "visible";
+        */
+        explainTextElement.firstChild.nodeValue = ''
+
+	}
+}
+//-->
+</script>
+
+</head>
+<body onload=init()>
+<div class="header">
+<!-- begin_mainmenu $select -->
+<div class="tabs">
+    <ul>
+        <li>
+        <a href="index.shtml"><span>Main page</span></a>
+        </li>
+        <li id="current">
+        <a href="getstarted.shtml"><span>Getting started</span></a>
+        </li>
+        <ul class="submenu">
+            <li><a href="#install">Installation</a></li>
+            <li><a href="#uibasics">User interface basics</a></li>
+            <li><a href="#linking">Linking Artifacts</a></li>
+            <li><a href="#filtering">Filtering</a></li>
+            <li><a href="#reporting">Reporting</a></li>
+            <li><a href="#export">Exporting database</a></li>
+        </ul>
+
+        <li>
+        <a href="acknowledgement.shtml"><span>Acknowledgement</span></a>
+        </li>
+        <li>
+        <a href="history.shtml"><span>History</span></a>
+        </li>
+    </ul>
+</div>
+<!-- end_mainmenu -->
+<hr class="header"/>
+</div>
+
+<div class="document">
+<h1><em>This page is under construction</em></h1>
+
+<p>
+Work in progress ...
+</p>
+
+<h1>Getting started</h1>
+
+<h2><a name="install">Installation</a></h2>
+<h3>Installing from source</h3>
+<p>
+The following software must be installed prior to installation and running openADAMS from source:
+</p>
+<ul>
+<li>Python 2.5; Versions 2.6 and 2.7 should work too.</li>
+<li>PyQt4</li>
+</ul>
+<p>
+The artifact editor saves all artifacts, folders  and relations between artifacts in a database file. 
+Images included in artifact fields are also saved in this database.
+</p>
+<p>
+To install openADAMS from source please download the latest archive <code>openadams-x.y.z.zip</code> 
+from <a href="http://sourceforge.net/projects/openadams/files/">Sourceforge</a>. 
+After unzipping the archive to an arbitrary folder you should be able to start openADAMS by running either the
+script <code>oaeditor.py</code> or <code>oaeditor.pyw</code>.
+</p>
+
+<h3>Win32 binary installation</h3>
+<p>
+Download the latest archive <code>openadams-win32-x.y.z.zip</code> from <a href="http://sourceforge.net/projects/openadams/files/">Sourceforge</a>.
+Unzip the archive to an arbitrary folder and run <code>oaeditor.exe</code> to start openADAMS.
+</p>
+
+<!-- *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** -->
+<h2><a name="uibasics">User interface basics</a></h2>
+<div>
+<p id="explain_gui_hint">
+Move mouse to one of the bubbles <img src="images/bubble.png" alt="bubble"/> in the image to see the meaning of the element.
+</p>
+<p id="explain_gui_text">
+<!-- filled by script -->
+</p>
+</div>
+
+<div> 
+<object id="explain_gui_image" data="images/explain_gui.svg" type="image/svg+xml" width="100%" height="100%">
+    <param name="src" value="explain_gui.svg">
+    Sorry, your browser is not able to display this object!
+  </object>
+</div>
+
+
+<div class="footer"></div>
+
+
+<!-- ************************************************************ -->
+
+<div class="clear">
+&nbsp;
+</div>
+<!-- *** *** *** *** -->
+
+<h2><a name="create">Creating and opening a database</a></h2>
+<p>
+Use the menu item <em>New database</em> from the <em>File</em> menu or use the shortcut
+<kbd>Ctrl-N</kbd> to create a new database.  A default folder layout will be created automatically.
+</p>
+<p>
+To open an existing database choose the menu item <em>File/Open database</em> or use the shortcut <kbd>Ctrl-O</kbd>.
+</p>
+<img src="images/file-menu.png" alt="file menu screenshot"/> 
+<!-- *** *** *** *** -->
+
+<h2><a name="artifacts">Creating and editing artifacts</a></h2>
+<p>
+To create a new artifact select the appropriate artifact type from the <em>Edit</em> menu or press the corresponding 
+toolbar button. 
+<br/>
+<img src="images/edit-menu.png" alt="edit menu screenshot"/><br/>
+The new artifact will go to the folder selected in the tree view. If not a folder but an 
+an artifact is selected, the newly created artifact will go to the same folder as the selected one.
+The new artifact will get a default title.
+</p>
+<p>
+To edit an artifact simply double click it in the tree view. A dialog box for editing attributes and text fields 
+of the artifact then appears.
+<br/>
+<img src="images/edit-dialog-1.png" alt="edit dialog screenshot"/>
+</p>
+<p>
+The dialog for most kind of artifacts has several tabs. In the first tab all the attributes and text fields 
+could be edited. The other tabs contains checkable lists to manage links between artifacts.
+<br/>
+<img src="images/edit-dialog-2.png" alt="edit dialog screenshot"/>
+</p>
+<p>
+The multiline text fields of artifacts could be edited in another way too. Each multiline text field has a 
+clickable label in the details panel. Clicking opens a more or less comfortable text editor for 
+the corresponding multiline text field.
+<br/>
+<img src="images/text-editor.png" alt="text editor screenshot"/>
+</p>
+<!-- *** *** *** *** -->
+
+<h2>Types of Artifacts</h2>
+openADAMS supports 7 basic artifact types:
+<dl>
+<dt>Text sections</dt>
+<dd>Used for plain text. A text section artifact has an ID, a title, some keywords and the actual content.</dd>
+
+<dt>Features</dt>
+<dd>Are used to describe product functions or properties, i.e. from the customers or marketing point of view.
+Features are useable to derive requirements.
+Features have an ID, title, keywords, priority, risk, status and a description.
+Features could be linked to requirments and use cases.
+</dd>
+
+<dt>Requirements</dt>
+<dd>
+Requirements as one of the most import type of artifacts have a lot of fields and attributes:
+ID, title, keywords, priority, status, risk, category, complexity, assigee, effort, baseline,
+description, testability, origin and rationale.
+Requirements could be linked to use cases, test cases and components.
+</dd>
+
+<dt>Use cases</dt>
+<dd>
+Are used to document a use case. Attributes and fields of a use case artifact are
+ID, title, keywords, priority, use frequency, actors, stakeholders, prerequisites, main scenario, 
+alternative scenario and notes.
+Use cases could be linked to requirements.
+</dd>
+
+<dt>Components</dt>
+<dd>Basic architectural documentation is supported through component artifacts.
+Attributes and fields of a component are ID, title, keywords, kind of component and description.
+Components could be linked to requirements.</dd>
+
+<dt>Test cases</dt>
+<dd>A test case describes a test for one or more requirement. 
+Fields and attributes of a test case are ID, title, keywords, priority, purpose, prerequisite, 
+test data, steps, notes and a script URL.
+Test cases are linked to requirements and test suites.
+</dd>
+
+<dt>Test suites</dt>
+<dd>
+A test suite is simpy a container to organize test cases. A test suite artifact has an 
+ID, a title, some keywords and a description.
+</dd>
+</dl>
+
+<p>
+Another kind of artifacts are images. 
+In any multiline text field of an artifact images may be inserted. But only those images 
+which are stored in the database file could be inserted. Use <em>Edit/Add image</em> from the menu strip
+to add an image to the database.
+</p>
+<!-- *** *** *** *** -->
+
+<h2><a name="linking">Linking Artifacts</a></h2>
+<!-- *** *** *** *** -->
+
+<h2><a name="filtering">Filtering</a></h2>
+<!-- *** *** *** *** -->
+
+<h2><a name="reporting">Reporting</a></h2>
+<!-- *** *** *** *** -->
+
+<h2><a name="export">Exporting database</a></h2>
+<!-- *** *** *** *** -->
+</div>
+
+<div class="footer">
+<hr class="footer" />
+<em>This document last modified</em><!--#flastmod file="getstarted.shtml" -->
+<a class="external" href="http://sourceforge.net"><img class="norm" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+</div>
+</body>
+</html>

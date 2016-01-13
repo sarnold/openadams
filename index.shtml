@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>openADAMS</title>
+<meta name="author" content="Achim&nbsp;Köhler" />
+<meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
+<meta content="openADAMS Short Manual" name="description" />
+<meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
+<link rel="stylesheet" href="css/oadoc.css" type="text/css" />
+<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="scripts/prototype.js"></script>
+<script type="text/javascript" src="scripts/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="scripts/lightbox.js"></script>
+</head>
+<body>
+<div class="header">
+<!-- begin_mainmenu $select -->
+<div class="tabs">
+  <ul>
+  <li id="current">
+  <a href="index.shtml"><span>Main page</span></a>
+  </li>
+  <ul class="submenu">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#resources">Related Resources</a></li>
+    <li><a href="#license">License</a></li>
+  </ul>
+  <li>
+  <a href="getstarted.shtml"><span>Getting started</span></a>
+  </li>
+  <li>
+  <a href="acknowledgement.shtml"><span>Acknowledgement</span></a>
+  </li>
+  <li>
+  <a href="history.shtml"><span>History</span></a>
+  </li>
+  </ul>
+</div>
+<!-- end_mainmenu -->
+<hr class="header"/>
+</div>
+
+<div class="document" id="artefact-management-system-afms">
+<h1 class="title">openADAMS</h1>
+<h2 class="title">Open Source Artifact Documentation And Management System</h2>
+
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>Achim&nbsp;Köhler</td></tr>
+<tr class="field"><th class="docinfo-name">Release:</th><td class="field-body">0.2.1</td>
+</tr>
+<tr><th class="docinfo-name">Copyright:</th>
+<td>Achim&nbsp;Köhler, 2010</td></tr>
+<tr><th class="docinfo-name">License:</th>
+<td>GNU General Public License</td></tr>
+<tr class="field"><th class="docinfo-name">Download:</th><td class="field-body"><a class="reference external" href="http://sourceforge.net/projects/openadams/files/">http://sourceforge.net/projects/openadams/files/</a></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2><a name="mission">Mission</a></h2>
+<div class="imgpanel">
+&nbsp;
+<a href="images/screenshot1.png" rel="lightbox" title="openADAMS main window">
+<img class="norm" src="images/screenshot1.png" width="300px" alt="openADAMS main window"></img>
+</a>
+</div>
+<p>
+Goal of this project is to provide a set of tools to manage some of the artifacts 
+appearing in the software development process. Till now the term artifacts basically 
+stands for <em>features</em>, <em>requirements</em>, <em>use cases</em>, 
+<em>architecture and design documents</em> and <em>test cases</em>.
+</p>
+<p>
+Managing these artifacts of course means creating and editing them. 
+Furthermore relations between artifacts could be organized.
+</p>
+<p>
+The tools could be useful in small and medium sized development projects. 
+Whenever you are used to write down requirements, use cases or test cases in a 
+Word Processor or a Spreadsheet Software, you should consider using openADAMS instead.
+</p>
+<p>
+openADAMS is a standalone desktop application, no database servers, web servers or similar 
+are required. 
+</p>
+<p>
+Read the <a href="getstarted.shtml">getting started</a> section to learn more about openADAMS.
+</p>
+
+<h2><a name="resources">Related resources</a></h2>
+
+openADAMS is the successor of <a href="http://sourceforge.net/projects/afms/">AFMS</a>.
+
+Here are the main new features of openADAMS:
+
+<ul>
+<li>
+    Artifacts could  be organized in user definable folders
+</li>
+<li>
+    Build in Rich Text Editor, no reStructured Text required any more
+</li>
+<li>
+    Images could be stored in the Database and these images could be 
+    inserted into Rich Text Fields of Artifacts
+</li>
+<li>
+    Support for Architecture and Design documentation with new artifact 
+    kind "components". Components have a Rich Text Field where you can 
+    include things like UML Diagrams. Components may be related to requirements 
+    to achieve traceability
+</li>
+<li>
+    PyQt instead of wxPython for the GUI
+</li>    
+<li>
+    Much more cleaner and smaller code. Thanks to Qt's model/view framework!
+</li>    
+</ul>
+
+<p>
+The test runner tool from <a href="http://sourceforge.net/projects/afms/">AFMS</a> is
+available in openADAMS, documentation is coming soon.
+</p>
+<p>
+openADAMS is implemented in <a href="http://www.python.org/">Python</a> and 
+uses <a href="http://www.riverbankcomputing.com/software/pyqt/intro">PyQt</a> for 
+the graphical user interfaces.
+</p>
+<p>
+Artifacts and other data are stored in a <a href="http://www.sqlite.org/">SQLite</a>
+database. <a href="http://www.sqlite.org/">SQLite</a> (pysqlite) comes with current 
+<a href="http://www.python.org/">Python</a> releases.
+</p>
+
+
+<p>
+openADAMS is strongly inspired by the <a class="reference external" href="http://sourceforge.net/projects/osrmt">Open Source Requirements Management System</a> and the
+<a class="reference external" href="http://readyset.tigris.org/">Ready-to-use Software Engineering Templates</a>
+</p>
+
+<h2><a name="license">License</a></h2>
+<p>
+openADAMS is free software: you can redistribute it and/or modify
+it under the terms of the <a class="reference external" href="http://www.gnu.org/licenses/">GNU General Public License</a> as published
+by the Free Software Foundation, either version 2 of the License,
+or (at your option) any later version.
+</p>
+</div>
+
+<div class="footer">
+<hr class="footer" />
+<em>This document last modified</em><!--#flastmod file="index.shtml" -->
+<a class="external" href="http://sourceforge.net"><img class="norm" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+</div>
+</body>
+</html>

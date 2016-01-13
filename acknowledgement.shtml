@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>openADAMS</title>
+<meta name="author" content="Achim&nbsp;Köhler" />
+<meta name="copyright" content="Achim&nbsp;Köhler, 2010" />
+<meta content="openADAMS Short Manual" name="description" />
+<meta content="Management, Features, Requirements, Use cases, Test cases, Test suites" name="keywords" />
+<link rel="stylesheet" href="css/oadoc.css" type="text/css" />
+</head>
+<body>
+<div class="header">
+<!-- begin_mainmenu $select -->
+<div class="tabs">
+  <ul>
+  <li>
+  <a href="index.shtml"><span>Main page</span></a>
+  </li>
+  <li>
+  <a href="getstarted.shtml"><span>Getting started</span></a>
+  </li>
+  <li id="current">
+  <a href="acknowledgement.shtml"><span>Acknowledgement</span></a>
+  </li>
+  <li>
+  <a href="history.shtml"><span>History</span></a>
+  </li>
+  </ul>
+</div>
+<!-- end_mainmenu -->
+<hr class="header"/>
+</div>
+
+<div class="document" id="artefact-management-system-afms">
+<h1>Acknowledgement</h1>
+
+<p>openADAMS  is implemented in <a href="http://www.python.org/">Python</a> and uses 
+<a href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt</a> as GUI Toolkit.
+</p>
+
+<p>The database engine is <a href="http://www.sqlite.org">sqlite</a>.</p>
+<p>The different icons are taken or derived from several icon collections:</p>
+<dl>
+<dt>Sweetie BasePack</dt>
+<dd><ul class="first last simple">
+<li>URL: <a class="reference external" href="http://sweetie.sublink.ca/preview/icons/Sweetie-BasePack-v3">http://sweetie.sublink.ca/preview/icons/Sweetie-BasePack-v3</a></li>
+<li>Licence: Creative Commons Attribution-ShareAlike 3.0 License Agreement,
+<a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/">http://creativecommons.org/licenses/by-sa/3.0/</a></li>
+</ul>
+
+</dd>
+<dt>Nuvola</dt>
+<dd><ul class="first last simple">
+<li>URL:      <a class="reference external" href="http://www.icon-king.com">http://www.icon-king.com</a></li>
+<li>Licence: GNU Lesser General Public License, <a class="reference external" href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a></li>
+</ul>
+</dd>
+<dt>Tango</dt>
+<dd><ul class="first last simple">
+<li>URL: <a class="reference external" href="http://tango.freedesktop.org/releases/tango-icon-theme-0.8.1.tar.gz">http://tango.freedesktop.org/releases/tango-icon-theme-0.8.1.tar.gz</a></li>
+
+<li>Licence: Creative Commons Attribution-ShareAlike 2.5 License Agreement,
+<a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.5/">http://creativecommons.org/licenses/by-sa/2.5/</a></li>
+</ul>
+</dd>
+</dl>
+
+<p>The documentation pages are using Lightbox for some effects, see <a class="reference external" href="http://www.huddletogether.com/projects/lightbox2/">http://www.huddletogether.com/projects/lightbox2/</a></p>
+
+</div>
+
+
+<div class="footer">
+<hr class="footer" />
+<em>This document last modified</em><!--#flastmod file="acknowledgement.shtml" -->
+<a class="external" href="http://sourceforge.net"><img class="norm" align="top" alt="SourceForge.net Logo" class="align-top" src="http://sflogo.sourceforge.net/sflogo.php?group_id=219925&amp;type=4" style="width: 125px; height: 37px;" /></a>
+</div>
+</body>
+</html>

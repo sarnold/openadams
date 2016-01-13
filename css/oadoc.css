@@ -1,0 +1,129 @@
+/* Stylesheet for AFMS documentation */
+body {
+ font-family: Verdana, Helvetica, Arial, sans-serif;
+ background-color:#FFFFFF;
+ margin: 0; padding: 0; 
+}
+
+/* tabs styles, based on http://www.alistapart.com/articles/slidingdoors */
+div.header
+ {
+  font-size: 0.91em;
+  float: left; width: 17em;
+  margin: 0; padding: 0;
+}
+
+div.document {
+  margin-left:18em;
+
+}
+
+div.tabs ul
+{
+   margin           : 0px;
+   padding-left     : 0px;
+   list-style-type  : none;
+}
+
+div.tabs li
+{
+   margin-bottom    : 1ex;
+   padding-bottom   : 1ex;
+   padding-top      : 1ex;
+   padding-left     : 1em;
+   background-color : #F5F5F5;
+   border           : 1px solid #DADADA;
+}
+
+div.tabs ul.submenu li
+{
+   font-size: 90%;
+   background-color: #ffffff;
+   padding-bottom   : 0ex;
+   padding-top      : 0ex;
+   padding-left     : 1em;
+   margin-left      : 1em;
+}
+
+div.tabs li:before
+{
+   content:"\00bb";
+   color: #1A419D;
+}
+
+div.tabs a
+{
+   font-weight      : normal;
+   text-decoration  : none;
+}
+
+div.tabs a:hover
+{
+    font-weight      : bold;
+}
+
+div.tabs a:link, div.tabs a:visited,
+div.tabs a:active, div.tabs a:hover
+{
+       color: #1A419D;
+}
+
+div.tabs li#current 
+{
+   border: 3px solid #FFE659;
+}
+
+hr.header {
+    display:none;
+}
+
+div.imgpanel {
+  float: right; width: 320px; height:700px;
+  margin: 0; padding: 0;
+  margin-top:0px;
+}
+
+div.footer {
+font-size: x-small;
+clear: both;
+}
+
+
+h2 {
+	border-bottom:thin solid #162D50;
+	border-top:medium solid #162D50;
+	margin-top:1em;
+    color: #234764;
+}
+
+h2.title
+{   font-size:120%;
+    border:none;
+}
+
+dl { 
+	margin-left:30px; 
+	width:880px;
+}
+dt { font-style:oblique; }
+
+.clear {
+clear:left;
+}
+
+p#explain_gui_hint {
+	margin-top:0pt;
+}
+
+p#explain_gui_text {
+	margin-top:0pt;
+	background-color:#FF5555;
+    min-height:7ex;
+    border:1px solid #000000;
+}
+
+img.norm {
+	padding-top:0;
+	padding-left:0;
+}
+
