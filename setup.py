@@ -1,6 +1,5 @@
 # -*- coding: utf-8  -*-
 from setuptools import setup
-from _naf_version import VERSION
 import subprocess
 
 SCRIPTS = ["oaeditor.py", "oalogview.py", "oatestrunner.py", 
@@ -25,8 +24,10 @@ subprocess.call(["lrelease", "nafms_de.ts"])
 # build PyQt resources
 subprocess.call(["pyrcc4", "-py2", "-o", "_naf_resources.py", "nafms.qrc"])
 
-# update version file
+# create version file
 subprocess.call(["./update_version.sh"])
+
+from _naf_version import VERSION
 
 setup(name='openadams',
       description = 'Artifact Documentation And Management System',
