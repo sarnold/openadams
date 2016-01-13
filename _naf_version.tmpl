@@ -20,16 +20,16 @@
 # along with openADAMS.  If not, see <http://www.gnu.org/licenses/>.
 # -------------------------------------------------------------------
 
-VERSION = "0.3.2"
+VERSION = "%GIT_VERSION%"
 
 _version = {
     'version' : VERSION,
-    'bdate'   : "$WCNOW=%Y/%m/%d %H:%M:%S$",
-    'wcrev'   : "$WCREV$",
-    'wcdate'  : "$WCDATE$",
-    'wcrange' : "$WCRANGE$",
-    'wcmixed' : "$WCMIXED?yes:no$",
-    'wcmods'  : "$WCMODS?tainted:untainted$"
+    'bdate'   : "%BUILD_DATE%",
+    'wcrev'   : "%GIT_REV%",
+    'wcdate'  : "%GIT_COMMIT_DATE%",
+    'wcrange' : "%GIT_REV%",
+    'wcmixed' : "no",
+    'wcmods'  : "%LOCAL_MODS%"
 }
 SVN_STR = "BDATE %(bdate)s; WCREV %(wcrev)s (%(wcmods)s); WCDATE %(wcdate)s; WCRANGE %(wcrange)s; WCMIXED %(wcmixed)s" % _version
 VERSION_STR = "VERSION %(version)s; BDATE %(bdate)s; WCREV %(wcrev)s (%(wcmods)s); WCDATE %(wcdate)s; WCRANGE %(wcrange)s; WCMIXED %(wcmixed)s" % _version
